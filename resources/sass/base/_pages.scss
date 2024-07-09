@@ -1,0 +1,128 @@
+@use './variables' as v;
+@use './mixins' as m;
+
+/** Inicio Card Page Title */
+.card-titulo-page {
+    background-color: v.$morado_m2;
+    width: 50%;
+    margin: auto;
+    border-bottom: .3rem solid v.$verde_v2;
+
+    box-shadow: 1px 0px 15px 0px rgba(84,83,83,0.75);
+    -webkit-box-shadow: 1px 0px 15px 0px rgba(84,83,83,0.75);
+    -moz-box-shadow: 1px 0px 15px 0px rgba(84,83,83,0.75);
+
+    @include m.tablet {
+        width: 70%;
+    }
+}
+
+.card-titulo-page p {
+    margin-left: 2.5rem;
+    text-align: left;
+    text-transform: uppercase;
+    color: v.$blanco;
+    font-weight: 700;
+    padding-top: 1rem;
+
+    @include m.tablet {
+        margin-left: 10rem;
+    }
+}
+
+.icono-page {
+    position: absolute;
+    width: 8rem;
+
+    margin-top: -2rem;
+    margin-left: -6rem;
+
+    @include m.tablet {
+        width: 10rem;
+
+        margin-top: -3rem;
+        margin-left: -5rem;
+    }
+}
+/** Fin Card Page Title */
+
+
+
+/** Inicio Card Page Fecha */
+.card-titulo-date {
+    display: flex;
+    justify-content: center;
+    width: 35%;
+    margin: auto;
+    background-color: v.$verde_v2;
+}
+
+.card-titulo-date p {
+    margin: 0;
+    padding: 1.2rem;
+    text-transform: uppercase;
+}
+
+.card-custom-date-span {
+    font-weight: 700;
+}
+/** Fin Card Page Fecha */
+
+
+
+/** Inicio Custom Button with Icon */
+.card-button {
+    width: 40%;
+    margin: auto;
+    display: flex;
+}
+
+.custom-card-action {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    width: 90%;
+    height: 3.9rem;
+    margin: auto;
+}
+
+.custom-card-action-icon {
+    position: relative;
+    height: 100%;
+    width: 30%;
+    background-color: v.$morado_m2;
+
+    @include m.tablet {
+        width: 25%;
+    }
+
+    @include m.desktop {
+        width: 22%;
+    }
+}
+
+.custom-card-action-icon img {
+    position: absolute;
+    height: 60%;
+    width: 60%;
+    top: 20%;
+    left: 20%;
+}
+
+.custom-card-button {
+    width: 80%;
+    height: 3.9rem!important;
+    border-radius: 0;
+    border-right: .5rem solid v.$morado_m2;
+    font-weight: 600;
+    font-size: 1.3rem;
+
+    @include m.tablet {
+        width: 75%;
+    }
+
+    @include m.desktop {
+        width: 73%;
+    }
+}
+/** Fin Custom Button with Icon */

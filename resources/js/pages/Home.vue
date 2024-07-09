@@ -1,13 +1,6 @@
 <template>
-    <div class="container-fluid">
-        <div class="custom-title-div-normal row justify-content-between">
-            <div class="">
-                <p class="custom-title-page">Inicio</p>
-            </div>
-        </div>
-        <div class="row justify-content-around">
-                <div class="home-main-card p-4"></div>
-        </div>
+    <div class="container-fluid py-12 px-8">
+        
     </div>
 </template>
 

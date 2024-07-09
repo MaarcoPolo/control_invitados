@@ -4,7 +4,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TipoUsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +29,14 @@ Route::controller(AuthController::class)->group(function(){
 //Dentro deben de ir las rutas de las peticiones del backend para movimientos internos que necesiten una autenticación de usuario
 //fuera del group se pueden poner rutas que no ocupen una autenticación de usuario, publicas les podriamos decir. 
 Route::group(['middleware' => 'auth:sanctum'], function($router) {
+    
+    //Ruta para obtener los tipos de usuario
+    Route::get('/tipo-usuarios', [TipoUsuarioController::class, 'getTipoUsuarios']);
+
+    //Rutas para el catalogo de usuarios
+    Route::post('/usuarios', [UserController::class, 'getUsuarios']);
+    Route::post('/usuarios/crear-usuario', [UserController::class, 'guardarUsuario']);
+    Route::post('/usuarios/actualizar-usuario', [UserController::class, 'actualizarUsuario']);
+    Route::post('/usuarios/eliminar-usuario', [UserController::class, 'eliminarUsuario']);
 
 });
