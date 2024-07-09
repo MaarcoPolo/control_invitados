@@ -3,7 +3,7 @@
         <div class="main-head">
             <div class="custom-page-header">
                 <div class="separador">
-                    <h1 class="title-head"><span>Control de Invitados</span></h1>
+                    <h1 class="title-head"><span>Control de invitados</span></h1>
                 </div>
                 <div class="logo">
                     <picture>
@@ -11,16 +11,22 @@
                     </picture>
                 </div>
                 <div class="separador-mobile">
-                    <h1 class="title-head"><span>Control de Invitados</span></h1>
+                    <h1 class="title-head"><span>Control de invitados</span></h1>
+                </div>
+            </div>
+            <div class="custom-navbar">
+                <ul class="custom-ul-navbar m-0">
+                    <li @click="irInicio()">Inicio</li>   
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>   
+
+                    <li @click="logout()">Cerrar Sesión</li>
+                </ul>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="text-center py-1 mt-8">
                 </div>
             </div>
         </div>
-        <aside class="sidebar">
-            <ul class="custom-ul">
-                <li class="option-sidebar" :class="currentRoute == 'Home' ? 'option-sidebar-selected' : 'option-sidebar-unselected'" @click="this.$router.push('/')">Inicio</li>
-                <li class="logout_sidebar_button option-sidebar option-sidebar-unselected" @click="logout()">Cerrar Sesión</li>
-            </ul>
-        </aside>
         <div class="content">
             <router-view></router-view>
         </div>
@@ -38,31 +44,17 @@
 
 <script>
     import { defineComponent } from "vue";
+    import { errorSweetAlert, successSweetAlert } from "../helpers/sweetAlertGlobals"
 
     export default defineComponent({
         name: 'app',
         data() {
             return {
-                bandCatalogos: false,
-                banAcceso: false,
-                showNav: false
+            
             }
         },
         created() {
-            const userInfo = localStorage.getItem('user')
-            if (userInfo) {
-                const userData = JSON.parse(userInfo)
-                this.$store.commit('setUserData', userData)
-            }
-            axios.interceptors.response.use(
-                response => response,
-                error => {
-                    if (error.response.status === 401) {
-                        this.$store.dispatch('logout')
-                    }
-                    return Promise.reject(error)
-                }
-            )
+        
         },
         computed: {
             user() {
@@ -78,7 +70,10 @@
             },
             irInicio() {
                 this.$router.push('/')
-            }
+            },
+            irUsuarios() {
+                this.$router.push('/usuarios')
+            },
         }
     })
 </script>

@@ -48,7 +48,6 @@
         },
         data() {
             return {
-                mostrarlabel: false,
                 form: {
                     usuario: '',
                     password: '',
