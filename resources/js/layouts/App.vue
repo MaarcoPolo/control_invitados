@@ -19,6 +19,7 @@
                     <li @click="irInicio()">Inicio</li>   
                     <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>   
                     <li @click="irEventos()">Eventos</li>
+                    <li @click="irInvitado()">Invitados</li>  
                     <li @click="logout()">Cerrar Sesión</li>
                 </ul>
             </div>
@@ -76,6 +77,9 @@
             },
             irUsuarios() {
                 this.$router.push('/usuarios')
+            },
+            irInvitado() {
+                this.$router.push('/invitados')
             },
         }
     })

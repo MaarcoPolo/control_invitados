@@ -1,0 +1,79 @@
+<template>
+    <div>
+        <template v-if="user">
+            <div class="col-12">
+                <p class="boton-logout text-center mt-4" @click="logout()"><b>CERRAR SESIÓN</b></p>
+            </div>
+        </template>
+    </div>
+</template>
+
+<script>
+    import { defineComponent } from "vue";
+    import { errorSweetAlert, successSweetAlert, warningSweetAlert } from "../helpers/sweetAlertGlobals"
+    export default defineComponent({
+        name: 'validar-invitado',
+        data(){
+            return {
+                buscar_folio:{
+                    folio:''
+                },
+                invitado:{
+                    nombre:'',
+                    dependencia:'',
+                    area:'',
+                    folio:'',
+                    verificado:'',
+                    evento_id:'',
+                    archivo_oficio: [],   
+                },
+            }
+        },
+        
+        created() {
+            if(this.user){
+                this.buscarOficio()
+            }
+        },
+        computed: {
+            user() {
+                return this.$store.getters.user
+            }
+        },
+        methods:{
+            logout() {
+                this.$store.dispatch('logout')
+            },
+            async buscarOficio() {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+
+                console.log(urlParams.get('folio'))
+
+                let folio = urlParams.get('folio')
+
+                if(folio)
+                {
+                    this.buscar_folio.folio = folio
+                    try {
+                        let response = await axios.post('/api/invitados/buscar-oficio', this.buscar_folio)
+                        if (response.status === 200) {
+                            if (response.data.status === "ok") {
+                                // this.$store.commit('setCitaAgendada', response.data.oficio)
+                                this.folio=response.data.folio
+                            } 
+                            else {
+                                errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                            }
+                        } else {
+                            errorSweetAlert('Ocurrió un error al buscar cita.')
+                        }
+                    } catch (error) {
+                        errorSweetAlert('Ocurrió un error al buscar cita.')
+                    }
+                }
+            }
+        }
+    })
+    
+</script>

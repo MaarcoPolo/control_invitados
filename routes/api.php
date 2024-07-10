@@ -7,8 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TipoUsuarioController;
 use App\Http\Controllers\EventoController;
-
-
+use App\Http\Controllers\InvitadoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,7 +35,7 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::get('/tipo-usuarios', [TipoUsuarioController::class, 'getTipoUsuarios']);
 
     //Rutas para el catalogo de usuarios
-    Route::post('/usuarios', [UserController::class, 'getUsuarios']);
+    Route::get('/usuarios', [UserController::class, 'getUsuarios']);
     Route::post('/usuarios/crear-usuario', [UserController::class, 'guardarUsuario']);
     Route::post('/usuarios/actualizar-usuario', [UserController::class, 'actualizarUsuario']);
     Route::post('/usuarios/eliminar-usuario', [UserController::class, 'eliminarUsuario']);
@@ -45,6 +44,15 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     //Eventos
     Route::post('/eventos', [EventoController::class, 'getEventos']);
     Route::post('/eventos/crear-evento', [EventoController::class, 'guardarEvento']);
+    //Rutas para el catalogo de invitados
+    Route::get('/invitados', [InvitadoController::class, 'getInvitados']);
+    Route::post('/invitados/crear-invitado', [InvitadoController::class, 'guardarInvitado']);
+    Route::post('/invitados/actualizar-invitado', [InvitadoController::class, 'actualizarInvitado']);
+    Route::post('/invitados/eliminar-invitado', [InvitadoController::class, 'eliminarInvitado']);
+    //Ruta para generar el codigo QR
+    Route::post('/invitados/generar-codigo-qr', [InvitadoController::class, 'generarCodigoQR']);
+    Route::post('/invitados/buscar-oficio', [InvitadoController::class, 'buscarOficio']);
+
 
 
 });
