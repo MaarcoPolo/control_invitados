@@ -3,6 +3,7 @@ import store from './store'
 import Login from './pages/Login.vue'
 import Home from './pages/Home.vue'
 import Usuarios from './pages/Usuarios.vue'
+import Eventos from './pages/Eventos.vue'
 import Invitados from './pages/Invitados.vue'
 import ValidarInvitado from './pages/ValidarInvitado.vue'
 
@@ -26,6 +27,14 @@ const routes = [
         path: '/usuarios',
         name: 'Usuarios',
         component: Usuarios,
+        meta: {
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/eventos',
+        name: 'Eventos',
+        component: Eventos,
         meta: {
             requiresAuth: true
         },

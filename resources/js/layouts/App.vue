@@ -17,9 +17,9 @@
             <div class="custom-navbar">
                 <ul class="custom-ul-navbar m-0">
                     <li @click="irInicio()">Inicio</li>   
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>
-                    <li @click="irInvitado()">Invitados</li>      
-
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>   
+                    <li @click="irEventos()">Eventos</li>
+                    <li @click="irInvitado()">Invitados</li>  
                     <li @click="logout()">Cerrar Sesión</li>
                 </ul>
             </div>
@@ -55,20 +55,20 @@
             }
         },
         created() {
-            // const userInfo = localStorage.getItem('user')
-            // if (userInfo) {
-            //     const userData = JSON.parse(userInfo)
-            //     this.$store.commit('setUserData', userData)
-            // }
-            // axios.interceptors.response.use(
-            //     response => response,
-            //     error => {
-            //         if (error.response.status === 401) {
-            //             this.$store.dispatch('logout')
-            //         }
-            //         return Promise.reject(error)
-            //     }
-            // )
+            const userInfo = localStorage.getItem('user')
+            if (userInfo) {
+                const userData = JSON.parse(userInfo)
+                this.$store.commit('setUserData', userData)
+            }
+            axios.interceptors.response.use(
+                response => response,
+                error => {
+                    if (error.response.status === 401) {
+                        this.$store.dispatch('logout')
+                    }
+                    return Promise.reject(error)
+                }
+            )
         
         },
         computed: {
@@ -85,6 +85,9 @@
             },
             irInicio() {
                 this.$router.push('/')
+            },
+            irEventos() {
+                this.$router.push('/eventos')
             },
             irUsuarios() {
                 this.$router.push('/usuarios')
