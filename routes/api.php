@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TipoUsuarioController;
+use App\Http\Controllers\EventoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +40,11 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/usuarios/crear-usuario', [UserController::class, 'guardarUsuario']);
     Route::post('/usuarios/actualizar-usuario', [UserController::class, 'actualizarUsuario']);
     Route::post('/usuarios/eliminar-usuario', [UserController::class, 'eliminarUsuario']);
+
+
+    //Eventos
+    Route::post('/eventos', [EventoController::class, 'getEventos']);
+    Route::post('/eventos/crear-evento', [EventoController::class, 'guardarEvento']);
+
 
 });
