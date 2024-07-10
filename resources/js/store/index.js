@@ -23,12 +23,12 @@ const store = createStore({
         getContRecaptcha: function(state) {
             return state.contRecaptcha
         },
-        getLoading(state) {
-            return state.loading
-        },
         getUsuarios(state){
             return state.usuarios
         },
+        getLoading(state) {
+            return state.loading
+        }
     },
     mutations: {
         setUserData(state, userData) {
@@ -40,12 +40,12 @@ const store = createStore({
             localStorage.removeItem('user')
             location.reload()
         },
-        setLoading(state, payload) {
-            state.loading = payload
-        },
         setUsuarios(state, payload) {
             state.usuarios = payload
         },
+        setLoading(state, payload) {
+            state.loading = payload
+        }
     },
     actions: {
         async login({commit}, credentials) {

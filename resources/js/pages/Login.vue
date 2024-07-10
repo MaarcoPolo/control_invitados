@@ -2,7 +2,7 @@
     <div class="conteiner-seg">
         <div class="imagen animate__animated animate__slideInLeft">
             <div>
-                <img style="max-height: 90rem;width: 90rem;" src="../../../public/img/image-login.png" alt="">
+                <img style="height: 91rem; width: 91rem;" src="../../../public/img/image-login.png" alt="">
             </div>
         </div>
         <div class="custom-border-login-1"></div>

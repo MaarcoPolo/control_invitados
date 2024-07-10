@@ -939,3 +939,12 @@ max-width: 90%;
 .card-icon-estatus {
     font-size: 7rem;
 }
+.botones-inicio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+
+    cursor: pointer;
+    transition: .5s all ease-in-out;
+}
