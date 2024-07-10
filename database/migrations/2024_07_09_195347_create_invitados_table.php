@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('folio',10)->unique();
             $table->boolean('verificado')->default(0);
-            $table->string('evento_id');
+            $table->foreignId('evento_id')->constrained();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

@@ -63,6 +63,18 @@
                                     <td class="custom-data-table text-uppercase">
                                         {{evento.nombre}}
                                     </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{evento.organizador}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{evento.sede}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{evento.fecha_i}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{evento.fecha_f}}
+                                    </td>
                                     <td>
                                         <div class="text-center row justify-content-center">
                                             <div>
@@ -78,6 +90,21 @@
                                                     location="bottom"
                                                     >
                                                     <span style="font-size: 15px;">Editar Evento</span>
+                                                </v-tooltip>
+                                            </div>
+                                            <div>
+                                                <v-icon
+                                                    @click="agregarInvitados(evento)"
+                                                    class="ml-1"
+                                                    >
+                                                    mdi-account-plus
+                                                </v-icon>
+
+                                                <v-tooltip
+                                                    activator="parent"
+                                                    location="bottom"
+                                                    >
+                                                    <span style="font-size: 15px;">Agregar Invitado</span>
                                                 </v-tooltip>
                                             </div>
                                             <div>
@@ -182,7 +209,7 @@
                             <div class="col-md-6 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_apellidoP">Organizador:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="evento.organizador.$model">
+                                    <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
                                     <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p>
                                 </div>
                             </div>
@@ -191,22 +218,22 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_apellidoM">Sede:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="evento.sede.$model">
+                                    <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
                                     <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_username">Fecha inicial:</label>
-                                    <input id="input_username" type="date" autocomplete="off" class="form-control" v-model="v$.evento.fecha_i">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.username.$error">*Campo obligatorio</p> -->
+                                    <label for="input_fecha_i">Fecha inicial:</label>
+                                    <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_i">
+                                    <!-- <p class="text-validation-red" v-if="v$.evento.fecha_i.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_pass">Fecha final:</label>
-                                    <input id="input_pass" type="date" autocomplete="off" class="form-control" v-model="v$.evento.fecha_f">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.password.$error">*Campo obligatorio</p> -->
+                                    <label for="input_fecha_f">Fecha final:</label>
+                                    <input id="input_fecha_f" type="date" class="form-control" v-model="evento.fecha_f">
+                                    <!-- <p class="text-validation-red" v-if="v$.evento.fecha_f.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                         </div>
@@ -246,21 +273,21 @@
                                 <div class="div-custom-input-form">
                                     <label for="input_nombre">Nombre:</label>
                                     <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
-                                    <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p>
+                                    <!-- <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_apellidoP">Organizador:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="evento.organizador.$model">
-                                    <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p>
+                                    <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
+                                    <!-- <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_apellidoM">Sede:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="evento.sede.$model">
-                                    <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p>
+                                    <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
+                                    <!-- <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                         </div>
@@ -268,14 +295,14 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_username">Fecha inicial:</label>
-                                    <input id="input_username" type="text" class="form-control" v-model="v$.evento.fecha_i">
+                                    <input id="input_username" type="text" class="form-control" v-model="evento.fecha_i">
                                     <!-- <p class="text-validation-red" v-if="v$.evento.username.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_pass">Fecha Final:</label>
-                                    <input id="input_pass" type="text" class="form-control" v-model="v$.evento.fecha_f">
+                                    <input id="input_pass" type="text" class="form-control" v-model="evento.fecha_f">
                                     <!-- <p class="text-validation-red" v-if="v$.evento.password.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>                        
@@ -317,12 +344,12 @@
                 dialogNuevoEvento: false,
                 dialogEditarEvento: false,
                 evento: {
-                    id: null,
+                    // id: null,
                     nombre: '',
                     organizador:'',
                     sede:'',
-                    fecha_i:'',
-                    fecha_f: '',
+                    fecha_i:null,
+                    fecha_f: null,
                 },               
                 loading: false,
                 elementosPorPagina: 10,
@@ -353,6 +380,12 @@
                         sede: {
                             required
                         },
+                        // fecha_i: {
+                        //     required
+                        // },
+                        // fecha_f: {
+                        //     required
+                        // },
                     }
                 }
         },
@@ -494,16 +527,17 @@
                 this.evento.sede =''
                 this.evento.fecha_i = ''
                 this.evento.fecha_f = ''
+                // this.v$.reset()
 
             },
             abrirModalEditarEvento(evento){
                 this.dialogEditarEvento=true 
                 this.evento.id = evento.id
                 this.evento.nombre = evento.nombre
-                this.evento.apellido_materno = evento.apellido_materno
-                this.evento.apellido_paterno = evento.apellido_paterno
-                this.evento.username = evento.username
-                this.evento.password = evento.password
+                this.evento.organizador = evento.organizador
+                this.evento.sede = evento.sede
+                this.evento.fecha_i = evento.fecha_i
+                this.evento.fecha_f = evento.fecha_f
             },
             async guardarNuevoEvento() {
                 const isFormCorrect = await this.v$.evento.$validate()              
@@ -519,7 +553,7 @@
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
                         try {
-                                this.loading = true
+                                // this.loading = true
                                 let response = await axios.post('/api/eventos/crear-evento', this.evento)
                                 return response
                             } catch (error) {
@@ -528,17 +562,19 @@
                         },
                         allowOutsideClick: () => !Swal.isLoading()
                     }).then((result) => {
+                        // this.loading = true
                         if (result.isConfirmed) {
                             if (result.value.status === 200) {
                                 if (result.value.data.status === "ok") {
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setEventos', result.value.data.eventos)
-                                    this.loading = false
+                                    // this.loading = false
                                     this.cerrarModalNuevoEvento()
                                     this.getDataPagina(1)
+                                    
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
-                                    this.loading = false
+                                    // this.loading = false
                                 }else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                                 }
@@ -547,6 +583,7 @@
                             }
                         }
                     })
+                    // this.loading = false
             },
             async guardarCambiosEditarEvento() {
                 const isFormCorrect = await this.v$.evento.$validate()              
@@ -588,6 +625,7 @@
                     })
             },
             async eliminarEvento(evento) {
+               
                     Swal.fire({
                     title: '¿Eliminar Evento?',
                     icon: 'question',
@@ -622,6 +660,7 @@
                         }
                     }
                 })
+                // this.loading = false
             }
         }
     })

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Invitado extends Model
 {
     use HasFactory;
+
+    public function evento()
+    {
+        return $this->belongsTo(Evento::class);
+    }
 }

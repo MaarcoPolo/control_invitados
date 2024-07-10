@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     //Eventos
     Route::post('/eventos', [EventoController::class, 'getEventos']);
     Route::post('/eventos/crear-evento', [EventoController::class, 'guardarEvento']);
+    Route::post('/eventos/eliminar-evento', [EventoController::class, 'eliminarEvento']);
+
     //Rutas para el catalogo de invitados
     Route::get('/invitados', [InvitadoController::class, 'getInvitados']);
     Route::post('/invitados/crear-invitado', [InvitadoController::class, 'guardarInvitado']);
