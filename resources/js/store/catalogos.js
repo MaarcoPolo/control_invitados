@@ -1,15 +1,22 @@
 export default{
     store: {
-        tipoUsuarios:[]
+        tipoUsuarios:[],
+        invitados:[]
     },
     getters:{
-        getTipoUsuarios(state) {
+        getTipoUsuarios(state){
             return state.tipoUsuarios
         },
+        getInvitados(state){
+            return state.invitados
+        }
     },
     mutations:{
-        setTipoUsuarios(state, payload) {
+        setTipoUsuarios(state, payload){
             state.tipoUsuarios = payload
+        },
+        setInvitados(state,payload){
+            state.invitados = payload
         }
     }
 }

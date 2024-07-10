@@ -2,14 +2,14 @@
     <div class="conteiner-seg">
         <div class="imagen animate__animated animate__slideInLeft">
             <div>
-                <img style="height: 10rem;" src="../../../public/img/logo_poder_judical_blanco.png" alt="">
+                <img style="max-height: 90rem;width: 90rem;" src="../../../public/img/image-login.png" alt="">
             </div>
         </div>
         <div class="custom-border-login-1"></div>
         <div class="custom-border-login-2"></div>
         <div class="app animate__animated animate__zoomIn">
             <div class="div-titulo-login">
-                <img style="width: 35rem; height: 26rem;" src="../../../public/img/logo.png" alt="">
+                <img style="width: 30.3rem; height: 21rem;" src="../../../public/img/logo-login.png" alt="">
             </div>
             <form class="form-login" autocomplete="off" @submit.prevent>
                 <br>

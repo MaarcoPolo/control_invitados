@@ -3,6 +3,8 @@ import store from './store'
 import Login from './pages/Login.vue'
 import Home from './pages/Home.vue'
 import Usuarios from './pages/Usuarios.vue'
+import Invitados from './pages/Invitados.vue'
+import ValidarInvitado from './pages/ValidarInvitado.vue'
 
 
 const routes = [
@@ -27,6 +29,19 @@ const routes = [
         meta: {
             requiresAuth: true
         },
+    },
+    {
+        path: '/invitados',
+        name: 'Invitados',
+        component: Invitados,
+        meta: {
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/validar-invitado',
+        name: 'ValidarInvitado',
+        component: ValidarInvitado,
     },
 ]
 

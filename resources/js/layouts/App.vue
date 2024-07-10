@@ -17,7 +17,8 @@
             <div class="custom-navbar">
                 <ul class="custom-ul-navbar m-0">
                     <li @click="irInicio()">Inicio</li>   
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>   
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>
+                    <li @click="irInvitado()">Invitados</li>      
 
                     <li @click="logout()">Cerrar Sesión</li>
                 </ul>
@@ -73,6 +74,9 @@
             },
             irUsuarios() {
                 this.$router.push('/usuarios')
+            },
+            irInvitado() {
+                this.$router.push('/invitados')
             },
         }
     })

@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="card-titulo-page mt-2">
                 <img class="icono-page" src="../../../public/icons/ventanilla.png" alt="">
-                <p>Usuarios</p>
+                <p>Invitados</p>
             </div>
         </div>
         <div class="container mt-16">
@@ -14,24 +14,21 @@
                         class="custom-button"
                         block
                         color="#c4f45d"
-                        @click="abrirModalNuevoUsuario()"
+                        @click="abrirModalNuevoInvitado()"
                         >
-                        Nuevo Usuario
+                        Nuevo Invitado
                     </v-btn>
                 </div>
                 <div class="col-md-5 col-12"></div>
                 <div class="col-md-4 col-12">
                     <div class="principal-div-custom-select">
-                        <!-- <div class="first-div-custom-select">
-                            <img src="../../../public/icons/buscar.png" alt="">
-                        </div> -->
                         <div class="second-div-custom-select">
                             <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
                         </div>
                     </div>
                 </div>
             </div>
-            <!--INICIO DE LA TABLA USUARIOS-->
+            <!--INICIO DE LA TABLA INVITADOS-->
             <div class="my-2 mb-12 py-6">
                 <div class="">
                     <div class="row justify-content-between">
@@ -52,18 +49,18 @@
                                         </div>
                                     </th>
                                 </tr>
-                                <tr v-else v-for="usuario in datosPaginados" :key="usuario.id">
+                                <tr v-else v-for="invitado in datosPaginados" :key="invitado.id">
                                     <td class="custom-data-table">
-                                        {{usuario.numero_registro}}
+                                        {{invitado.numero_registro}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
-                                        {{usuario.nombre}}
+                                        {{invitado.nombre}}
                                     </td>
                                     <td>
                                         <div class="text-center row justify-content-center">
                                             <div>
                                                 <v-icon
-                                                    @click="abrirModalEditarUsuario(usuario)"
+                                                    @click="abrirModalEditarInvitado(invitado)"
                                                     class="mr-1"
                                                     >
                                                     mdi-text-box-edit-outline
@@ -73,12 +70,12 @@
                                                     activator="parent"
                                                     location="bottom"
                                                     >
-                                                    <span style="font-size: 15px;">Editar Usuario</span>
+                                                    <span style="font-size: 15px;">Editar Invitado</span>
                                                 </v-tooltip>
                                             </div>
                                             <div>
                                                 <v-icon
-                                                    @click="eliminarUsuario(usuario)"
+                                                    @click="eliminarInvitado(invitado)"
                                                     class="ml-1"
                                                     >
                                                     mdi-trash-can
@@ -88,7 +85,22 @@
                                                     activator="parent"
                                                     location="bottom"
                                                     >
-                                                    <span style="font-size: 15px;">Eliminar Usuario</span>
+                                                    <span style="font-size: 15px;">Eliminar Invitado</span>
+                                                </v-tooltip>
+                                            </div>
+                                            <div>
+                                                <v-icon
+                                                    @click="descargarCodigoInvitado(invitado)"
+                                                    class="ml-1 mr-1"
+                                                    >
+                                                    mdi-qrcode
+                                                </v-icon>
+
+                                                <v-tooltip
+                                                    activator="parent"
+                                                    location="bottom"
+                                                    >
+                                                    <span style="font-size: 15px;">Descargar Código</span>
                                                 </v-tooltip>
                                             </div>
                                         </div>
@@ -98,7 +110,7 @@
                         </table>
                     </div>
                     <div>
-                        <template v-if="usuarios && usuarios.length > 0">
+                        <template v-if="invitados && invitados.length > 0">
                             <div class="row justify-content-between container">
                                 <div>
                                     <p class="custom-text-show-results mt-2">
@@ -107,7 +119,7 @@
                                         -
                                         <span>{{to}}</span>
                                         de
-                                        <span>{{usuarios.length}}</span>
+                                        <span>{{invitados.length}}</span>
                                         resultados
                                     </p>
                                 </div>
@@ -150,16 +162,16 @@
                         </template>
                         <template v-else-if="!loading">
                             <div class="text-center">
-                                <p class="no-data-text">No hay usuarios disponibles</p>
+                                <p class="no-data-text">No hay invitados disponibles</p>
                             </div>
                         </template>
                     </div>
                 </div>
             </div>
-            <v-dialog v-model="dialogNuevoUsuario" max-width="100rem" persistent>
+            <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
-                        <h3 class="mt-5 custom-dialog-title">Nuevo Usuario</h3>
+                        <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
                     </v-card-title>
                     <v-card-text>
                         <div class="text-center my-3 custom-border">
@@ -167,40 +179,44 @@
                                 <p>Datos</p>
                             </div>
                         </div>
-                        <div class="row justify-content-between">
+                        <div class="row justify-content-center">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.usuario.nombre.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.nombre.$error">*Campo obligatorio</p>
+                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.invitado.nombre.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_apellidoP">Apellido paterno:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="usuario.apellido_paterno">
+                                    <label for="input_dependencia">Dependencia u Organismo:</label>
+                                    <input id="input_dependencia" type="text" class="form-control" v-model="invitado.dependencia">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_apellidoM">Apellido materno:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="usuario.apellido_materno">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_username">Nombre de usuario:</label>
-                                    <input id="input_username" type="text" autocomplete="off" class="form-control" v-model="v$.usuario.username.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.username.$error">*Campo obligatorio</p>
+                                    <label for="input_area">Área:</label>
+                                    <input id="input_area" type="text" class="form-control" v-model="invitado.area">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_pass">Contraseña:</label>
-                                    <input id="input_pass" type="text" autocomplete="off" class="form-control" v-model="v$.usuario.password.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.password.$error">*Campo obligatorio</p>
+                                    <label for="input_telefono">Teléfono:</label>
+                                    <input id="input_telefono" type="text" autocomplete="off" class="form-control" v-model="invitado.telefono">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_email">Correo:</label>
+                                    <input id="input_email" type="text" autocomplete="off" class="form-control" v-model="invitado.email">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_evento">Seleccione un evento:</label>
+                                    <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.evento_id">
+                                        <option  v-for="item in eventos" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -208,14 +224,14 @@
                             <v-btn
                                 class="custom-button mr-2"
                                 color="#c4f45d"
-                                @click="guardarNuevoUsuario()"
+                                @click="guardarNuevoInvitado()"
                                 >
                                 Guardar
                             </v-btn>
                             <v-btn
                                 class="custom-button ml-2"
                                 color="#6a73a0"
-                                @click="cerrarModalNuevoUsuario()"
+                                @click="cerrarModalNuevoInvitado()"
                                 >
                                 Cancelar
                             </v-btn>
@@ -223,11 +239,11 @@
                     </v-card-text>
                 </v-card>
             </v-dialog>
-            <!-- INICIO MODAL PARA EDITAR DATOS DEL USUARIO -->
-            <v-dialog v-model="dialogEditarUsuario" max-width="100rem" persistent>
+            <!-- INICIO MODAL PARA EDITAR DATOS DEL INVITADO -->
+            <v-dialog v-model="dialogEditarInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
-                        <h3 class="mt-2 custom-dialog-title">Editar Usuario</h3>
+                        <h3 class="mt-2 custom-dialog-title">Editar invitado</h3>
                     </v-card-title>
                     <v-card-text>
                         <div class="text-center my-8 custom-border">
@@ -239,51 +255,57 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.usuario.nombre.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.nombre.$error">*Campo obligatorio</p>
+                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.invitado.nombre.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_apellidoP">Apellido paterno:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="usuario.apellido_paterno">
+                                    <label for="input_dependencia">Dependencia u Organismo:</label>
+                                    <input id="input_dependencia" type="text" class="form-control" v-model="invitado.dependencia">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_apellidoM">Apellido materno:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="usuario.apellido_materno">
+                                    <label for="input_area">Área:</label>
+                                    <input id="input_area" type="text" class="form-control" v-model="invitado.area">
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-between mt-4">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_username">Nombre de usuario:</label>
-                                    <input id="input_username" type="text" class="form-control" v-model="v$.usuario.username.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.username.$error">*Campo obligatorio</p>
+                                    <label for="input_telefono">Teléfono:</label>
+                                    <input id="input_telefono" type="text" autocomplete="off" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_pass">Contraseña:</label>
-                                    <input id="input_pass" type="text" class="form-control" v-model="v$.usuario.password.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.password.$error">*Campo obligatorio</p>
+                                    <label for="input_email">Correo:</label>
+                                    <input id="input_email" type="text" autocomplete="off" class="form-control" v-model="invitado.email">
                                 </div>
-                            </div>                        
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_evento">Seleccione un evento:</label>
+                                    <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.evento_id">
+                                        <option  v-for="item in eventos" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="text-center mb-4 mt-6">
                             <v-btn
                                 class="custom-button mr-2"
                                 color="#c4f45d"
-                                @click="guardarCambiosEditarUsuario()"
+                                @click="guardarCambiosEditarInvitado()"
                                 >
                                 Guardar
                             </v-btn>
                             <v-btn
                                 class="custom-button ml-2"
                                 color="#6a73a0"
-                                @click="cerrarModalNuevoUsuario()"
+                                @click="cerrarModalNuevoInvitado()"
                                 >
                                 Cancelar
                             </v-btn>
@@ -299,22 +321,23 @@
     import { defineComponent } from 'vue';
     import { errorSweetAlert, successSweetAlert } from "../helpers/sweetAlertGlobals"
     import useValidate from '@vuelidate/core'
-    import { required, email, helpers } from '@vuelidate/validators'
+    import { required } from '@vuelidate/validators'
 
     export default defineComponent({
-        name: 'usuarios',
+        name: 'invitados',
         data () {
             return { 
                 showNav: false,
-                dialogNuevoUsuario: false,
-                dialogEditarUsuario: false,
-                usuario: {
+                dialogNuevoInvitado: false,
+                dialogEditarInvitado: false,
+                invitado: {
                     id: null,
                     nombre: '',
-                    apellido_paterno:'',
-                    apellido_materno:'',
-                    password:'',
-                    username: '',
+                    dependencia:'',
+                    area:'',
+                    telefono:'',
+                    email:'',
+                    evento_id: null
                 },               
                 loading: false,
                 elementosPorPagina: 10,
@@ -335,23 +358,16 @@
         },
         validations() {
                 return {
-                    usuario: {
+                    invitado: {
                         nombre: {
-                            required
-                        },
-                        password: {
-                            required
-                        },
-                        username: {
                             required
                         },
                     }
                 }
         },
         created() {
-            this.getUsuarios()
-            this.getTipoUsuarios()
-            // this.getAreas()
+            this.getInvitados()
+            
         },
         computed: {
             pages() {
@@ -361,17 +377,15 @@
                 first = Math.min(first, this.totalPaginas() - numShown + 1)
                 return [...Array(numShown)].map((k, i) => i + first)
             },
-            usuarios() {
-                    return this.$store.getters.getUsuarios
+            invitados() {
+                    return this.$store.getters.getInvitados
             },
         },
         watch: {
             buscar: function () {
                 if (!this.buscar.length == 0) {
-                    this.datosPaginados = this.usuarios.filter(item => {
-                        return item.nombre.toLowerCase().includes(this.buscar.toLowerCase())
-                        || item.sede.toLowerCase().includes(this.buscar.toLowerCase())
-                    
+                    this.datosPaginados = this.invitados.filter(item => {
+                        return item.nombre.toLowerCase().includes(this.buscar.toLowerCase())                    
                     })
                 } else {
                     this.getDataPagina(1)
@@ -388,7 +402,7 @@
                 this.$store.dispatch('logout')
             },
             totalPaginas() {
-                return Math.ceil(this.usuarios.length / this.elementosPorPagina)
+                return Math.ceil(this.invitados.length / this.elementosPorPagina)
             },
             getDataPagina(noPagina) {
                 this.paginaActual = noPagina
@@ -398,8 +412,8 @@
                 let fin = (noPagina * this.elementosPorPagina)
 
                 for (let index = ini; index < fin; index++) {
-                    if (this.usuarios[index]) {
-                        this.datosPaginados.push(this.usuarios[index])
+                    if (this.invitados[index]) {
+                        this.datosPaginados.push(this.invitados[index])
                     }
                 }
                 // Para el texto "Mostrando 1 - 10 de 20 resultados"
@@ -407,7 +421,7 @@
                 if (noPagina < this.totalPaginas()) {
                     this.to = fin
                 } else {
-                    this.to = this.usuarios.length
+                    this.to = this.invitados.length
                 }
             },
             getFirstPage() {
@@ -440,68 +454,55 @@
             setCurrentPage(pagina) {
                 this.current = pagina
             },
-            abrirModalNuevoUsuario(){
-                this.dialogNuevoUsuario = true
+            abrirModalNuevoInvitado(){
+                this.dialogNuevoInvitado = true
             },
-            async getUsuarios() {
+            async getInvitados() {
                 this.loading = true
                 try {                   
-                    let response = await axios.get('/api/usuarios', this.usuario)
+                    let response = await axios.get('/api/invitados', this.invitado)
                     if (response.status === 200) {
                         if (response.data.status === "ok") {
-                            this.$store.commit('setUsuarios', response.data.usuarios)
+                            this.$store.commit('setInvitados', response.data.invitados)
                             this.mostrar = true
+                            // this.loading = false
+
                         } else {
                             errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
                         }
                     } else {
-                        errorSweetAlert('Ocurrió un error al obtener los Usuarios')
+                        errorSweetAlert('Ocurrió un error al obtener los invitados')
                     }
                 } catch (error) {
-                    errorSweetAlert('Ocurrió un error al obtener los Usuarios')
+                    errorSweetAlert('Ocurrió un error al obtener los invitados')
                 }
                 this.loading = false
             },
-            async getTipoUsuarios() {
-                try {
-                    let response = await axios.get('/api/tipo-usuarios')
-                    if (response.status === 200) {
-                        if (response.data.status === "ok") {
-                            this.$store.commit('setTipoUsuarios', response.data.tipoUsuarios)
-                        } else {
-                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
-                        }
-                    } else {
-                        errorSweetAlert('Ocurrió un error al obtener los tipos de usuarios')
-                    }
-                } catch (error) {
-                    errorSweetAlert('Ocurrió un error al obtener los tipos de usuarios')
-                }
-            },  
-            cerrarModalNuevoUsuario(){
-                this.dialogNuevoUsuario = false
-                this.dialogEditarUsuario = false
-                this.usuario.nombre =''
-                this.usuario.apellido_materno =''
-                this.usuario.apellido_paterno =''
-                this.usuario.username = ''
-                this.usuario.password = ''
+            cerrarModalNuevoInvitado(){
+                this.dialogNuevoInvitado = false
+                this.dialogEditarInvitado = false
+                this.invitado.id = ''
+                this.invitado.nombre =''
+                this.invitado.dependencia =''
+                this.invitado.area =''
+                this.invitado.telefono = ''
+                this.invitado.email = ''
 
             },
-            abrirModalEditarUsuario(usuario){
-                this.dialogEditarUsuario=true 
-                this.usuario.id = usuario.id
-                this.usuario.nombre = usuario.nombre
-                this.usuario.apellido_materno = usuario.apellido_materno
-                this.usuario.apellido_paterno = usuario.apellido_paterno
-                this.usuario.username = usuario.username
-                this.usuario.password = usuario.password
+            abrirModalEditarInvitado(invitado){
+                this.dialogEditarInvitado = true 
+                this.invitado.id = invitado.id
+                this.invitado.nombre = invitado.nombre
+                this.invitado.dependencia = invitado.dependencia
+                this.invitado.area = invitado.area
+                this.invitado.telefono = invitado.telefono
+                this.invitado.email = invitado.email
             },
-            async guardarNuevoUsuario() {
-                const isFormCorrect = await this.v$.usuario.$validate()              
+            async guardarNuevoInvitado() {
+                const isFormCorrect = await this.v$.invitado.$validate()              
                 if (!isFormCorrect) return
                 Swal.fire({
-                    title: '¿Guardar nuevo Usuario?',
+                    title: '¿Guardar nuevo Invitado?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonColor: '#3085D6',
@@ -512,10 +513,10 @@
                     preConfirm: async () => {
                         try {
                                 this.loading = true
-                                let response = await axios.post('/api/usuarios/crear-usuario', this.usuario)
+                                let response = await axios.post('/api/invitados/crear-invitado', this.invitado)
                                 return response
                             } catch (error) {
-                                errorSweetAlert('Ocurrió un error al guardar el Usuario.')
+                                errorSweetAlert('Ocurrió un error al guardar al invitado.')
                             }
                         },
                         allowOutsideClick: () => !Swal.isLoading()
@@ -524,9 +525,9 @@
                             if (result.value.status === 200) {
                                 if (result.value.data.status === "ok") {
                                     successSweetAlert(result.value.data.message)
-                                    this.$store.commit('setUsuarios', result.value.data.usuarios)
+                                    this.$store.commit('setInvitados', result.value.data.invitados)
                                     this.loading = false
-                                    this.cerrarModalNuevoUsuario()
+                                    this.cerrarModalNuevoInvitado()
                                     this.getDataPagina(1)
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
@@ -535,13 +536,13 @@
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                                 }
                             } else {
-                                errorSweetAlert('Ocurrió un error al guardar el Usuario.')
+                                errorSweetAlert('Ocurrió un error al guardar al invitado.')
                             }
                         }
                     })
             },
-            async guardarCambiosEditarUsuario() {
-                const isFormCorrect = await this.v$.usuario.$validate()              
+            async guardarCambiosEditarInvitado() {
+                const isFormCorrect = await this.v$.invitado.$validate()              
                 if (!isFormCorrect) return
                     Swal.fire({
                         title: '¿Guardar cambios?',
@@ -555,10 +556,10 @@
                         preConfirm: async () => {
                             try {
 
-                                let response = await axios.post('/api/usuarios/actualizar-usuario', this.usuario)
+                                let response = await axios.post('/api/invitados/actualizar-invitado', this.invitado)
                                 return response
                             } catch (error) {
-                                errorSweetAlert('Ocurrió un error al actualizar los datos del usuario.')
+                                errorSweetAlert('Ocurrió un error al actualizar los datos del invitado.')
                             }
                         },
                         allowOutsideClick: () => !Swal.isLoading()
@@ -567,21 +568,21 @@
                             if (result.value.status === 200) {
                                 if (result.value.data.status === "ok") {
                                     successSweetAlert(result.value.data.message)
-                                    this.$store.commit('setUsuarios', result.value.data.usuarios)
-                                    this.cerrarModalNuevoUsuario()
+                                    this.$store.commit('setInvitados', result.value.data.invitados)
+                                    this.cerrarModalNuevoInvitado()
                                     this.getDataPagina(1)
                                 } else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                                 }
                             } else {
-                                errorSweetAlert('Ocurrió un error al actualizar los datos del usuario.')
+                                errorSweetAlert('Ocurrió un error al actualizar los datos del invitado.')
                             }
                         }
                     })
             },
-            async eliminarUsuario(usuario) {
+            async eliminarInvitado(invitado) {
                     Swal.fire({
-                    title: '¿Eliminar Usuario?',
+                    title: '¿Eliminar Invitado?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonColor: '#3085D6',
@@ -592,10 +593,10 @@
                     preConfirm: async () => {
                         try {
                             
-                            let response = await axios.post('/api/usuarios/eliminar-usuario', usuario)
+                            let response = await axios.post('/api/invitados/eliminar-invitado', invitado)
                             return response
                         } catch (error) {
-                            errorSweetAlert('Ocurrió un error al eliminar este Usuario.')
+                            errorSweetAlert('Ocurrió un error al eliminar este Invitado.')
                         }
                     },
                     allowOutsideClick: () => !Swal.isLoading()
@@ -604,16 +605,32 @@
                         if (result.value.status === 200) {
                             if (result.value.data.status === "ok") {
                                 successSweetAlert(result.value.data.message)
-                                this.$store.commit('setUsuarios', result.value.data.usuarios)
+                                this.$store.commit('setInvitados', result.value.data.invitados)
                                 this.getDataPagina(1)
                             } else {
                                 errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                             }
                         } else {
-                            errorSweetAlert('Ocurrió un error al eliminar el Usuario.')
+                            errorSweetAlert('Ocurrió un error al eliminar el invitado.')
                         }
                     }
                 })
+            },
+            async descargarCodigoInvitado(invitado){
+                try{
+                    let response = await axios.post('/api/invitados/generar-codigo-qr',invitado,{
+                                                    responseType: 'arraybuffer'
+                                                    }).then((response)=>{    
+                                                        let blob = new Blob([response.data], { type: 'application/pdf' })
+                                                        let link = document.createElement('a')
+                                                        link.href = window.URL.createObjectURL(blob)
+                                                        link.download = `${invitado.nombre}.pdf`
+                                                        // link.download = 'codigoQR.pdf'
+                                                        link.click()
+                                                    })   
+                                                }catch (error) {
+                        errorSweetAlert('Ocurrió un error al descargar el archivo PDF')
+                    }  
             }
         }
     })
