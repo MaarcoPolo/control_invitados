@@ -922,13 +922,14 @@
             async getInvitados(evento) {
                 this.loading2 = true
                 if(evento){
-                    this.invitado.evento_id = evento.id
+                    this.invitado.evento_id = evento.id                
 
                 }else{
                     this.loading2 = false
+
                 }
                 try {                   
-                    let response = await axios.get('/api/invitados')
+                    let response = await axios.post('/api/invitados',this.invitado)
                     if (response.status === 200) {
                         if (response.data.status === "ok") {
                             this.$store.commit('setInvitados', response.data.invitados)
