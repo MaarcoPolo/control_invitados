@@ -10,9 +10,16 @@ use PDF;
 
 
 class InvitadoController extends Controller{
+
     public function getInvitados(Request $request){
         try {
-            $invitados = Invitado::all();
+            // $invitados = Invitado::all();
+            if($request->evento_id){
+                $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
+            }else{
+                $invitados = Invitado::all();
+            }
+
 
             $array_invitados = array();
             $cont = 1;
@@ -60,10 +67,10 @@ class InvitadoController extends Controller{
                 $invitado->telefono = $request->telefono;
                 $invitado->email = $request->email;
                 $invitado->folio = Str::random(10);
-                $invitado->evento_id = 1;
+                $invitado->evento_id = $request->evento_id;
                 $invitado->save();
 
-                $invitados = Invitado::where('evento_id', $request->evento_id)->get();
+                $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
 
                 $array_invitados = array();
                 $cont = 1;
@@ -119,7 +126,7 @@ class InvitadoController extends Controller{
             $invitado->evento_id = $request->evento_id;            
             $invitado->save();
             
-            $invitados = Invitado::where('evento_id', $request->evento_id)->get();
+            $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
 
                 $array_invitados = array();
                 $cont = 1;
@@ -172,7 +179,7 @@ class InvitadoController extends Controller{
             $invitado->status = false;
             $invitado->save();
 
-            $invitados = Invitado::where('evento_id', $request->evento_id)->get();
+            $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
 
             $array_invitados = array();
             $cont = 1;
@@ -254,7 +261,7 @@ class InvitadoController extends Controller{
     public function buscarOficio(Request $request) {
 
         try {
-            $invitado = Invitado::where('folio',$request->folio)->first();
+            $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
             
             $objectInvitado = new \stdClass();
             $objectInvitado->id = $invitado->id;
@@ -274,9 +281,9 @@ class InvitadoController extends Controller{
             ], 200);
             
 
-           
+        
         }catch (\Throwable $th) {
-           
+        
             return response()->json([
                 "status" => "error",
                 "message" => "Ocurrió un error al encontrar al invitado.",
@@ -285,6 +292,45 @@ class InvitadoController extends Controller{
                 "line" => $th->getLine(),
             ], 200);
         }
-       
+    }
+    public function buscarInvitado(Request $request) {
+
+        try {
+            $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
+
+            $array_invitados = array();
+            $cont = 1;
+
+            foreach ($invitados as $invitado) {
+                $objectInvitado = new \stdClass();
+                $objectInvitado->id = $invitado->id;
+                $objectInvitado->numero_registro = $cont;
+                $objectInvitado->nombre = $invitado->nombre;
+                $objectInvitado->dependencia = $invitado->dependencia;
+                $objectInvitado->area = $invitado->area;
+                $objectInvitado->telefono = $invitado->telefono;
+                $objectInvitado->email = $invitado->email;
+                $objectInvitado->evento_id = $invitado->evento_id;
+                
+                array_push($array_invitados, $objectInvitado);
+                $cont++;
+            }
+
+            return response()->json([
+                "status" => "ok",
+                "message" => "Invitados encontrados.",
+                "invitados" => $array_invitados
+            ], 200);
+    
+        }catch (\Throwable $th) {
+        
+            return response()->json([
+                "status" => "error",
+                "message" => "Ocurrió un error al encontrar al invitado.",
+                "error" => $th->getMessage(),
+                "location" => $th->getFile(),
+                "line" => $th->getLine(),
+            ], 200);
+        }
     }
 }

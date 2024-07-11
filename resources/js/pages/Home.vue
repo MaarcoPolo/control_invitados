@@ -27,6 +27,9 @@
             irInvitados() {
                 this.$router.push('/invitados')
             },
+            irEventos() {
+                this.$router.push('/eventos')
+            }
         }
     })
 </script>
