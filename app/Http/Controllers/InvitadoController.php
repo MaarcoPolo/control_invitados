@@ -264,7 +264,14 @@ class InvitadoController extends Controller{
             $invitado = Invitado::where('folio',$request->folio)->first();
             // dd($request->folio);
             if($invitado){
+
                 if($invitado->verificado == 0){
+                    DB::beginTransaction();
+
+                    $invitado->verificado = 1;
+                    $invitado->save();
+
+                    DB::commit();
                     return response()->json([
                         "status" => "ok",
                         "message" => "Folio encontrada con éxito",
@@ -306,7 +313,8 @@ class InvitadoController extends Controller{
 
         
         }catch (\Throwable $th) {
-        
+            DB::rollback();
+            $exito = false;
             return response()->json([
                 "status" => "error",
                 "message" => "Ocurrió un error al encontrar al invitado.",

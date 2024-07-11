@@ -24,9 +24,8 @@
         <!-- Styles -->
         <style>
             .swal2-container{
-                z-index: 1000!important;
-               
-               
+                z-index: 10000!important;
+
             }
         </style>
     </head>
