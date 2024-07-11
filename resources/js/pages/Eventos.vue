@@ -487,7 +487,7 @@
             async getEventos() {
                 this.loading = true
                 try {                   
-                    let response = await axios.post('/api/eventos', this.evento)
+                    let response = await axios.get('/api/eventos')
                     if (response.status === 200) {
                         if (response.data.status === "ok") {
                             this.$store.commit('setEventos', response.data.eventos)

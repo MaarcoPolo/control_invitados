@@ -251,27 +251,50 @@ class InvitadoController extends Controller{
 
         PDF::Output('Código.pdf');
     }
-    public function buscarOficio(Request $request) {
+    public function buscarFolio(Request $request) {
 
         try {
             $invitado = Invitado::where('folio',$request->folio)->first();
-            
-            $objectInvitado = new \stdClass();
-            $objectInvitado->id = $invitado->id;
-            $objectInvitado->nombre = $invitado->nombre;
-            $objectInvitado->dependencia = $invitado->dependencia;
-            $objectInvitado->area = $invitado->area;
-            $objectInvitado->telefono = $invitado->telefono;
-            $objectInvitado->email = $invitado->email;
-            $objectInvitado->folio = $invitado->folio;
-            $objectInvitado->verificado = $invitado->verificado;
-            $objectInvitado->evento_id = $invitado->evento_id;
+            // dd($request->folio);
+            if($invitado){
+                if($invitado->verificado == 0){
+                    return response()->json([
+                        "status" => "ok",
+                        "message" => "Folio encontrada con éxito",
+                        // "cita" => $request->folio
+                    ], 200);
+                }
+                if($invitado->verificado == 1){
+                    return response()->json([
+                        "status" => "usado",
+                        "message" => "Folio ya usado",
+                        // "cita" => $request->folio
+                    ], 200);
+                }
+            }
+           else{
+                return response()->json([
+                    "status" => "no_existe",
+                    "message" => "Folio no existe",
+                    // "cita" => $request->folio
+                ], 200);
+            }
+            // $objectInvitado = new \stdClass();
+            // $objectInvitado->id = $invitado->id;
+            // $objectInvitado->nombre = $invitado->nombre;
+            // $objectInvitado->dependencia = $invitado->dependencia;
+            // $objectInvitado->area = $invitado->area;
+            // $objectInvitado->telefono = $invitado->telefono;
+            // $objectInvitado->email = $invitado->email;
+            // $objectInvitado->folio = $invitado->folio;
+            // $objectInvitado->verificado = $invitado->verificado;
+            // $objectInvitado->evento_id = $invitado->evento_id;
 
-            return response()->json([
-                "status" => "ok",
-                "message" => "Invitado encontrado.",
-                "folio" => $objectInvitado
-            ], 200);
+            // return response()->json([
+            //     "status" => "ok",
+            //     "message" => "Invitado encontrado.",
+            //     "folio" => $objectInvitado
+            // ], 200);
             
 
            
