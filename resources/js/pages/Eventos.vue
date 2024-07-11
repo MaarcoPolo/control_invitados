@@ -928,7 +928,7 @@
                     this.loading2 = false
                 }
                 try {                   
-                    let response = await axios.post('/api/invitados', this.invitado)
+                    let response = await axios.get('/api/invitados')
                     if (response.status === 200) {
                         if (response.data.status === "ok") {
                             this.$store.commit('setInvitados', response.data.invitados)
