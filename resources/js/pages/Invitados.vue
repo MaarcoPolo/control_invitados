@@ -8,18 +8,19 @@
         </div>
         <div class="container mt-16">
             <!-- INICIO BOTON NUEVO Y BUSCADOR -->
-            <div class="row justify-content-between mt-6">
-                <div class="col-md-3 col-12">
-                    <v-btn
-                        class="custom-button"
-                        block
-                        color="#c4f45d"
-                        @click="abrirModalNuevoInvitado()"
-                        >
-                        Nuevo Invitado
-                    </v-btn>
+            <div class="row justify-content-center mt-6">
+                <div class="col-md-8 col-12">
+                    <div class="div-custom-input-form">
+                        <label for="select_evento">Seleccione un evento:</label>
+                        <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.evento_id">
+                            <option  v-for="item in eventos" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-5 col-12"></div>
+            </div>
+            <div class="row justify-content-flex-start mt-6">
+                <div class="col-md-4 col-12"></div>
+                <div class="col-md-4 col-12"></div>
                 <div class="col-md-4 col-12">
                     <div class="principal-div-custom-select">
                         <div class="second-div-custom-select">
@@ -28,6 +29,7 @@
                     </div>
                 </div>
             </div>
+
             <!--INICIO DE LA TABLA INVITADOS-->
             <div class="my-2 mb-12 py-6">
                 <div class="">
@@ -367,6 +369,7 @@
         },
         created() {
             this.getInvitados()
+            this.getEventos()
             
         },
         computed: {
@@ -380,6 +383,9 @@
             invitados() {
                     return this.$store.getters.getInvitados
             },
+            eventos() {
+                    return this.$store.getters.getEventos
+            }
         },
         watch: {
             buscar: function () {
@@ -395,6 +401,9 @@
                 if (this.mostrar) {
                     this.getDataPagina(1)
                 }
+            },
+            'invitado.evento_id': function () {
+                this.BuscarInvitado()
             },
         },
         methods: {
@@ -460,12 +469,13 @@
             async getInvitados() {
                 this.loading = true
                 try {                   
-                    let response = await axios.get('/api/invitados', this.invitado)
+                    let response = await axios.post('/api/invitados', this.invitado)
                     if (response.status === 200) {
                         if (response.data.status === "ok") {
                             this.$store.commit('setInvitados', response.data.invitados)
                             this.mostrar = true
-                            // this.loading = false
+                            this.loading = false
+                            this.getDataPagina(1)
 
                         } else {
                             errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
@@ -487,7 +497,6 @@
                 this.invitado.area =''
                 this.invitado.telefono = ''
                 this.invitado.email = ''
-
             },
             abrirModalEditarInvitado(invitado){
                 this.dialogEditarInvitado = true 
@@ -631,7 +640,47 @@
                                                 }catch (error) {
                         errorSweetAlert('Ocurrió un error al descargar el archivo PDF')
                     }  
-            }
+            },
+            async getEventos() {
+                this.loading = true
+                try {                   
+                    let response = await axios.post('/api/eventos', this.evento)
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.$store.commit('setEventos', response.data.eventos)
+                            
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                }
+                this.loading = false
+            },
+            async BuscarInvitado() {
+                this.loading = true
+                try {                   
+                    let response = await axios.post('/api/invitados/buscar-invitados', this.invitado)
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.$store.commit('setInvitados', response.data.invitados)
+                            this.getDataPagina(1)
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                }
+                this.loading = false
+            },
         }
     })
 </script>

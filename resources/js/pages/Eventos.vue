@@ -22,9 +22,6 @@
                 <div class="col-md-5 col-12"></div>
                 <div class="col-md-4 col-12">
                     <div class="principal-div-custom-select">
-                        <!-- <div class="first-div-custom-select">
-                            <img src="../../../public/icons/buscar.png" alt="">
-                        </div> -->
                         <div class="second-div-custom-select">
                             <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
                         </div>
@@ -94,7 +91,7 @@
                                             </div>
                                             <div>
                                                 <v-icon
-                                                    @click="agregarInvitados(evento)"
+                                                    @click="abrirModalNuevoInvitado(evento)"
                                                     class="ml-1"
                                                     >
                                                     mdi-account-plus
@@ -326,6 +323,173 @@
                     </v-card-text>
                 </v-card>
             </v-dialog>
+            
+            <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
+                <v-card>
+                    <v-card-title class="text-center">
+                        <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
+                    </v-card-title>
+                    <v-card-text>
+                        <div class="text-center my-3 custom-border">
+                            <div class="custom-subtitle">
+                                <p>Datos</p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_nombre">Nombre:</label>
+                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.invitado.nombre.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_dependencia">Dependencia u Organismo:</label>
+                                    <input id="input_dependencia" type="text" class="form-control" v-model="invitado.dependencia">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_area">Área:</label>
+                                    <input id="input_area" type="text" class="form-control" v-model="invitado.area">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_telefono">Teléfono:</label>
+                                    <input id="input_telefono" type="text" autocomplete="off" class="form-control" v-model="invitado.telefono">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_email">Correo:</label>
+                                    <input id="input_email" type="text" autocomplete="off" class="form-control" v-model="invitado.email">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_evento">Seleccione un evento:</label>
+                                    <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.evento_id" disabled>
+                                        <option  v-for="item in eventos" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mb-4 mt-6">
+                            <v-btn
+                                class="custom-button mr-2"
+                                color="#c4f45d"
+                                @click="guardarNuevoInvitado()"
+                                >
+                                Guardar
+                            </v-btn>
+            
+                        </div>
+                    </v-card-text>
+                <div class="container">
+                <div class="my-2 mb-12 py-6">
+                <div class="">
+                    <div class="row justify-content-between">
+                        <table class="table custom-border-table">
+                            <thead class="headers-table">
+                                <tr>
+                                    <th class="custom-title-table">Id</th>
+                                    <th class="custom-title-table">Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="loading2">
+                                    <th colspan="5">
+                                        <p class="text-center text-loading-data-table">Cargando datos...</p>
+                                        <div class="linear-activity">
+                                            <div class="indeterminate"></div>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr v-else v-for="invitado in datosPaginados2" :key="invitado.id">
+                                    <td class="custom-data-table">
+                                        {{invitado.numero_registro}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.nombre}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <template v-if="invitados && invitados.length > 0">
+                            <div class="row justify-content-between container">
+                                <div>
+                                    <p class="custom-text-show-results mt-2">
+                                        Mostrando
+                                        <span>{{from}}</span>
+                                        -
+                                        <span>{{to}}</span>
+                                        de
+                                        <span>{{invitados.length}}</span>
+                                        resultados
+                                    </p>
+                                </div>
+                                <div>
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination pagination-lg justify-content-center">
+                                            <li class="page-item cursor-paginator" @click="getFirstPage2()">
+                                                <a class="page-link" aria-label="Previous">
+                                                    <span aria-hidden="true">&lt;&lt;</span>
+                                                    <span class="sr-only">First</span>
+                                                </a>
+                                            </li>
+                                            <li class="page-item cursor-paginator" @click="getPreviousPage2()">
+                                                <a class="page-link" aria-label="Previous">
+                                                    <span aria-hidden="true">&lt;</span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                            </li>
+                                            <li v-for="pagina in pages2" @click="getDataPagina2(pagina), setCurrentPage2(pagina)" :key="pagina" class="page-item cursor-paginator" :class="isActive2(pagina)">
+                                                <a class="page-link">
+                                                    {{pagina}}
+                                                </a>
+                                            </li>
+                                            <li class="page-item cursor-paginator" @click="getNextPage2()">
+                                                <a class="page-link" aria-label="Next">
+                                                    <span aria-hidden="true">&gt;</span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </li>
+                                            <li class="page-item cursor-paginator" @click="getLastPage2()">
+                                                <a class="page-link" aria-label="Next">
+                                                    <span aria-hidden="true">&gt;&gt;</span>
+                                                    <span class="sr-only">Last</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </template>
+                        <template v-else-if="!loading2">
+                            <div class="text-center">
+                                <p class="no-data-text">No hay invitados disponibles</p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mb-4 mt-6">
+                <v-btn
+                    class="custom-button ml-2"
+                    color="#6a73a0"
+                    @click="cerrarModalNuevoInvitado()"
+                    >
+                    Cerrar
+                </v-btn>
+            </div>
+        </div>
+        </v-card>
+            </v-dialog>
+            
         </div>
     </div>
 </template>
@@ -334,7 +498,7 @@
     import { defineComponent } from 'vue';
     import { errorSweetAlert, successSweetAlert } from "../helpers/sweetAlertGlobals"
     import useValidate from '@vuelidate/core'
-    import { required, email, helpers } from '@vuelidate/validators'
+    import { required } from '@vuelidate/validators'
 
     export default defineComponent({
         name: 'eventos',
@@ -361,6 +525,30 @@
                 numShown: 5,
                 current: 1,
                 buscar: '',
+
+                //variables para el modal y tabla de los invitados
+                
+                dialogNuevoInvitado: false,
+                invitado: {
+                    id: null,
+                    nombre: '',
+                    dependencia:'',
+                    area:'',
+                    telefono:'',
+                    email:'',
+                    evento_id: null
+                },
+                loading2: false,
+                elementosPorPagina2: 5,
+                paginaActual2: 1,
+                datosPaginados2: [],
+                mostrar2: false,
+                from2: '',
+                to2: '',
+                numShown2: 5,
+                current2: 1,
+                buscar2: '',
+
             }
         },
         setup() {
@@ -386,13 +574,17 @@
                         // fecha_f: {
                         //     required
                         // },
+                    },
+                    invitado:{
+                        nombre:{
+                            required
+                        }
                     }
                 }
         },
         created() {
             this.getEventos()
-            // this.getTipoUsuarios()
-            // this.getAreas()
+            this.getInvitados()
         },
         computed: {
             pages() {
@@ -404,6 +596,16 @@
             },
             eventos() {
                     return this.$store.getters.getEventos
+            },
+            invitados() {
+                    return this.$store.getters.getInvitados
+            },
+            pages2() {
+                const numShown2 = Math.min(this.numShown2, this.totalPaginas2())
+                let first = this.current2 - Math.floor(numShown2 / 2)
+                first = Math.max(first, 1)
+                first = Math.min(first, this.totalPaginas2() - numShown2 + 1)
+                return [...Array(numShown2)].map((k, i) => i + first)
             },
         },
         watch: {
@@ -503,22 +705,6 @@
                 }
                 this.loading = false
             },
-            // async getTipoUsuarios() {
-            //     try {
-            //         let response = await axios.get('/api/tipo-usuarios')
-            //         if (response.status === 200) {
-            //             if (response.data.status === "ok") {
-            //                 this.$store.commit('setTipoUsuarios', response.data.tipoUsuarios)
-            //             } else {
-            //                 errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
-            //             }
-            //         } else {
-            //             errorSweetAlert('Ocurrió un error al obtener los tipos de usuarios')
-            //         }
-            //     } catch (error) {
-            //         errorSweetAlert('Ocurrió un error al obtener los tipos de usuarios')
-            //     }
-            // },  
             cerrarModalNuevoEvento(){
                 this.dialogNuevoEvento = false
                 this.dialogEditarEvento = false
@@ -527,6 +713,8 @@
                 this.evento.sede =''
                 this.evento.fecha_i = ''
                 this.evento.fecha_f = ''
+                this.evento.id = null
+
                 // this.v$.reset()
 
             },
@@ -625,7 +813,7 @@
                     })
             },
             async eliminarEvento(evento) {
-               
+            
                     Swal.fire({
                     title: '¿Eliminar Evento?',
                     icon: 'question',
@@ -661,7 +849,157 @@
                     }
                 })
                 // this.loading = false
-            }
+            },
+            
+            // funciones para el invitado 
+            abrirModalNuevoInvitado(evento){
+                this.dialogNuevoInvitado = true
+                this.invitado.evento_id = evento.id
+                this.getInvitados(evento)
+                this.getDataPagina2(1)
+
+
+            },
+            cerrarModalNuevoInvitado(){
+                this.dialogNuevoInvitado = false
+                this.invitado.id = ''
+                this.invitado.nombre =''
+                this.invitado.dependencia =''
+                this.invitado.area =''
+                this.invitado.telefono = ''
+                this.invitado.email = ''
+                this.invitado.evento_id = null
+            },
+            async guardarNuevoInvitado() {
+                const isFormCorrect = await this.v$.invitado.$validate()              
+                if (!isFormCorrect) return
+                Swal.fire({
+                    title: '¿Guardar nuevo Invitado?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085D6',
+                    cancelButtonColor: '#D33',
+                    confirmButtonText: 'Si, guardar',
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        try {
+                                this.loading2 = true
+                                let response = await axios.post('/api/invitados/crear-invitado', this.invitado)
+                                return response
+                            } catch (error) {
+                                errorSweetAlert('Ocurrió un error al guardar al invitado.')
+                            }
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            if (result.value.status === 200) {
+                                if (result.value.data.status === "ok") {
+                                    successSweetAlert(result.value.data.message)
+                                    this.$store.commit('setInvitados', result.value.data.invitados)
+                                    this.loading2 = false
+                                    this.getDataPagina2(1)
+                                    this.mostrar2 = true
+                                    this.invitado.id = ''
+                                    this.invitado.nombre =''
+                                    this.invitado.dependencia =''
+                                    this.invitado.area =''
+                                    this.invitado.telefono = ''
+                                    this.invitado.email = ''
+                                } else if(result.value.data.status==="exists"){
+                                    warningSweetAlert(result.value.data.message)
+                                    this.loading2 = false
+                                }else {
+                                    errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
+                                }
+                            } else {
+                                errorSweetAlert('Ocurrió un error al guardar al invitado.')
+                            }
+                        }
+                    })
+            },
+            async getInvitados(evento) {
+                this.loading2 = true
+                if(evento){
+                    this.invitado.evento_id = evento.id
+
+                }else{
+                    this.loading2 = false
+                }
+                try {                   
+                    let response = await axios.post('/api/invitados', this.invitado)
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.$store.commit('setInvitados', response.data.invitados)
+                            this.mostrar2 = true
+                            this.getDataPagina2(1)
+                            // this.loading = false
+
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener los invitados')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener los invitados')
+                }
+                this.loading2 = false
+            },
+            totalPaginas2() {
+                return Math.ceil(this.invitados.length / this.elementosPorPagina2)
+            },
+            getDataPagina2(noPagina) {
+                this.paginaActual2 = noPagina
+                this.datosPaginados2 = []
+
+                let ini = (noPagina * this.elementosPorPagina2) - this.elementosPorPagina2
+                let fin = (noPagina * this.elementosPorPagina2)
+
+                for (let index = ini; index < fin; index++) {
+                    if (this.invitados[index]) {
+                        this.datosPaginados2.push(this.invitados[index])
+                    }
+                }
+                // Para el texto "Mostrando 1 - 10 de 20 resultados"
+                this.from = ini+1
+                if (noPagina < this.totalPaginas2()) {
+                    this.to = fin
+                } else {
+                    this.to = this.invitados.length
+                }
+            },
+            getFirstPage2() {
+                this.paginaActual2 = 1
+                this.setCurrentPage2(this.paginaActual2)
+                this.getDataPagina2(this.paginaActual2)
+            },
+            getPreviousPage2() {
+                if (this.paginaActual2 > 1) {
+                    this.paginaActual2--
+                }
+                this.setCurrentPage2(this.paginaActual2)
+                this.getDataPagina2(this.paginaActual2)
+            },
+            getNextPage2() {
+                if (this.paginaActual2 < this.totalPaginas2()) {
+                    this.paginaActual2++
+                }
+                this.setCurrentPage2(this.paginaActual2)
+                this.getDataPagina2(this.paginaActual2)
+            },
+            getLastPage2() {
+                this.paginaActual2 = this.totalPaginas2()
+                this.setCurrentPage2(this.paginaActual2)
+                this.getDataPagina2(this.paginaActual2)
+            },
+            isActive2 (noPagina) {
+                return noPagina == this.paginaActual2 ? 'active' : ''
+            },
+            setCurrentPage2(pagina) {
+                this.current2 = pagina
+            },
         }
     })
 </script>

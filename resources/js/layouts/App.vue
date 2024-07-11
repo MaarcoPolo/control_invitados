@@ -3,7 +3,7 @@
         <div class="main-head">
             <div class="custom-page-header">
                 <div class="separador">
-                    <h1 class="title-head"><span>Control de invitados</span></h1>
+                    <h1 class="title-head"><span>Control de eventos</span></h1>
                 </div>
                 <div class="logo">
                     <picture>
@@ -11,15 +11,15 @@
                     </picture>
                 </div>
                 <div class="separador-mobile">
-                    <h1 class="title-head"><span>Control de invitados</span></h1>
+                    <h1 class="title-head"><span>Control de eventos</span></h1>
                 </div>
             </div>
             <div class="custom-navbar">
                 <ul class="custom-ul-navbar m-0">
                     <li @click="irInicio()">Inicio</li>   
                     <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>   
-                    <li @click="irEventos()">Eventos</li>
-                    <li @click="irInvitado()">Invitados</li>  
+                    <!-- <li @click="irEventos()">Eventos</li>
+                    <li @click="irInvitado()">Invitados</li>   -->
                     <li @click="logout()">Cerrar Sesión</li>
                 </ul>
             </div>

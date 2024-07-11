@@ -3,7 +3,7 @@
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TipoUsuarioController;
 use App\Http\Controllers\EventoController;
@@ -47,13 +47,14 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/eventos/eliminar-evento', [EventoController::class, 'eliminarEvento']);
 
     //Rutas para el catalogo de invitados
-    Route::get('/invitados', [InvitadoController::class, 'getInvitados']);
+    Route::post('/invitados', [InvitadoController::class, 'getInvitados']);
     Route::post('/invitados/crear-invitado', [InvitadoController::class, 'guardarInvitado']);
     Route::post('/invitados/actualizar-invitado', [InvitadoController::class, 'actualizarInvitado']);
     Route::post('/invitados/eliminar-invitado', [InvitadoController::class, 'eliminarInvitado']);
     //Ruta para generar el codigo QR
     Route::post('/invitados/generar-codigo-qr', [InvitadoController::class, 'generarCodigoQR']);
     Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
+    Route::post('/invitados/buscar-invitados', [InvitadoController::class, 'buscarInvitado']);
 
 
 
