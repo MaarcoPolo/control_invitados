@@ -6,7 +6,7 @@ use App\Models\Invitado;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PDF;
-
+use Carbon\Carbon;
 
 
 class InvitadoController extends Controller{
@@ -56,17 +56,20 @@ class InvitadoController extends Controller{
     }
     public function guardarInvitado(Request $request){
         $exito = false;
-
+        
         DB::beginTransaction();
         try {
+                $n_invitado = Invitado::where('evento_id', $request->evento_id)->where('status',1)->count();
+
             
                 $invitado = new Invitado;
+                $invitado->n_invitado = $n_invitado+1;
                 $invitado->nombre = $request->nombre;
                 $invitado->dependencia = $request->dependencia;
                 $invitado->area = $request->area;
                 $invitado->telefono = $request->telefono;
                 $invitado->email = $request->email;
-                $invitado->folio = Str::random(10);
+                $invitado->folio = $request->evento_id.'-'.Str::random(10);
                 $invitado->evento_id = $request->evento_id;
                 $invitado->save();
 
@@ -259,15 +262,15 @@ class InvitadoController extends Controller{
         PDF::Output('Código.pdf');
     }
     public function buscarFolio(Request $request) {
-
+        $current_day = Carbon::now();
         try {
             $invitado = Invitado::where('folio',$request->folio)->first();
             // dd($request->folio);
             if($invitado){
-
+                $hora = $current_day->toTimeString();
                 if($invitado->verificado == 0){
                     DB::beginTransaction();
-
+                    $invitado->hora_ingreso = $hora;
                     $invitado->verificado = 1;
                     $invitado->save();
 
@@ -325,7 +328,7 @@ class InvitadoController extends Controller{
         }
     }
     public function buscarInvitado(Request $request) {
-
+        
         try {
             $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
 
