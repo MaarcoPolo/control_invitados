@@ -14,12 +14,13 @@ import swal from 'sweetalert2';
 
 import './../sass/app.scss'
 
+
 const vuetify = createVuetify({
     components,
     directives,
     icons: {
         defaultSet: 'mdi', // This is already the default value - only for display purposes
-      },
+    },
 })
 
 window.Swal = swal;

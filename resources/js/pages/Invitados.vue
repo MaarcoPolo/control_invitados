@@ -170,7 +170,7 @@
                     </div>
                 </div>
             </div>
-            <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
+            <!-- <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
                         <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
@@ -185,32 +185,33 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.invitado.nombre.$model">
+                                    <input id="input_nombre" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.nombre.$model">
                                     <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_dependencia">Dependencia u Organismo:</label>
-                                    <input id="input_dependencia" type="text" class="form-control" v-model="invitado.dependencia">
+                                    <input id="input_dependencia" type="text" class="form-control" autocomplete="off" v-model="invitado.dependencia">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_area">Área:</label>
-                                    <input id="input_area" type="text" class="form-control" v-model="invitado.area">
+                                    <input id="input_area" type="text" class="form-control" autocomplete="off" v-model="invitado.area">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_telefono">Teléfono:</label>
-                                    <input id="input_telefono" type="text" autocomplete="off" class="form-control" v-model="invitado.telefono">
+                                    <input id="input_telefono" type="text" maxlength="10" autocomplete="off" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_email">Correo:</label>
-                                    <input id="input_email" type="text" autocomplete="off" class="form-control" v-model="invitado.email">
+                                    <input id="input_email" type="email" autocomplete="off" class="form-control" v-model="v$.invitado.email.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
@@ -240,7 +241,7 @@
                         </div>
                     </v-card-text>
                 </v-card>
-            </v-dialog>
+            </v-dialog> -->
             <!-- INICIO MODAL PARA EDITAR DATOS DEL INVITADO -->
             <v-dialog v-model="dialogEditarInvitado" max-width="100rem" persistent>
                 <v-card>
@@ -257,20 +258,20 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.invitado.nombre.$model">
+                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.invitado.nombre.$model" autocomplete="off">
                                     <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_dependencia">Dependencia u Organismo:</label>
-                                    <input id="input_dependencia" type="text" class="form-control" v-model="invitado.dependencia">
+                                    <input id="input_dependencia" type="text" class="form-control" v-model="invitado.dependencia" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_area">Área:</label>
-                                    <input id="input_area" type="text" class="form-control" v-model="invitado.area">
+                                    <input id="input_area" type="text" class="form-control" v-model="invitado.area" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -278,13 +279,14 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_telefono">Teléfono:</label>
-                                    <input id="input_telefono" type="text" autocomplete="off" class="form-control" v-model="invitado.telefono">
+                                    <input id="input_telefono" type="text" autocomplete="off" maxlength="10" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_email">Correo:</label>
-                                    <input id="input_email" type="text" autocomplete="off" class="form-control" v-model="invitado.email">
+                                    <input id="input_email" type="email" autocomplete="off" class="form-control" v-model="v$.invitado.email.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
@@ -323,7 +325,7 @@
     import { defineComponent } from 'vue';
     import { errorSweetAlert, successSweetAlert } from "../helpers/sweetAlertGlobals"
     import useValidate from '@vuelidate/core'
-    import { required } from '@vuelidate/validators'
+    import { required,email } from '@vuelidate/validators'
 
     export default defineComponent({
         name: 'invitados',
@@ -364,6 +366,9 @@
                         nombre: {
                             required
                         },
+                        email:{
+                            email
+                        }
                     }
                 }
         },

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('invitados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre',50);
-            $table->string('dependencia',50)->nullable();
-            $table->string('area',50)->nullable();
+            $table->string('dependencia',250)->nullable();
+            $table->string('area',250)->nullable();
             $table->string('telefono',10)->nullable();
             $table->string('email')->nullable();
             $table->string('folio',10)->unique();
