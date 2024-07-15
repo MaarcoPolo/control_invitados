@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->integer('n_invitado');
             $table->text('nombre');
+            $table->text('apellido_p');
+            $table->text('apellido_m');
             $table->text('dependencia')->nullable();
+            $table->text('cargo')->nullable();
             $table->text('area')->nullable();
             $table->string('telefono',10)->nullable();
             $table->string('email')->nullable();

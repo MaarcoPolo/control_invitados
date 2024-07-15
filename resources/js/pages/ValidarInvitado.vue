@@ -64,15 +64,16 @@
                         if (response.status === 200) {
                             if (response.data.status === "ok") {
                                 Swal.fire({
-                                    title: "Verificado",
+                                    title: "VERIFICADO",
                                     text: "Acceso permitido",
                                     icon: "success",
                                     allowOutsideClick: false,
                                     });
                             } else if(response.data.status === "usado"){
                                 Swal.fire({
-                                    title: "Usado",
-                                    text: "El codigo ya fue escaneado",
+                                    title: "USADO",
+                                    html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>HORA INGRESO:</strong> "+`${response.data.hora}`,
+                                    // text: "Nombre: "+`${response.data.nombre}`+'<br>'+"Hora:",
                                     icon: "warning",
                                     allowOutsideClick: false,
                                     });
@@ -80,8 +81,8 @@
                             else if(response.data.status === "no_existe"){
                                 Swal.fire({
                                     // timer: 20000,
-                                    title: "No existe",
-                                    text: "El codigo no esta registrado",
+                                    title: "NO EXISTE",
+                                    text: "El acceso al evento no está registrado",
                                     icon: "error",
                                     allowOutsideClick: false,
                                     });

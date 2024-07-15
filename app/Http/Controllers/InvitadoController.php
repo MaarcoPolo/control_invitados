@@ -264,7 +264,7 @@ class InvitadoController extends Controller{
     public function buscarFolio(Request $request) {
         $current_day = Carbon::now();
         try {
-            $invitado = Invitado::where('folio',$request->folio)->first();
+            $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
             // dd($request->folio);
             if($invitado){
                 $hora = $current_day->toTimeString();
@@ -278,14 +278,17 @@ class InvitadoController extends Controller{
                     return response()->json([
                         "status" => "ok",
                         "message" => "Folio encontrada con éxito",
-                        // "cita" => $request->folio
+                        // "cita" => $invitado->verificado,
                     ], 200);
                 }
                 if($invitado->verificado == 1){
+
+                    // $nombre =$invitado->nombre;
                     return response()->json([
                         "status" => "usado",
                         "message" => "Folio ya usado",
-                        // "cita" => $request->folio
+                        "nombre" => $invitado->nombre,
+                        "hora" => $invitado->hora_ingreso
                     ], 200);
                 }
             }

@@ -6,15 +6,16 @@
                 <p>Eventos</p>
             </div>
         </div>
+        
         <div class="container mt-16">
             <!-- INICIO BOTON NUEVO Y BUSCADOR -->
-            <div class="row justify-content-between mt-6">
+            <div class="row justify-content-between">
                 <div class="col-md-3 col-12">
                     <v-btn
                         class="custom-button"
                         block
                         color="#c4f45d"
-                        @click="abrirModalNuevoEvento()"
+                        @click="abrir()"
                         >
                         Nuevo Evento
                     </v-btn>
@@ -28,6 +29,106 @@
                     </div>
                 </div>
             </div>
+            <!-- ///////////////////////////////////////// -->
+            <v-container>
+                <v-expansion-panels v-model="panel">
+                    <v-expansion-panel>
+                       <v-expansion-panel-title >
+                       </v-expansion-panel-title>
+                        <v-expansion-panel-content>
+                            <v-expansion-panel-text>
+                                    <div class="text-center my-3 custom-border">
+                                        <div class="custom-subtitle">
+                                            <p>Datos</p>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-6 col-12">
+                                            <div class="div-custom-input-form">
+                                                <label for="input_nombre">Nombre:</label>
+                                                <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
+                                                <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="div-custom-input-form">
+                                                <label for="input_apellidoP">Organizador:</label>
+                                                <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
+                                                <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-4 col-12">
+                                            <div class="div-custom-input-form">
+                                                <label for="input_fecha_i">Fecha inicial:</label>
+                                                <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_i">
+                                                <!-- <p class="text-validation-red" v-if="v$.evento.fecha_i.$error">*Campo obligatorio</p> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="div-custom-input-form">
+                                                <label for="input_fecha_i">Fecha final:</label>
+                                                <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_f">
+                                                <!-- <p class="text-validation-red" v-if="v$.evento.fecha_i.$error">*Campo obligatorio</p> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="div-custom-input-form">
+                                                <label for="input_fecha_f">Horario:</label>
+                                                <input id="input_fecha_f" type="time" class="form-control" v-model="evento.horario">
+                                                <!-- <p class="text-validation-red" v-if="v$.evento.fecha_f.$error">*Campo obligatorio</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-6 col-12">
+                                            <div class="div-custom-input-form">
+                                                <label for="input_apellidoM">Sede:</label>
+                                                <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
+                                                <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="div-custom-input-form">
+                                                <label for="input_apellidoM">Domicilio de la Sede:</label>
+                                                <input id="input_apellidoM" type="text" class="form-control" v-model="evento.domicilio">
+                                                <!-- <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-12 col-12">
+                                            <div class="div-custom-input-form">
+                                                <label for="input_apellidoM">Ubicación en Google Maps:</label>
+                                                <input id="input_apellidoM" type="text" class="form-control" v-model="evento.ubicacion">
+                                                <!-- <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mb-4 mt-2">
+                                        <v-btn
+                                            class="custom-button mr-2"
+                                            color="#c4f45d"
+                                            @click="guardarNuevoEvento()"
+                                            >
+                                            Guardar
+                                        </v-btn>
+                                        <v-btn
+                                            class="custom-button ml-2"
+                                            color="#c4f45d"
+                                            @click="guardarCambiosEditarEvento()"
+                                            >
+                                            Guardar Cambios
+                                        </v-btn>
+                                    </div>
+                            </v-expansion-panel-text>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+             </v-container>
+             <!-- //////////////////////////// -->
+              
             <!--INICIO DE LA TABLA EVENTOS-->
             <div class="my-2 mb-12 py-6">
                 <div class="">
@@ -184,7 +285,7 @@
                     </div>
                 </div>
             </div>
-            <v-dialog v-model="dialogNuevoEvento" max-width="100rem" persistent>
+            <!-- <v-dialog v-model="dialogNuevoEvento" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
                         <h3 class="mt-5 custom-dialog-title">Nuevo Evento</h3>
@@ -216,21 +317,18 @@
                                 <div class="div-custom-input-form">
                                     <label for="input_apellidoM">Sede:</label>
                                     <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
-                                    <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_fecha_i">Fecha inicial:</label>
                                     <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_i">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.fecha_i.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_fecha_f">Fecha final:</label>
                                     <input id="input_fecha_f" type="date" class="form-control" v-model="evento.fecha_f">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.fecha_f.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                         </div>
@@ -252,9 +350,9 @@
                         </div>
                     </v-card-text>
                 </v-card>
-            </v-dialog>
+            </v-dialog> -->
             <!-- INICIO MODAL PARA EDITAR DATOS DEL EVENTO -->
-            <v-dialog v-model="dialogEditarEvento" max-width="100rem" persistent>
+            <!-- <v-dialog v-model="dialogEditarEvento" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
                         <h3 class="mt-2 custom-dialog-title">Editar Evento</h3>
@@ -270,21 +368,18 @@
                                 <div class="div-custom-input-form">
                                     <label for="input_nombre">Nombre:</label>
                                     <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_apellidoP">Organizador:</label>
                                     <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_apellidoM">Sede:</label>
                                     <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p> -->
                                 </div>
                             </div>
                         </div>
@@ -292,15 +387,13 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_username">Fecha inicial:</label>
-                                    <input id="input_username" type="text" class="form-control" v-model="evento.fecha_i">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.username.$error">*Campo obligatorio</p> -->
+                                    <input id="input_username" type="date" class="form-control" v-model="evento.fecha_i">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_pass">Fecha Final:</label>
-                                    <input id="input_pass" type="text" class="form-control" v-model="evento.fecha_f">
-                                    <!-- <p class="text-validation-red" v-if="v$.evento.password.$error">*Campo obligatorio</p> -->
+                                    <input id="input_pass" type="date" class="form-control" v-model="evento.fecha_f">
                                 </div>
                             </div>                        
                         </div>
@@ -322,7 +415,7 @@
                         </div>
                     </v-card-text>
                 </v-card>
-            </v-dialog>
+            </v-dialog> -->
             
             <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
@@ -505,8 +598,10 @@
         name: 'eventos',
         data () {
             return { 
+                panel: [],
+                // opened: 0,
                 showNav: false,
-                dialogNuevoEvento: false,
+                // dialogNuevoEvento: false,
                 dialogEditarEvento: false,
                 evento: {
                     // id: null,
@@ -515,6 +610,9 @@
                     sede:'',
                     fecha_i:null,
                     fecha_f: null,
+                    horario: null,
+                    domicilio: '',
+                    ubicacion: ''
                 },               
                 loading: false,
                 elementosPorPagina: 10,
@@ -618,6 +716,9 @@
                     this.datosPaginados = this.eventos.filter(item => {
                         return item.nombre.toLowerCase().includes(this.buscar.toLowerCase())
                         || item.sede.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.organizador.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.fecha_i.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.fecha_f.toLowerCase().includes(this.buscar.toLowerCase())
                     
                     })
                 } else {
@@ -631,6 +732,9 @@
             },
         },
         methods: {
+            abrir(){
+                this.panel = [0]
+            },
             logout() {
                 this.$store.dispatch('logout')
             },
@@ -723,13 +827,16 @@
 
             },
             abrirModalEditarEvento(evento){
-                this.dialogEditarEvento=true 
+                this.panel = [0] 
                 this.evento.id = evento.id
                 this.evento.nombre = evento.nombre
                 this.evento.organizador = evento.organizador
                 this.evento.sede = evento.sede
                 this.evento.fecha_i = evento.fecha_i
                 this.evento.fecha_f = evento.fecha_f
+                this.evento.horario = evento.horario
+                this.evento.domicilio = evento.domicilio_sede
+                this.evento.ubicacion = evento.ubicacion
             },
             async guardarNuevoEvento() {
                 const isFormCorrect = await this.v$.evento.$validate()              
