@@ -712,11 +712,11 @@
         },
         watch: {
             'panel': function() {
-                if(this.panel){
-                    console.log(this.evento)
+                if(!this.panel){
+                    this.evento.id = 200
                 }
                 else{
-                    console.log(this.evento)
+                    console.log("nada", this.evento)
                 }
                
             },
@@ -751,7 +751,7 @@
                 this.evento.horario =''
                 this.evento.domicilio = ''
                 this.evento.ubicacion = ''
-                this.evento.id = null
+                this.evento.id = 100
             },
             logout() {
                 this.$store.dispatch('logout')
