@@ -68,10 +68,14 @@ class InvitadoController extends Controller{
                 $invitado = new Invitado;
                 $invitado->n_invitado = $n_invitado+1;
                 $invitado->nombre = $request->nombre;
+                $invitado->apellido_p = $request->apellido_p;
+                $invitado->apellido_m = $request->apellido_m;
                 $invitado->dependencia = $request->dependencia;
                 $invitado->area = $request->area;
                 $invitado->telefono = $request->telefono;
                 $invitado->email = $request->email;
+                $invitado->estado = $request->estado;
+                $invitado->municipio = $request->municipio;
                 $invitado->folio = $request->evento_id.'-'.Str::random(10);
                 $invitado->evento_id = $request->evento_id;
                 $invitado->save();

@@ -438,6 +438,22 @@
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
+                                    <label for="input_apellido_p">Apellido paterno:</label>
+                                    <input id="input_apellido_p" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_p.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.apellido_p.$error">*Campo obligatorio</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_apellido_m">Apellido materno:</label>
+                                    <input id="input_apellido_m" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_m.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.apellido_m.$error">*Campo obligatorio</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
                                     <label for="input_dependencia">Dependencia u Organismo:</label>
                                     <input id="input_dependencia" type="text" class="form-control" autocomplete="off" v-model="invitado.dependencia">
                                 </div>
@@ -454,6 +470,8 @@
                                     <input id="input_telefono" type="text" autocomplete="off" maxlength="10" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row justify-content-center">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_email">Correo:</label>
@@ -463,10 +481,14 @@
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="select_evento">Seleccione un evento:</label>
-                                    <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.evento_id" disabled>
-                                        <option  v-for="item in eventos" :key="item.id" :value="item.id">{{item.nombre}}</option>
-                                    </select>
+                                    <label for="input_estado">Estado:</label>
+                                    <input id="input_estado" type="text" autocomplete="off" class="form-control" v-model="invitado.estado">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_municipio">Municipio:</label>
+                                    <input id="input_municipio" type="text" autocomplete="off" class="form-control" v-model="invitado.municipio">
                                 </div>
                             </div>
                         </div>
@@ -631,11 +653,16 @@
                 invitado: {
                     id: null,
                     nombre: '',
+                    apellido_p:'',
+                    apellido_m:'',
                     dependencia:'',
                     area:'',
                     telefono:'',
                     email:'',
-                    evento_id: null
+                    evento_id: null,
+                    estado:'',
+                    municipio:''
+
                 },
                 loading2: false,
                 elementosPorPagina2: 5,
@@ -676,6 +703,12 @@
                     },
                     invitado:{
                         nombre:{
+                            required
+                        },
+                        apellido_p:{
+                            required
+                        },
+                        apellido_m:{
                             required
                         },
                         email:{
