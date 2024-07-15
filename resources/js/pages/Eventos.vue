@@ -114,13 +114,13 @@
                                             >
                                             Guardar
                                         </v-btn>
-                                        <v-btn
+                                        <!-- <v-btn
                                             class="custom-button ml-2"
                                             color="#c4f45d"
                                             @click="guardarCambiosEditarEvento()"
                                             >
                                             Guardar Cambios
-                                        </v-btn>
+                                        </v-btn> -->
                                     </div>
                             </v-expansion-panel-text>
                         </v-expansion-panel-content>
@@ -604,7 +604,7 @@
                 // dialogNuevoEvento: false,
                 dialogEditarEvento: false,
                 evento: {
-                    // id: null,
+                    id: 0,
                     nombre: '',
                     organizador:'',
                     sede:'',
@@ -711,6 +711,15 @@
             },
         },
         watch: {
+            'panel': function() {
+                if(this.panel){
+                    console.log(this.evento)
+                }
+                else{
+                    console.log(this.evento)
+                }
+               
+            },
             buscar: function () {
                 if (!this.buscar.length == 0) {
                     this.datosPaginados = this.eventos.filter(item => {
@@ -734,6 +743,15 @@
         methods: {
             abrir(){
                 this.panel = [0]
+                this.evento.nombre =''
+                this.evento.organizador =''
+                this.evento.sede =''
+                this.evento.fecha_i = ''
+                this.evento.fecha_f = ''
+                this.evento.horario =''
+                this.evento.domicilio = ''
+                this.evento.ubicacion = ''
+                this.evento.id = null
             },
             logout() {
                 this.$store.dispatch('logout')
