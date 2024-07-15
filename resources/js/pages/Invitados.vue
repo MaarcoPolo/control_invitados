@@ -77,6 +77,35 @@
                                             </div>
                                             <div>
                                                 <v-icon
+                                                    @click="descargarCodigoInvitado(invitado)"
+                                                    class="ml-1 mr-1"
+                                                    >
+                                                    mdi-qrcode
+                                                </v-icon>
+                                                <v-tooltip
+                                                    activator="parent"
+                                                    location="bottom"
+                                                    >
+                                                    <span style="font-size: 15px;">Descargar Código</span>
+                                                </v-tooltip>
+                                            </div>
+                                            <div>
+                                                <v-icon
+                                                    @click="descargarCodigoInvitado(invitado)"
+                                                    class="ml-1 mr-1"
+                                                    >
+                                                    mdi-email-fast-outline
+                                                </v-icon>
+
+                                                <v-tooltip
+                                                    activator="parent"
+                                                    location="bottom"
+                                                    >
+                                                    <span style="font-size: 15px;">Enviar correo</span>
+                                                </v-tooltip>
+                                            </div>
+                                            <div>
+                                                <v-icon
                                                     @click="eliminarInvitado(invitado)"
                                                     class="ml-1"
                                                     >
@@ -88,21 +117,6 @@
                                                     location="bottom"
                                                     >
                                                     <span style="font-size: 15px;">Eliminar Invitado</span>
-                                                </v-tooltip>
-                                            </div>
-                                            <div>
-                                                <v-icon
-                                                    @click="descargarCodigoInvitado(invitado)"
-                                                    class="ml-1 mr-1"
-                                                    >
-                                                    mdi-qrcode
-                                                </v-icon>
-
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Descargar Código</span>
                                                 </v-tooltip>
                                             </div>
                                         </div>
