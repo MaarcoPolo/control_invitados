@@ -13,14 +13,19 @@ return new class extends Migration
     {
         Schema::create('invitados', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre',50);
-            $table->string('dependencia',250)->nullable();
-            $table->string('area',250)->nullable();
+            $table->integer('n_invitado');
+            $table->text('nombre');
+            $table->text('apellido_p');
+            $table->text('apellido_m');
+            $table->text('dependencia')->nullable();
+            $table->text('cargo')->nullable();
+            $table->text('area')->nullable();
             $table->string('telefono',10)->nullable();
             $table->string('email')->nullable();
-            $table->string('folio',10)->unique();
+            $table->string('folio')->unique();
             $table->boolean('verificado')->default(0);
             $table->foreignId('evento_id')->constrained();
+            $table->time('hora_ingreso')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
