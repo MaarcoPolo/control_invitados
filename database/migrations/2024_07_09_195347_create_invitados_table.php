@@ -26,6 +26,8 @@ return new class extends Migration
             $table->boolean('verificado')->default(0);
             $table->foreignId('evento_id')->constrained();
             $table->time('hora_ingreso')->nullable();
+            $table->text('estado');
+            $table->text('municipio');
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
