@@ -54,10 +54,9 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/invitados/eliminar-invitado', [InvitadoController::class, 'eliminarInvitado']);
     //Ruta para generar el codigo QR
     Route::post('/invitados/generar-codigo-qr', [InvitadoController::class, 'generarCodigoQR']);
-    Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
     Route::post('/invitados/buscar-invitados', [InvitadoController::class, 'buscarInvitado']);
     Route::post('/invitados/enviar-correo', [InvitadoController::class, 'enviarCorreo']);
 
-
-
 });
+
+    Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
