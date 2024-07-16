@@ -729,9 +729,7 @@
                     this.evento.id = null
                     // console.log(this.evento)
                 }
-                else{
-                    // console.log(this.evento)
-                }
+                
                
             },
             buscar: function () {
@@ -776,7 +774,7 @@
                 this.evento.horario =''
                 this.evento.domicilio = ''
                 this.evento.ubicacion = ''
-                this.evento.id = 100
+                this.evento.id = null
             },
             logout() {
                 this.$store.dispatch('logout')
@@ -912,8 +910,17 @@
                                     this.$store.commit('setEventos', result.value.data.eventos)
                                     // this.loading = false
                                     this.cerrarModalNuevoEvento()
-                                    this.getDataPagina(1)
-                                    
+                                    this.getDataPagina(1) 
+                                    this.panel = []
+                                    this.evento.nombre =''
+                                    this.evento.organizador =''
+                                    this.evento.sede =''
+                                    this.evento.fecha_i = ''
+                                    this.evento.fecha_f = ''
+                                    this.evento.horario =''
+                                    this.evento.domicilio = ''
+                                    this.evento.ubicacion = ''
+                                    this.v$.reset()
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
                                     // this.loading = false
