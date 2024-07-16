@@ -13,4 +13,9 @@ class Invitado extends Model
     {
         return $this->belongsTo(Evento::class);
     }
+
+    public function zona()
+    {
+        return $this->belongsTo(Zona::class);
+    }
 }

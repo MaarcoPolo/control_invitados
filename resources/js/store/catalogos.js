@@ -2,7 +2,8 @@ export default{
     store: {
         tipoUsuarios:[],
         eventos:[],
-        invitados:[]
+        invitados:[],
+        secciones:[]
     },
     getters:{
         getTipoUsuarios(state){
@@ -13,6 +14,9 @@ export default{
         },
         getInvitados(state){
             return state.invitados
+        },
+        getSecciones(state){
+            return state.secciones
         }
     },
     mutations:{
@@ -24,6 +28,9 @@ export default{
         },
         setInvitados(state,payload){
             state.invitados = payload
+        },
+        setSecciones(state,payload){
+            state.secciones = payload
         }
     }
 }

@@ -44,15 +44,15 @@
                                         <div class="col-md-6 col-12">
                                             <div class="div-custom-input-form">
                                                 <label for="input_nombre">Nombre:</label>
-                                                <input id="input_nombre" type="text" class="form-control" v-model="seccion.nombre">
-                                                <!-- <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p> -->
+                                                <input id="input_nombre" type="text" class="form-control" v-model="v$.seccion.nombre.$model">
+                                                <p class="text-validation-red" v-if="v$.seccion.nombre.$error">*Campo obligatorio</p>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="div-custom-input-form">
                                                 <label for="input_apellidoP">Color:</label>
-                                                <input :style="inputColor" id="input_apellidoP" type="color" class="form-control" v-model="seccion.color">
-                                                <!-- <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p> -->
+                                                <input id="input_apellidoP" type="color" class="form-control" v-model="v$.seccion.color.$model">
+                                                <p class="text-validation-red" v-if="v$.seccion.color.$error">*Campo obligatorio</p>
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +103,7 @@
                                         <v-btn
                                             class="custom-button mr-2"
                                             color="#c4f45d"
-                                            @click="guardarNuevoEvento()"
+                                            @click="guardarNuevaSeccion()"
                                             >
                                             Guardar
                                         </v-btn>
@@ -112,7 +112,7 @@
                                         <v-btn
                                             class="custom-button mr-2"
                                             color="#c4f45d"
-                                            @click="guardarCambiosEditarEvento()"
+                                            @click="guardarCambiosSeccion()"
                                             >
                                             Guardar
                                         </v-btn>
@@ -130,10 +130,10 @@
                                 <tr>
                                     <th class="custom-title-table">#</th>
                                     <th class="custom-title-table">Nombre</th>
-                                    <th class="custom-title-table">Organizador</th>
-                                    <th class="custom-title-table">Sede</th>
+                                    <th class="custom-title-table">Color</th>
+                                    <!-- <th class="custom-title-table">Sede</th>
                                     <th class="custom-title-table">Fecha inicial</th>
-                                    <th class="custom-title-table">Fecha final</th>
+                                    <th class="custom-title-table">Fecha final</th> -->
                                     <th class="custom-title-table">Acciones</th>
                                 </tr>
                             </thead>
@@ -146,17 +146,17 @@
                                         </div>
                                     </th>
                                 </tr>
-                                <tr v-else v-for="evento in datosPaginados" :key="evento.id">
+                                <tr v-else v-for="seccion in datosPaginados" :key="seccion.id">
                                     <td class="custom-data-table">
-                                        {{evento.numero_registro}}
+                                        {{seccion.numero_registro}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
-                                        {{evento.nombre}}
+                                        {{seccion.nombre}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
-                                        {{evento.organizador}}
+                                        {{seccion.color}}
                                     </td>
-                                    <td class="custom-data-table text-uppercase">
+                                    <!-- <td class="custom-data-table text-uppercase">
                                         {{evento.sede}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
@@ -164,12 +164,12 @@
                                     </td>
                                     <td class="custom-data-table text-uppercase">
                                         {{evento.fecha_f}}
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <div class="text-center row justify-content-center">
                                             <div>
                                                 <v-icon
-                                                    @click="abrirModalEditarEvento(evento)"
+                                                    @click="abrirModalEditarSeccion(seccion)"
                                                     class="mr-1"
                                                     >
                                                     mdi-text-box-edit-outline
@@ -179,10 +179,10 @@
                                                     activator="parent"
                                                     location="bottom"
                                                     >
-                                                    <span style="font-size: 15px;">Editar Evento</span>
+                                                    <span style="font-size: 15px;">Editar Seccion</span>
                                                 </v-tooltip>
                                             </div>
-                                            <div>
+                                            <!-- <div>
                                                 <v-icon
                                                     @click="abrirModalNuevoInvitado(evento)"
                                                     class="ml-1"
@@ -196,10 +196,10 @@
                                                     >
                                                     <span style="font-size: 15px;">Agregar Invitado</span>
                                                 </v-tooltip>
-                                            </div>
+                                            </div> -->
                                             <div>
                                                 <v-icon
-                                                    @click="eliminarEvento(evento)"
+                                                    @click="eliminarSeccion(seccion)"
                                                     class="ml-1"
                                                     >
                                                     mdi-trash-can
@@ -209,7 +209,7 @@
                                                     activator="parent"
                                                     location="bottom"
                                                     >
-                                                    <span style="font-size: 15px;">Eliminar Evento</span>
+                                                    <span style="font-size: 15px;">Eliminar Seccion</span>
                                                 </v-tooltip>
                                             </div>
                                         </div>
@@ -219,7 +219,7 @@
                         </table>
                     </div>
                     <div>
-                        <template v-if="eventos && eventos.length > 0">
+                        <template v-if="secciones && secciones.length > 0">
                             <div class="row justify-content-between container">
                                 <div>
                                     <p class="custom-text-show-results mt-2">
@@ -228,7 +228,7 @@
                                         -
                                         <span>{{to}}</span>
                                         de
-                                        <span>{{eventos.length}}</span>
+                                        <span>{{secciones.length}}</span>
                                         resultados
                                     </p>
                                 </div>
@@ -271,7 +271,7 @@
                         </template>
                         <template v-else-if="!loading">
                             <div class="text-center">
-                                <p class="no-data-text">No hay eventos disponibles</p>
+                                <p class="no-data-text">No hay secciones disponibles</p>
                             </div>
                         </template>
                     </div>
@@ -316,7 +316,7 @@ export default defineComponent({
                 numShown: 5,
                 current: 1,
                 buscar: '',
-                input_background_color: '#FFFFFF',
+                // input_background_color: '#0a0a0a',
         }
     },
     setup() {
@@ -325,16 +325,30 @@ export default defineComponent({
         }
     },
     validations(){
+        return{
+            seccion:{
+                nombre: {
+                   required
+                },
+                color: {
+                    required
+                },
+            }
+        }
 
     },
     created(){
-
+        this.getSecciones()
     },
     computed:{
+        secciones() {
+                    return this.$store.getters.getSecciones
+            },
         inputColor() {
                 return {
-                    "background-color": `${this.input_background_color}`,
-                    "border": "none"
+                    
+                    "backgraund_color": `${this.input_background_color}`,
+                    
                 }
         },
         pages() {
@@ -346,23 +360,42 @@ export default defineComponent({
         },
     },
     watch:{
-        'seccion.color': function() {
-                this.input_background_color = this.$refs.color_seleccion.value
-                this.areas.forEach(e => {
-                    if (e.color == this.color) {
-                        this.preregistro.area = e.id
-                    }
-                    document.getElementById('input_gafete').focus();
-                })
+        // 'seccion.color': function() {
+        //     console.log(this.seccion)
+        //         // this.input_background_color = this.$refs.color_seleccion.value
+        //         // this.areas.forEach(e => {
+        //         //     if (e.color == this.color) {
+        //         //         this.preregistro.area = e.id
+        //         //     }
+        //         //     document.getElementById('input_gafete').focus();
+        //         // })
+        //     },
+            'panel': function() {
+                if(!this.panel){
+                    this.nuevo = 1
+                    this.v$.$reset()
+                    this.seccion.nombre =''
+                    this.seccion.color =''
+                    // this.evento.sede =''
+                    // this.evento.fecha_i = ''
+                    // this.evento.fecha_f = ''
+                    // this.evento.horario =''
+                    // this.evento.domicilio = ''
+                    // this.evento.ubicacion = ''
+                    this.seccion.id = null
+                    // console.log(this.evento)
+                }
+                
+               
             },
         buscar: function () {
             if (!this.buscar.length == 0) {
-                this.datosPaginados = this.eventos.filter(item => {
+                this.datosPaginados = this.secciones.filter(item => {
                      return item.nombre.toLowerCase().includes(this.buscar.toLowerCase())
-                    || item.sede.toLowerCase().includes(this.buscar.toLowerCase())
-                    || item.organizador.toLowerCase().includes(this.buscar.toLowerCase())
-                    || item.fecha_i.toLowerCase().includes(this.buscar.toLowerCase())
-                    || item.fecha_f.toLowerCase().includes(this.buscar.toLowerCase())
+                    // || item.sede.toLowerCase().includes(this.buscar.toLowerCase())
+                    // || item.organizador.toLowerCase().includes(this.buscar.toLowerCase())
+                    // || item.fecha_i.toLowerCase().includes(this.buscar.toLowerCase())
+                    // || item.fecha_f.toLowerCase().includes(this.buscar.toLowerCase())
                     
                 })
             } else {
@@ -376,11 +409,133 @@ export default defineComponent({
         },
     },
     methods:{
+        async eliminarSeccion(seccion) {
+            
+            Swal.fire({
+            title: '¿Eliminar Seccion?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085D6',
+            cancelButtonColor: '#D33',
+            confirmButtonText: 'Si, eliminar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                try {
+                    
+                    let response = await axios.post('/api/secciones/eliminar-seccion', seccion)
+                    return response
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al eliminar la Seccion.')
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (result.value.status === 200) {
+                    if (result.value.data.status === "ok") {
+                        successSweetAlert(result.value.data.message)
+                        this.$store.commit('setSecciones', result.value.data.secciones)
+                        this.getDataPagina(1)
+                    } else {
+                        errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
+                    }
+                } else {
+                    errorSweetAlert('Ocurrió un error al eliminar la Seccion.')
+                }
+            }
+        })
+        // this.loading = false
+    },
+        async guardarCambiosSeccion() {
+                const isFormCorrect = await this.v$.seccion.$validate()              
+                if (!isFormCorrect) return
+                    Swal.fire({
+                        title: '¿Guardar cambios?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085D6',
+                        cancelButtonColor: '#D33',
+                        confirmButtonText: 'Si, guardar',
+                        cancelButtonText: 'Cancelar',
+                        showLoaderOnConfirm: true,
+                        preConfirm: async () => {
+                            try {
+
+                                let response = await axios.post('/api/secciones/actualizar-seccion', this.seccion)
+                                return response
+                            } catch (error) {
+                                errorSweetAlert('Ocurrió un error al actualizar los datos de la seccion.')
+                            }
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            if (result.value.status === 200) {
+                                if (result.value.data.status === "ok") {
+                                    successSweetAlert(result.value.data.message)
+                                    this.$store.commit('setSecciones', result.value.data.secciones)
+                                    // this.cerrarModalNuevoEvento()
+                                    this.panel = []
+                                    this.seccion.nombre =''
+                                    this.seccion.color =''
+                                    // this.evento.sede =''
+                                    // this.evento.fecha_i = ''
+                                    // this.evento.fecha_f = ''
+                                    // this.evento.horario =''
+                                    // this.evento.domicilio = ''
+                                    // this.evento.ubicacion = ''
+                                    this.getDataPagina(1)
+                                    this.v$.reset()
+                    
+                                } else {
+                                    errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
+                                }
+                            } else {
+                                errorSweetAlert('Ocurrió un error al actualizar los datos de la seccion.')
+                            }
+                        }
+                    })
+                   
+            },
+        abrirModalEditarSeccion(seccion){
+                this.nuevo= 0
+                this.panel = [0] 
+                this.seccion.id = seccion.id
+                this.seccion.nombre = seccion.nombre
+                this.seccion.color = seccion.color
+                // this.seccion.sede = seccion.sede
+                // this.seccion.fecha_i = seccion.fecha_i
+                // this.seccion.fecha_f = seccion.fecha_f
+                // this.seccion.horario = seccion.horario
+                // this.seccion.domicilio = seccion.domicilio_sede
+                // this.seccion.ubicacion = seccion.ubicacion
+            },
+        async getSecciones() {
+                this.loading = true
+                try {                   
+                    let response = await axios.get('/api/secciones')
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.$store.commit('setSecciones', response.data.secciones)
+                            this.input_background_color = response.data.secciones.color
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener las Secciones')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener las Secciones')
+                }
+                this.loading = false
+            },
         logout() {
                 this.$store.dispatch('logout')
             },
             totalPaginas() {
-                return Math.ceil(this.eventos.length / this.elementosPorPagina)
+                return Math.ceil(this.secciones.length / this.elementosPorPagina)
             },
             getDataPagina(noPagina) {
                 this.paginaActual = noPagina
@@ -390,8 +545,8 @@ export default defineComponent({
                 let fin = (noPagina * this.elementosPorPagina)
 
                 for (let index = ini; index < fin; index++) {
-                    if (this.eventos[index]) {
-                        this.datosPaginados.push(this.eventos[index])
+                    if (this.secciones[index]) {
+                        this.datosPaginados.push(this.secciones[index])
                     }
                 }
                 // Para el texto "Mostrando 1 - 10 de 20 resultados"
@@ -399,7 +554,7 @@ export default defineComponent({
                 if (noPagina < this.totalPaginas()) {
                     this.to = fin
                 } else {
-                    this.to = this.eventos.length
+                    this.to = this.secciones.length
                 }
             },
             getFirstPage() {
@@ -431,6 +586,77 @@ export default defineComponent({
             },
             setCurrentPage(pagina) {
                 this.current = pagina
+            },
+            abrir(){
+                this.nuevo = 1
+                this.v$.$reset()
+                this.panel = [0]
+                this.seccion.nombre =''
+                this.seccion.color =''
+                // this.evento.sede =''
+                // this.evento.fecha_i = ''
+                // this.evento.fecha_f = ''
+                // this.evento.horario =''
+                // this.evento.domicilio = ''
+                // this.evento.ubicacion = ''
+                this.seccion.id = null
+            },
+            async guardarNuevaSeccion() {
+                const isFormCorrect = await this.v$.seccion.$validate()              
+                if (!isFormCorrect) return
+                Swal.fire({
+                    title: '¿Guardar nueva Seccion?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085D6',
+                    cancelButtonColor: '#D33',
+                    confirmButtonText: 'Si, guardar',
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        try {
+                                // this.loading = true
+                                let response = await axios.post('/api/secciones/crear-seccion', this.seccion)
+                                return response
+                            } catch (error) {
+                                errorSweetAlert('Ocurrió un error al guardar la Seccion.')
+                            }
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        // this.loading = true
+                        if (result.isConfirmed) {
+                            if (result.value.status === 200) {
+                                if (result.value.data.status === "ok") {
+                                    successSweetAlert(result.value.data.message)
+                                    this.$store.commit('setSecciones', result.value.data.secciones)
+                                    // this.loading = false
+                                    // this.cerrarModalNuevoEvento()
+                                    this.getDataPagina(1) 
+                                    this.panel = []
+                                    this.seccion.nombre =''
+                                    this.seccion.color =''
+                                    // this.evento.sede =''
+                                    // this.evento.fecha_i = ''
+                                    // this.evento.fecha_f = ''
+                                    // this.evento.horario =''
+                                    // this.evento.domicilio = ''
+                                    // this.evento.ubicacion = ''
+                                    this.v$.reset()
+                                // } else if(result.value.data.status==="exists"){
+                                //     warningSweetAlert(result.value.data.message)
+                                //     // this.loading = false
+                                }
+                                else {
+                                    errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
+                                }
+                            } else {
+                                errorSweetAlert('Ocurrió un error al guardar el Evento.')
+                            }
+                        }
+                    })
+                    // this.loading = false
+                    this.v$.$reset()
             },
     }
 })

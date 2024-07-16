@@ -41,13 +41,14 @@
                                     <th class="custom-title-table">Nombre</th>
                                     <th class="custom-title-table">Dependencia</th>
                                     <th class="custom-title-table">Área</th>
+                                    <th class="custom-title-table">Evento</th>
                                     <th class="custom-title-table">Sección</th>
                                     <th class="custom-title-table">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-if="loading">
-                                    <th colspan="5">
+                                    <th colspan="7">
                                         <p class="text-center text-loading-data-table">Cargando datos...</p>
                                         <div class="linear-activity">
                                             <div class="indeterminate"></div>
@@ -67,7 +68,12 @@
                                     <td class="custom-data-table text-uppercase">
                                         {{invitado.area}}
                                     </td>
-                                    <td></td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.nombre_evento}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.zona}}
+                                    </td>
                                     <td>
                                         <div class="text-center row justify-content-center">
                                             <div>

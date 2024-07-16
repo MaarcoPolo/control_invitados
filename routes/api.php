@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TipoUsuarioController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\InvitadoController;
+use App\Http\Controllers\ZonaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -54,10 +55,15 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/invitados/eliminar-invitado', [InvitadoController::class, 'eliminarInvitado']);
     //Ruta para generar el codigo QR
     Route::post('/invitados/generar-codigo-qr', [InvitadoController::class, 'generarCodigoQR']);
-    Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
+    
     Route::post('/invitados/buscar-invitados', [InvitadoController::class, 'buscarInvitado']);
     Route::post('/invitados/enviar-correo', [InvitadoController::class, 'enviarCorreo']);
 
-
+    Route::get('/secciones', [ZonaController::class, 'getSecciones']);
+    Route::post('/secciones/crear-seccion', [ZonaController::class, 'guardarSeccion']);
+    Route::post('/secciones/actualizar-seccion', [ZonaController::class, 'actualizarSeccion']);
+    Route::post('/secciones/eliminar-seccion', [ZonaController::class, 'eliminarSeccion']);
 
 });
+
+    Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
