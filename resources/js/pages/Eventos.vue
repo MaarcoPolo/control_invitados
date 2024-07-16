@@ -868,6 +868,7 @@
 
             },
             abrirModalEditarEvento(evento){
+                this.nuevo= 0
                 this.panel = [0] 
                 this.evento.id = evento.id
                 this.evento.nombre = evento.nombre
