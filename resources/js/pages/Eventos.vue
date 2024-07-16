@@ -716,6 +716,7 @@
         watch: {
             'panel': function() {
                 if(!this.panel){
+                    this.nuevo = 1
                     this.v$.$reset()
                     this.evento.nombre =''
                     this.evento.organizador =''
