@@ -492,6 +492,9 @@
                                 <tr>
                                     <th class="custom-title-table">Id</th>
                                     <th class="custom-title-table">Nombre</th>
+                                    <th class="custom-title-table">Dependencia</th>
+                                    <th class="custom-title-table">Área</th>
+                                    <th class="custom-title-table">Sección</th>
                                 </tr>
                             </thead>
                             <tbody>
