@@ -237,11 +237,23 @@ class InvitadoController extends Controller{
         $invitado = Invitado::find($request->id);
         $evento = Evento::find($request->evento_id);
 
+        $date = new Carbon($evento->fecha_inicial);
+        $f = $this->formatearFecha($date->dayOfWeek, $date->day, $date->month, $date->year);
+
+        $h = Carbon::createFromFormat('H:i:s',$evento->horario)->format('H:i');
+
+        if($h >= '13:00'){
+            $w = 'PM';
+        }else{
+            $w = 'AM';
+        }
+        $hora = $h.' '.$w;
+                
             //header
-            PDF::setHeaderCallBack(function($pdf){
-                $logo = public_path() . '/img/logo_poder_j.png';
-                $pdf->Image($logo,26,0,160,45);
-            });
+            // PDF::setHeaderCallBack(function($pdf){
+            //     $logo = public_path() . '/img/logo_poder_j.png';
+            //     $pdf->Image($logo,26,0,160,45);
+            // });
 
             $style = array(
                 'border' => 2,
@@ -255,7 +267,7 @@ class InvitadoController extends Controller{
 
 
 
-            $view = View::make('pdf.invitacion', compact('invitado','evento'));
+            $view = View::make('pdf.invitacion', compact('invitado','evento','f','hora'));
             $html_content = $view->render();
 
             $PDF_MARGIN_LEFT = 15;
@@ -270,7 +282,7 @@ class InvitadoController extends Controller{
 
             PDF::writeHTML($html_content, true, false, true, false, '');
             // PDF::write2DBarcode('http://control_invitados.test/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
-            PDF::write2DBarcode('http://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
+            PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
 
             PDF::Text(65, 265, 'ESPERANDO CONTAR SON SU PRESENCIA');
             PDF::Text(10, 280, 'FIRMA');
@@ -398,6 +410,18 @@ class InvitadoController extends Controller{
         $invitado = Invitado::find($request->id);
         $evento = Evento::find($request->evento_id);
 
+        $date = new Carbon($evento->fecha_inicial);
+        $f = $this->formatearFecha($date->dayOfWeek, $date->day, $date->month, $date->year);
+
+        $h = Carbon::createFromFormat('H:i:s',$evento->horario)->format('H:i');
+
+        if($h >= '13:00'){
+            $w = 'PM';
+        }else{
+            $w = 'AM';
+        }
+        $hora = $h.' '.$w;
+
          //header
         PDF::setHeaderCallBack(function($pdf){
             $logo = public_path() . '/img/logo_poder_j.png';
@@ -416,7 +440,7 @@ class InvitadoController extends Controller{
 
 
 
-        $view = View::make('pdf.invitacion', compact('invitado','evento'));
+        $view = View::make('pdf.invitacion', compact('invitado','evento','f',hora));
         $html_content = $view->render();
 
         $PDF_MARGIN_LEFT = 15;
@@ -431,7 +455,7 @@ class InvitadoController extends Controller{
 
         PDF::writeHTML($html_content, true, false, true, false, '');
         // PDF::write2DBarcode('http://control_invitados.test/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
-        PDF::write2DBarcode('http://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
+        PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
 
         PDF::Text(65, 265, 'ESPERANDO CONTAR SON SU PRESENCIA');
         PDF::Text(10, 280, 'FIRMA');
@@ -483,6 +507,76 @@ class InvitadoController extends Controller{
         ], 200);
     }
 
+    }
+    public function formatearFecha($week_day, $day, $month, $year)
+    {
+        $nombre_dia = '';
+        switch ($week_day) {
+            case 0:
+                $nombre_dia = 'Domingo';
+                break;
+            case 1:
+                $nombre_dia = 'Lunes';
+                break;
+            case 2:
+                $nombre_dia = 'Martes';
+                break;
+            case 3:
+                $nombre_dia = 'Miércoles';
+                break;
+            case 4:
+                $nombre_dia = 'Jueves';
+                break;
+            case 5:
+                $nombre_dia = 'Viernes';
+                break;
+            case 6:
+                $nombre_dia = 'Sábado';
+                break;
+        }
+
+        $nombre_mes = '';
+        switch ($month) {
+            case 1:
+                $nombre_mes = 'Enero';
+                break;
+            case 2:
+                $nombre_mes = 'Febrero';
+                break;
+            case 3:
+                $nombre_mes = 'Marzo';
+                break;
+            case 4:
+                $nombre_mes = 'Abril';
+                break;
+            case 5:
+                $nombre_mes = 'Mayo';
+                break;
+            case 6:
+                $nombre_mes = 'Junio';
+                break;
+            case 7:
+                $nombre_mes = 'Julio';
+                break;
+            case 8:
+                $nombre_mes = 'Agosto';
+                break;
+            case 9:
+                $nombre_mes = 'Septiembre';
+                break;
+            case 10:
+                $nombre_mes = 'Octubre';
+                break;
+            case 11:
+                $nombre_mes = 'Noviembre';
+                break;
+            case 12:
+                $nombre_mes = 'Diciembre';
+                break;
+        }
+
+        $fecha_formateada = $nombre_dia . ', ' . $day . ' de ' . $nombre_mes . ' de ' . $year;
+        return $fecha_formateada;
     }
 
 }

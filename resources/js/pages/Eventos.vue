@@ -419,7 +419,7 @@
                 </v-card>
             </v-dialog> -->
             
-            <!-- <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
+            <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
                         <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
@@ -615,7 +615,7 @@
             </div>
         </div>
         </v-card>
-            </v-dialog> -->
+            </v-dialog>
             
         </div>
     </div>
