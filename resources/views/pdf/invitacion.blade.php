@@ -45,11 +45,11 @@
 <body>
     <p class="texto">EL _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </p>
     <p class="texto">TIENE EL HONOR DE INVITARLE A LOS </p>
-    <p class="nombre-evento"><span>DIÁLOGOS NACIONALES SOBRE LA REFORMA CONSTITUCIONAL AL PODER JUDICIAL TRIBUNALES DE JUSTICA LOCAL</span></p>
+    <p class="nombre-evento"><span>{{$evento->nombre}}</span></p>
     <p class="texto">EL EVENTO SE LLEVARÁ A CABO EL PRÓXIMO</p>
-    <p class="texto-fecha">MARTES 23 DE JULIO</p>
-    <p class="hora">11:00 PM</p>
-    <p class="lugar">CENTRO EXPOSITOR "SALÓN FUERTE DE LORETO"</p>
-    <p class="texto">AV. EJERCITO DE ORIENTE NO.100, CENTRO CIVICO CULTURAL 5 DE MAYO. ZONA DE LOS FUERTES, PUEBLA, MEXICO</p>
+    <p class="texto-fecha">{{$evento->fecha_inicial}}</p>
+    <p class="hora">{{$evento->horario}}</p>
+    <p class="lugar">{{$evento->sede}}</p>
+    <p class="texto">{{$evento->domicilio_sede}}</p>
 </body>
 </html>
