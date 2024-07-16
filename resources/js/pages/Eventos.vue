@@ -21,13 +21,13 @@
                     </v-btn>
                 </div>
                 <div class="col-md-5 col-12"></div>
-                <div class="col-md-4 col-12">
-                    <div class="principal-div-custom-select">
-                        <div class="second-div-custom-select">
-                            <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
+                    <div class="col-md-4 col-12">
+                        <div class="principal-div-custom-select">
+                            <div class="second-div-custom-select">
+                                <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
             <!-- ///////////////////////////////////////// -->
             <v-container>
@@ -419,7 +419,7 @@
                 </v-card>
             </v-dialog> -->
             
-            <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
+            <!-- <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
                         <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
@@ -535,6 +535,12 @@
                                     <td class="custom-data-table text-uppercase">
                                         {{invitado.nombre}}
                                     </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.dependencia}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.area}}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -609,7 +615,7 @@
             </div>
         </div>
         </v-card>
-            </v-dialog>
+            </v-dialog> -->
             
         </div>
     </div>

@@ -39,6 +39,9 @@
                                 <tr>
                                     <th class="custom-title-table">Id</th>
                                     <th class="custom-title-table">Nombre</th>
+                                    <th class="custom-title-table">Dependencia</th>
+                                    <th class="custom-title-table">Área</th>
+                                    <th class="custom-title-table">Sección</th>
                                     <th class="custom-title-table">Acciones</th>
                                 </tr>
                             </thead>
@@ -58,6 +61,13 @@
                                     <td class="custom-data-table text-uppercase">
                                         {{invitado.nombre}}
                                     </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.dependencia}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.area}}
+                                    </td>
+                                    <td></td>
                                     <td>
                                         <div class="text-center row justify-content-center">
                                             <div>
