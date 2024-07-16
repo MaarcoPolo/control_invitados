@@ -126,8 +126,8 @@ class EventoController extends Controller
             $evento->nombre = $request->nombre;
             $evento->organizador = $request->organizador;
             $evento->sede = $request->sede;
-            $evento->fecha_inicial = $request->fecha_inicial;
-            $evento->fecha_final = $request->fecha_final;
+            $evento->fecha_inicial = $request->fecha_i;
+            $evento->fecha_final = $request->fecha_f;
             $evento->horario = $request->horario;     
             $evento->domicilio_sede = $request->domicilio;
             $evento->ubicacion = $request->ubicacion;       

@@ -106,7 +106,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-center mb-4 mt-2">
+                                    <div v-if="this.nuevo == 1" class="text-center mb-4 mt-2">
                                         <v-btn
                                             class="custom-button mr-2"
                                             color="#c4f45d"
@@ -114,13 +114,15 @@
                                             >
                                             Guardar
                                         </v-btn>
-                                        <!-- <v-btn
-                                            class="custom-button ml-2"
+                                    </div>
+                                    <div v-else class="text-center mb-4 mt-2">
+                                        <v-btn
+                                            class="custom-button mr-2"
                                             color="#c4f45d"
                                             @click="guardarCambiosEditarEvento()"
                                             >
-                                            Guardar Cambios
-                                        </v-btn> -->
+                                            Guardar
+                                        </v-btn>
                                     </div>
                             </v-expansion-panel-text>
                         </v-expansion-panel-content>
@@ -620,6 +622,7 @@
         name: 'eventos',
         data () {
             return { 
+                nuevo: 0,
                 panel: [],
                 // opened: 0,
                 showNav: false,
@@ -746,10 +749,21 @@
         watch: {
             'panel': function() {
                 if(!this.panel){
-                    this.evento.id = 200
+                    this.nuevo = 1
+                    this.v$.$reset()
+                    this.evento.nombre =''
+                    this.evento.organizador =''
+                    this.evento.sede =''
+                    this.evento.fecha_i = ''
+                    this.evento.fecha_f = ''
+                    this.evento.horario =''
+                    this.evento.domicilio = ''
+                    this.evento.ubicacion = ''
+                    this.evento.id = null
+                    // console.log(this.evento)
                 }
                 else{
-                    console.log("nada", this.evento)
+                    // console.log(this.evento)
                 }
                
             },
@@ -774,7 +788,18 @@
             },
         },
         methods: {
+            // async guardar(){
+            //     const isFormCorrect = await this.v$.evento.$validate()              
+            //     if (!isFormCorrect) return
+            //     if(this.evento.id == 100){
+            //         guardarNuevoEvento()
+            //     }else{
+            //         guardarCambiosEditarEvento()
+            //     }
+            // },
             abrir(){
+                this.nuevo = 1
+                this.v$.$reset()
                 this.panel = [0]
                 this.evento.nombre =''
                 this.evento.organizador =''
@@ -934,6 +959,7 @@
                         }
                     })
                     // this.loading = false
+                    this.v$.$reset()
             },
             async guardarCambiosEditarEvento() {
                 const isFormCorrect = await this.v$.evento.$validate()              
@@ -964,7 +990,18 @@
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setEventos', result.value.data.eventos)
                                     this.cerrarModalNuevoEvento()
+                                    this.panel = []
+                                    this.evento.nombre =''
+                                    this.evento.organizador =''
+                                    this.evento.sede =''
+                                    this.evento.fecha_i = ''
+                                    this.evento.fecha_f = ''
+                                    this.evento.horario =''
+                                    this.evento.domicilio = ''
+                                    this.evento.ubicacion = ''
                                     this.getDataPagina(1)
+                                    this.v$.reset()
+                    
                                 } else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                                 }
@@ -973,6 +1010,7 @@
                             }
                         }
                     })
+                   
             },
             async eliminarEvento(evento) {
             
