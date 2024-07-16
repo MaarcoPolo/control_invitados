@@ -419,7 +419,7 @@
                 </v-card>
             </v-dialog> -->
             
-            <!-- <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
+            <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
                         <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
@@ -454,7 +454,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-8 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_dependencia">Dependencia u Organismo:</label>
                                     <input id="input_dependencia" type="text" class="form-control" autocomplete="off" v-model="invitado.dependencia">
@@ -466,14 +466,14 @@
                                     <input id="input_area" type="text" class="form-control" autocomplete="off" v-model="invitado.area">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row justify-content-center">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_telefono">Teléfono:</label>
+                                    <label for="input_telefono">Teléfono de la dependencia:</label>
                                     <input id="input_telefono" type="text" autocomplete="off" maxlength="10" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row justify-content-center">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_email">Correo:</label>
@@ -487,10 +487,21 @@
                                     <input id="input_estado" type="text" autocomplete="off" class="form-control" v-model="invitado.estado">
                                 </div>
                             </div>
-                            <div class="col-md-4 col-12">
+                            
+                        </div>
+                        <div class="row justify-content">
+                            <div class="col-md-6 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_municipio">Municipio:</label>
                                     <input id="input_municipio" type="text" autocomplete="off" class="form-control" v-model="invitado.municipio">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_email">Seccion:</label>
+                                    <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
+                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -540,6 +551,9 @@
                                     </td>
                                     <td class="custom-data-table text-uppercase">
                                         {{invitado.area}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.zona}}
                                     </td>
                                 </tr>
                             </tbody>
@@ -615,7 +629,7 @@
             </div>
         </div>
         </v-card>
-            </v-dialog> -->
+            </v-dialog>
             
         </div>
     </div>
@@ -673,7 +687,8 @@
                     email:'',
                     evento_id: null,
                     estado:'',
-                    municipio:''
+                    municipio:'',
+                    seccion: ''
 
                 },
                 loading2: false,
@@ -732,8 +747,12 @@
         created() {
             this.getEventos()
             this.getInvitados()
+            this.getSecciones()
         },
         computed: {
+            secciones() {
+                    return this.$store.getters.getSecciones
+            },
             pages() {
                 const numShown = Math.min(this.numShown, this.totalPaginas())
                 let first = this.current - Math.floor(numShown / 2)
@@ -795,15 +814,26 @@
             },
         },
         methods: {
-            // async guardar(){
-            //     const isFormCorrect = await this.v$.evento.$validate()              
-            //     if (!isFormCorrect) return
-            //     if(this.evento.id == 100){
-            //         guardarNuevoEvento()
-            //     }else{
-            //         guardarCambiosEditarEvento()
-            //     }
-            // },
+            async getSecciones() {
+                this.loading = true
+                try {                   
+                    let response = await axios.get('/api/secciones')
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.$store.commit('setSecciones', response.data.secciones)
+                            this.input_background_color = response.data.secciones.color
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener las Secciones')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener las Secciones')
+                }
+                this.loading = false
+            },
             abrir(){
                 this.nuevo = 1
                 this.v$.$reset()
@@ -952,7 +982,7 @@
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setEventos', result.value.data.eventos)
                                     // this.loading = false
-                                    this.cerrarModalNuevoEvento()
+                                    // this.cerrarModalNuevoEvento()
                                     this.getDataPagina(1) 
                                     this.panel = []
                                     this.evento.nombre =''
@@ -1120,10 +1150,15 @@
                                     this.mostrar2 = true
                                     this.invitado.id = ''
                                     this.invitado.nombre =''
+                                    this.invitado.apellido_p =''
+                                    this.invitado.apellido_m =''
                                     this.invitado.dependencia =''
                                     this.invitado.area =''
                                     this.invitado.telefono = ''
                                     this.invitado.email = ''
+                                    this.invitado.estado =''
+                                    this.invitado.municipio = ''
+                                    this.invitado.seccion = ''
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
                                     this.loading2 = false

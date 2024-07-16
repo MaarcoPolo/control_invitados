@@ -33,13 +33,14 @@ class InvitadoController extends Controller{
                 $objectInvitado = new \stdClass();
                 $objectInvitado->id = $invitado->id;
                 $objectInvitado->numero_registro = $cont;
-                $objectInvitado->nombre = $invitado->nombre;
+                $objectInvitado->nombre = $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m;
                 $objectInvitado->dependencia = $invitado->dependencia;
                 $objectInvitado->area = $invitado->area;
                 $objectInvitado->telefono = $invitado->telefono;
                 $objectInvitado->email = $invitado->email;
                 $objectInvitado->evento_id = $invitado->evento_id;
-                
+                $objectInvitado->nombre_evento = $invitado->evento->nombre;
+                $objectInvitado->zona = $invitado->zona->nombre;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -80,6 +81,7 @@ class InvitadoController extends Controller{
                 $invitado->municipio = $request->municipio;
                 $invitado->folio = $request->evento_id.'-'.Str::random(10);
                 $invitado->evento_id = $request->evento_id;
+                $invitado->zona_id = $request->seccion;
                 $invitado->save();
 
                 $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
@@ -91,13 +93,14 @@ class InvitadoController extends Controller{
                     $objectInvitado = new \stdClass();
                     $objectInvitado->id = $invitado->id;
                     $objectInvitado->numero_registro = $cont;
-                    $objectInvitado->nombre = $invitado->nombre;
+                    $objectInvitado->nombre = $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m;
                     $objectInvitado->dependencia = $invitado->dependencia;
                     $objectInvitado->area = $invitado->area;
                     $objectInvitado->telefono = $invitado->telefono;
                     $objectInvitado->email = $invitado->email;
                     $objectInvitado->evento_id = $invitado->evento_id;
-                    
+                    $objectInvitado->nombre_evento = $invitado->evento->nombre;
+                    $objectInvitado->zona = $invitado->zona->nombre;
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -147,13 +150,14 @@ class InvitadoController extends Controller{
                     $objectInvitado = new \stdClass();
                     $objectInvitado->id = $invitado->id;
                     $objectInvitado->numero_registro = $cont;
-                    $objectInvitado->nombre = $invitado->nombre;
+                    $objectInvitado->nombre = $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m;
                     $objectInvitado->dependencia = $invitado->dependencia;
                     $objectInvitado->area = $invitado->area;
                     $objectInvitado->telefono = $invitado->telefono;
                     $objectInvitado->email = $invitado->email;
                     $objectInvitado->evento_id = $invitado->evento_id;
-                    
+                    $objectInvitado->nombre_evento = $invitado->evento->nombre;
+                    $objectInvitado->zona = $invitado->zona->nombre;
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -200,13 +204,14 @@ class InvitadoController extends Controller{
                 $objectInvitado = new \stdClass();
                 $objectInvitado->id = $invitado->id;
                 $objectInvitado->numero_registro = $cont;
-                $objectInvitado->nombre = $invitado->nombre;
+                $objectInvitado->nombre = $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m;
                 $objectInvitado->dependencia = $invitado->dependencia;
                 $objectInvitado->area = $invitado->area;
                 $objectInvitado->telefono = $invitado->telefono;
                 $objectInvitado->email = $invitado->email;
                 $objectInvitado->evento_id = $invitado->evento_id;
-                
+                $objectInvitado->nombre_evento = $invitado->evento->nombre;
+                $objectInvitado->zona = $invitado->zona->nombre;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -364,13 +369,14 @@ class InvitadoController extends Controller{
                 $objectInvitado = new \stdClass();
                 $objectInvitado->id = $invitado->id;
                 $objectInvitado->numero_registro = $cont;
-                $objectInvitado->nombre = $invitado->nombre;
+                $objectInvitado->nombre = $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m;
                 $objectInvitado->dependencia = $invitado->dependencia;
                 $objectInvitado->area = $invitado->area;
                 $objectInvitado->telefono = $invitado->telefono;
                 $objectInvitado->email = $invitado->email;
                 $objectInvitado->evento_id = $invitado->evento_id;
-                
+                $objectInvitado->nombre_evento = $invitado->evento->nombre;
+                $objectInvitado->zona = $invitado->zona->nombre;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
