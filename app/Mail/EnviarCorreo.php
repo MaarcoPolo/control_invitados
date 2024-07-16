@@ -38,7 +38,7 @@ class EnviarCorreo extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Enviar Correo',
+            subject: 'Invitación al evento de Poder Judicial del Estado de Puebla',
         );
     }
 

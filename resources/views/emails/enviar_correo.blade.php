@@ -51,6 +51,6 @@
     <p class="hora">{{$evento->horario}}</p>
     <p class="lugar">{{$evento->sede}}</p>
     <p class="texto">{{$evento->domicilio_sede}}</p>  --}}
-    Correo de invitación
+    Favor de abrir o descargar el archivo PDF para poder visualizar su invitación
 </body>
 </html>

@@ -430,7 +430,8 @@ class InvitadoController extends Controller{
         PDF::AddPage('P', 'A4');
 
         PDF::writeHTML($html_content, true, false, true, false, '');
-        PDF::write2DBarcode('http://control_invitados.test/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
+        // PDF::write2DBarcode('http://control_invitados.test/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
+        PDF::write2DBarcode('http://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
 
         PDF::Text(65, 265, 'ESPERANDO CONTAR SON SU PRESENCIA');
         PDF::Text(10, 280, 'FIRMA');
