@@ -91,7 +91,7 @@
                                             </div>
                                             <div>
                                                 <v-icon
-                                                    @click="descargarCodigoInvitado(invitado)"
+                                                    @click="enviarCorreo(invitado)"
                                                     class="ml-1 mr-1"
                                                     >
                                                     mdi-email-fast-outline
@@ -700,6 +700,27 @@
                 }
                 this.loading = false
             },
+            async enviarCorreo(invitado) {
+                this.loading = true
+                try {                   
+                    let response = await axios.post('/api/invitados/enviar-correo',invitado)
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            successSweetAlert(response.data.message)
+                            this.$store.commit('setInvitados', response.data.invitados)
+                            this.getDataPagina(1)
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                }
+                this.loading = false
+            }
         }
     })
 </script>

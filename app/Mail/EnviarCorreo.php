@@ -10,11 +10,12 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ConfirmacionCita extends Mailable
+class EnviarCorreo extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $invitado;
+    public $evento;
     public $pdf;
 
     /**
@@ -22,9 +23,10 @@ class ConfirmacionCita extends Mailable
      *
      * @return void
      */
-    public function __construct($invitado, $pdf)
+    public function __construct($invitado,$evento,$pdf)
     {
         $this->invitado = $invitado;
+        $this->evento = $evento;
         $this->pdf = $pdf;
     }
 
