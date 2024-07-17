@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 // class InvitadosImport implements ToModel
 class InvitadosImport implements ToCollection
 {
-    private $evento_id;
+    private $evento_id = null;
     /**
     * @param array $row
     *

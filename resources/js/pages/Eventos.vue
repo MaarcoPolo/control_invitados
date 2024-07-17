@@ -446,7 +446,7 @@
                                 <v-btn
                                     class="custom-button ml-2"
                                     color="#6a73a0"
-                                    @click="EventSubir()"
+                                    @click="importarInvitados()"
                                     >
                                     importar
                                 </v-btn>
@@ -668,7 +668,8 @@
         data () {
             return { 
                 archivo: {
-                    archivo: ''
+                    archivo: [],
+                    evento_id: ''
                 },
                 nuevo: 0,
                 panel: [],
@@ -1281,6 +1282,8 @@
 
             async importarInvitados() {
                 try {
+                    this.archivo.evento_id = this.invitado.evento_id
+                    console.log(this.archivo)
                     this.loading = true
                     let response = await axios.post('/api/invitados/import', this.archivo,{
                         headers: {
@@ -1294,8 +1297,10 @@
             },
 
             EventSubir(){
+                this.archivo.evento_id = this.invitado.evento_id
                 let formData = new FormData();
-                formData.append('file', this.archivo.archivo);
+                console.log(this.archivo)
+                formData.append('file', this.archivo);
                 axios.post( '/api/invitados/import',formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'

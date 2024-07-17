@@ -496,9 +496,10 @@ class InvitadoController extends Controller{
 
     public function importInvitados(Request $request)
     {
-        $path = $request->file('file')->getRealPath();
-        $evento_id = 2;
-        $ex =  Excel::import(new InvitadosImport($evento_id),$path);
+        // dd($request->archivo);
+        $path = $request->file('archivo');
+        // $evento_id = 2;
+        $ex =  Excel::import(new InvitadosImport($request->evento_id),$path);
 
        return compact($ex);
     }
