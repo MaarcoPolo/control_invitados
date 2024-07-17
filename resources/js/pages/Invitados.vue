@@ -577,6 +577,7 @@
                                 successSweetAlert(result.value.data.message)
                                 this.$store.commit('setInvitados', result.value.data.invitados)
                                 this.getDataPagina(1)
+                                this.BuscarInvitado()
                             } else {
                                 errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                             }

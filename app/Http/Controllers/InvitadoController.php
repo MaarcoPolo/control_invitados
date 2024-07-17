@@ -478,7 +478,7 @@ class InvitadoController extends Controller{
 
 
 
-        $view = View::make('pdf.invitacion', compact('invitado','evento','f',hora));
+        $view = View::make('pdf.invitacion', compact('invitado','evento','f','hora'));
         $html_content = $view->render();
 
         $PDF_MARGIN_LEFT = 15;
