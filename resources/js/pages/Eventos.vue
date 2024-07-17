@@ -668,7 +668,7 @@
         data () {
             return { 
                 archivo: {
-                    archivo: [],
+                    archivo:'',
                     evento_id: ''
                 },
                 nuevo: 0,

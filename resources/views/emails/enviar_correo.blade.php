@@ -52,5 +52,11 @@
     <p class="lugar">{{$evento->sede}}</p>
     <p class="texto">{{$evento->domicilio_sede}}</p>  --}}
     Favor de abrir o descargar el archivo PDF para poder visualizar su invitación
+    <br><br>
+
+    CONFIRMA TU ASISTENCIA DANDO CLIC AL SIGUIENTE ENLACE
+    {{--  https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}  --}}
+        http://control_invitados.test/confirmacion?folio={{$invitado->folio}}
+
 </body>
 </html>

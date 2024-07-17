@@ -70,3 +70,4 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
 });
 
     Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
+    Route::post('/invitados/confirmar-asistencia', [InvitadoController::class, 'confirmarAsistencia']);
