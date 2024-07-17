@@ -60,7 +60,7 @@
                                         {{invitado.numero_registro}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
-                                        {{invitado.nombre}}
+                                        {{invitado.nombreC}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
                                         {{invitado.dependencia}}
@@ -200,13 +200,14 @@
                     </div>
                 </div>
             </div>
-            <!-- <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
+            <!-- INICIO MODAL PARA EDITAR DATOS DEL INVITADO -->
+            <v-dialog v-model="dialogEditarInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
-                        <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
+                        <h3 class="mt-2 custom-dialog-title">Editar invitado</h3>
                     </v-card-title>
                     <v-card-text>
-                        <div class="text-center my-3 custom-border">
+                        <div class="text-center my-8 custom-border">
                             <div class="custom-subtitle">
                                 <p>Datos</p>
                             </div>
@@ -221,10 +222,34 @@
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
+                                    <label for="input_apellido_p">Apellido paterno:</label>
+                                    <input id="input_apellido_p" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_p.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.apellido_p.$error">*Campo obligatorio</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_apellido_m">Apellido materno:</label>
+                                    <input id="input_apellido_m" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_m.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.apellido_m.$error">*Campo obligatorio</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-12">
+                                <div class="div-custom-input-form">
                                     <label for="input_dependencia">Dependencia u Organismo:</label>
                                     <input id="input_dependencia" type="text" class="form-control" autocomplete="off" v-model="invitado.dependencia">
                                 </div>
                             </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_cargo">Cargo:</label>
+                                    <input id="input_cargo" type="text" class="form-control" autocomplete="off" v-model="invitado.cargo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_area">Área:</label>
@@ -233,82 +258,7 @@
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_telefono">Teléfono:</label>
-                                    <input id="input_telefono" type="text" maxlength="10" autocomplete="off" class="form-control" v-model="invitado.telefono">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_email">Correo:</label>
-                                    <input id="input_email" type="email" autocomplete="off" class="form-control" v-model="v$.invitado.email.$model">
-                                    <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="select_evento">Seleccione un evento:</label>
-                                    <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.evento_id">
-                                        <option  v-for="item in eventos" :key="item.id" :value="item.id">{{item.nombre}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center mb-4 mt-6">
-                            <v-btn
-                                class="custom-button mr-2"
-                                color="#c4f45d"
-                                @click="guardarNuevoInvitado()"
-                                >
-                                Guardar
-                            </v-btn>
-                            <v-btn
-                                class="custom-button ml-2"
-                                color="#6a73a0"
-                                @click="cerrarModalNuevoInvitado()"
-                                >
-                                Cancelar
-                            </v-btn>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog> -->
-            <!-- INICIO MODAL PARA EDITAR DATOS DEL INVITADO -->
-            <v-dialog v-model="dialogEditarInvitado" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-2 custom-dialog-title">Editar invitado</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-center my-8 custom-border">
-                            <div class="custom-subtitle">
-                                <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.invitado.nombre.$model" autocomplete="off">
-                                    <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_dependencia">Dependencia u Organismo:</label>
-                                    <input id="input_dependencia" type="text" class="form-control" v-model="invitado.dependencia" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_area">Área:</label>
-                                    <input id="input_area" type="text" class="form-control" v-model="invitado.area" autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_telefono">Teléfono:</label>
+                                    <label for="input_telefono">Teléfono de la dependencia:</label>
                                     <input id="input_telefono" type="text" autocomplete="off" maxlength="10" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
@@ -319,11 +269,25 @@
                                     <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row justify-content">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="select_evento">Seleccione un evento:</label>
-                                    <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.evento_id">
-                                        <option  v-for="item in eventos" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    <label for="input_estado">Estado:</label>
+                                    <input id="input_estado" type="text" autocomplete="off" class="form-control" v-model="invitado.estado">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_municipio">Municipio:</label>
+                                    <input id="input_municipio" type="text" autocomplete="off" class="form-control" v-model="invitado.municipio">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_seccion">Seccion:</label>
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
+                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -366,13 +330,21 @@
                 dialogEditarInvitado: false,
                 invitado: {
                     id: null,
+                    nombreC:'',
                     nombre: '',
+                    apellido_p:'',
+                    apellido_m:'',
                     dependencia:'',
                     area:'',
                     telefono:'',
                     email:'',
-                    evento_id: null
-                },               
+                    evento_id: null,
+                    estado:'',
+                    municipio:'',
+                    seccion: '',
+                    cargo:''
+
+                },       
                 loading: false,
                 elementosPorPagina: 10,
                 paginaActual: 1,
@@ -383,6 +355,7 @@
                 numShown: 5,
                 current: 1,
                 buscar: '',
+                invitados:[]
             }
         },
         setup() {
@@ -393,7 +366,13 @@
         validations() {
                 return {
                     invitado: {
-                        nombre: {
+                        nombre:{
+                            required
+                        },
+                        apellido_p:{
+                            required
+                        },
+                        apellido_m:{
                             required
                         },
                         email:{
@@ -403,9 +382,8 @@
                 }
         },
         created() {
-            this.getInvitados()
             this.getEventos()
-            
+            this.getSecciones()
         },
         computed: {
             pages() {
@@ -415,11 +393,11 @@
                 first = Math.min(first, this.totalPaginas() - numShown + 1)
                 return [...Array(numShown)].map((k, i) => i + first)
             },
-            invitados() {
-                    return this.$store.getters.getInvitados
-            },
             eventos() {
                     return this.$store.getters.getEventos
+            },
+            secciones() {
+                    return this.$store.getters.getSecciones
             }
         },
         watch: {
@@ -501,89 +479,37 @@
             abrirModalNuevoInvitado(){
                 this.dialogNuevoInvitado = true
             },
-            async getInvitados() {
-                this.loading = true
-                try {                   
-                    let response = await axios.post('/api/invitados')
-                    if (response.status === 200) {
-                        if (response.data.status === "ok") {
-                            this.$store.commit('setInvitados', response.data.invitados)
-                            this.mostrar = true
-                            this.loading = false
-                            this.getDataPagina(1)
-
-                        } else {
-                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
-                        }
-                    } else {
-                        errorSweetAlert('Ocurrió un error al obtener los invitados')
-                    }
-                } catch (error) {
-                    errorSweetAlert('Ocurrió un error al obtener los invitados')
-                }
-                this.loading = false
-            },
             cerrarModalNuevoInvitado(){
                 this.dialogNuevoInvitado = false
                 this.dialogEditarInvitado = false
                 this.invitado.id = ''
-                this.invitado.nombre =''
-                this.invitado.dependencia =''
-                this.invitado.area =''
+                this.invitado.nombre = ''
+                this.invitado.apellido_p = ''
+                this.invitado.apellido_m = ''
+                this.invitado.dependencia = ''
+                this.invitado.area = ''
+                this.invitado.cargo = ''
+                this.invitado.estado = ''
+                this.invitado.municipio = ''
+                this.invitado.seccion = ''
                 this.invitado.telefono = ''
                 this.invitado.email = ''
             },
             abrirModalEditarInvitado(invitado){
                 this.dialogEditarInvitado = true 
                 this.invitado.id = invitado.id
+                this.invitado.nombreC = invitado.nombreC
                 this.invitado.nombre = invitado.nombre
+                this.invitado.apellido_p = invitado.apellido_p
+                this.invitado.apellido_m = invitado.apellido_m
                 this.invitado.dependencia = invitado.dependencia
                 this.invitado.area = invitado.area
+                this.invitado.cargo = invitado.cargo
                 this.invitado.telefono = invitado.telefono
                 this.invitado.email = invitado.email
-            },
-            async guardarNuevoInvitado() {
-                const isFormCorrect = await this.v$.invitado.$validate()              
-                if (!isFormCorrect) return
-                Swal.fire({
-                    title: '¿Guardar nuevo Invitado?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085D6',
-                    cancelButtonColor: '#D33',
-                    confirmButtonText: 'Si, guardar',
-                    cancelButtonText: 'Cancelar',
-                    showLoaderOnConfirm: true,
-                    preConfirm: async () => {
-                        try {
-                                this.loading = true
-                                let response = await axios.post('/api/invitados/crear-invitado', this.invitado)
-                                return response
-                            } catch (error) {
-                                errorSweetAlert('Ocurrió un error al guardar al invitado.')
-                            }
-                        },
-                        allowOutsideClick: () => !Swal.isLoading()
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            if (result.value.status === 200) {
-                                if (result.value.data.status === "ok") {
-                                    successSweetAlert(result.value.data.message)
-                                    this.$store.commit('setInvitados', result.value.data.invitados)
-                                    this.loading = false
-                                    this.cerrarModalNuevoInvitado()
-                                    this.getDataPagina(1)
-                                } else if(result.value.data.status==="exists"){
-                                    warningSweetAlert(result.value.data.message)
-                                    this.loading = false
-                                }else {
-                                    errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
-                                }
-                            } else {
-                                errorSweetAlert('Ocurrió un error al guardar al invitado.')
-                            }
-                        }
-                    })
+                this.invitado.estado = invitado.estado
+                this.invitado.municipio = invitado.municipio
+                this.invitado.seccion = invitado.seccion
             },
             async guardarCambiosEditarInvitado() {
                 const isFormCorrect = await this.v$.invitado.$validate()              
@@ -668,8 +594,7 @@
                                                         let blob = new Blob([response.data], { type: 'application/pdf' })
                                                         let link = document.createElement('a')
                                                         link.href = window.URL.createObjectURL(blob)
-                                                        link.download = `${invitado.nombre}.pdf`
-                                                        // link.download = 'codigoQR.pdf'
+                                                        link.download = `${invitado.nombreC}.pdf`
                                                         link.click()
                                                     })   
                                                 }catch (error) {
@@ -702,7 +627,7 @@
                     let response = await axios.post('/api/invitados/buscar-invitados', this.invitado)
                     if (response.status === 200) {
                         if (response.data.status === "ok") {
-                            this.$store.commit('setInvitados', response.data.invitados)
+                            this.invitados = response.data.invitados
                             this.getDataPagina(1)
                             this.mostrar = true
                         } else {
@@ -734,6 +659,26 @@
                     }
                 } catch (error) {
                     errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                }
+                this.loading = false
+            },
+            async getSecciones() {
+                this.loading = true
+                try {                   
+                    let response = await axios.get('/api/secciones')
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.$store.commit('setSecciones', response.data.secciones)
+                            this.input_background_color = response.data.secciones.color
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener las Secciones')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener las Secciones')
                 }
                 this.loading = false
             }

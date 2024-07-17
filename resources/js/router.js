@@ -7,7 +7,7 @@ import Eventos from './pages/Eventos.vue'
 import Invitados from './pages/Invitados.vue'
 import ValidarInvitado from './pages/ValidarInvitado.vue'
 import Secciones from './pages/Secciones.vue'
-
+import Ingresados from './pages/Ingresados.vue'
 
 const routes = [
     {
@@ -52,6 +52,14 @@ const routes = [
         path: '/secciones',
         name: 'Secciones',
         component: Secciones,
+        meta: {
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/ingresados',
+        name: 'Ingresados',
+        component: Ingresados,
         meta: {
             requiresAuth: true
         },

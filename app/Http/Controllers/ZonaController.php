@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\Zona;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Invitado;
+
 
 class ZonaController extends Controller
 {
@@ -226,6 +228,46 @@ class ZonaController extends Controller
                 "status" => "ok",
                 "message" => "Seccion eliminada con exito.",
                 "secciones" => $array_zonas
+            ], 200);
+        }
+    }
+    public function SeccionesConteo(Request $request){
+        try{
+
+            $zonas = Zona::where('status',1)->get();
+            
+            $array_zonas = array();
+            foreach($zonas as $zona){
+
+                $objectZona = new \stdClass();
+                $objectZona->id = $zona->id;
+                $objectZona->nombre = $zona->nombre;
+
+                $confirmado = Invitado::where('status',1)->where('zona_id',$zona->id)->where('confirmo',1)->where('evento_id',$request->evento_id)->count();
+                $ingresados = Invitado::where('status',1)->where('zona_id',$zona->id)->where('verificado',1)->where('evento_id',$request->evento_id)->count();
+                $pendientes = Invitado::where('status',1)->where('zona_id',$zona->id)->where('verificado',0)->where('evento_id',$request->evento_id)->count();
+                $total_seccion = Invitado::where('status',1)->where('zona_id',$zona->id)->where('evento_id',$request->evento_id)->count();
+
+                $objectZona->ingresados = $ingresados;
+                $objectZona->pendientes = $pendientes;
+                $objectZona->total_seccion = $total_seccion;
+
+                array_push($array_zonas, $objectZona);
+            }
+
+            return response()->json([
+                "status" => "ok",
+                "message" => "Secciones contadas obtenidas con éxito",
+                "secciones" => $array_zonas
+            ], 200);
+
+        }catch(\Throwable $th) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Ocurrió un error al obtener el conteo de las secciones",
+                "error" => $th->getMessage(),
+                "location" => $th->getFile(),
+                "line" => $th->getLine(),
             ], 200);
         }
     }

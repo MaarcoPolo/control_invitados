@@ -6,7 +6,6 @@
                 <p>Eventos</p>
             </div>
         </div>
-        
         <div class="container mt-16">
             <!-- INICIO BOTON NUEVO Y BUSCADOR -->
             <div class="row justify-content-between">
@@ -33,8 +32,8 @@
             <v-container>
                 <v-expansion-panels v-model="panel">
                     <v-expansion-panel>
-                       <v-expansion-panel-title >
-                       </v-expansion-panel-title>
+                        <v-expansion-panel-title >
+                        </v-expansion-panel-title>
                         <v-expansion-panel-content>
                             <v-expansion-panel-text>
                                     <div class="text-center my-3 custom-border">
@@ -128,9 +127,8 @@
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
-             </v-container>
+            </v-container>
              <!-- //////////////////////////// -->
-              
             <!--INICIO DE LA TABLA EVENTOS-->
             <div class="my-2 mb-12 py-6">
                 <div class="">
@@ -286,139 +284,7 @@
                         </template>
                     </div>
                 </div>
-            </div>
-            <!-- <v-dialog v-model="dialogNuevoEvento" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-5 custom-dialog-title">Nuevo Evento</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-center my-3 custom-border">
-                            <div class="custom-subtitle">
-                                <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-md-6 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
-                                    <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoP">Organizador:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
-                                    <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoM">Sede:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_fecha_i">Fecha inicial:</label>
-                                    <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_i">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_fecha_f">Fecha final:</label>
-                                    <input id="input_fecha_f" type="date" class="form-control" v-model="evento.fecha_f">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center mb-4 mt-6">
-                            <v-btn
-                                class="custom-button mr-2"
-                                color="#c4f45d"
-                                @click="guardarNuevoEvento()"
-                                >
-                                Guardar
-                            </v-btn>
-                            <v-btn
-                                class="custom-button ml-2"
-                                color="#6a73a0"
-                                @click="cerrarModalNuevoEvento()"
-                                >
-                                Cancelar
-                            </v-btn>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog> -->
-            <!-- INICIO MODAL PARA EDITAR DATOS DEL EVENTO -->
-            <!-- <v-dialog v-model="dialogEditarEvento" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-2 custom-dialog-title">Editar Evento</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-center my-8 custom-border">
-                            <div class="custom-subtitle">
-                                <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoP">Organizador:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoM">Sede:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_username">Fecha inicial:</label>
-                                    <input id="input_username" type="date" class="form-control" v-model="evento.fecha_i">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_pass">Fecha Final:</label>
-                                    <input id="input_pass" type="date" class="form-control" v-model="evento.fecha_f">
-                                </div>
-                            </div>                        
-                        </div>
-                        <div class="text-center mb-4 mt-6">
-                            <v-btn
-                                class="custom-button mr-2"
-                                color="#c4f45d"
-                                @click="guardarCambiosEditarEvento()"
-                                >
-                                Guardar
-                            </v-btn>
-                            <v-btn
-                                class="custom-button ml-2"
-                                color="#6a73a0"
-                                @click="cerrarModalNuevoEvento()"
-                                >
-                                Cancelar
-                            </v-btn>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog> -->
-            
+            </div>            
             <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
@@ -462,12 +328,18 @@
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_area">Área:</label>
-                                    <input id="input_area" type="text" class="form-control" autocomplete="off" v-model="invitado.area">
+                                    <label for="input_cargo">Cargo:</label>
+                                    <input id="input_cargo" type="text" class="form-control" autocomplete="off" v-model="invitado.cargo">
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-center">
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_area">Área:</label>
+                                    <input id="input_area" type="text" class="form-control" autocomplete="off" v-model="invitado.area">
+                                </div>
+                            </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_telefono">Teléfono de la dependencia:</label>
@@ -481,25 +353,24 @@
                                     <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row justify-content">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_estado">Estado:</label>
                                     <input id="input_estado" type="text" autocomplete="off" class="form-control" v-model="invitado.estado">
                                 </div>
                             </div>
-                            
-                        </div>
-                        <div class="row justify-content">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_municipio">Municipio:</label>
                                     <input id="input_municipio" type="text" autocomplete="off" class="form-control" v-model="invitado.municipio">
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_email">Seccion:</label>
-                                    <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
+                                    <label for="select_seccion">Seccion:</label>
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
                                         <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
                                     </select>
                                 </div>
@@ -544,7 +415,7 @@
                                         {{invitado.numero_registro}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
-                                        {{invitado.nombre}}
+                                        {{invitado.nombreC}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
                                         {{invitado.dependencia}}
@@ -688,7 +559,8 @@
                     evento_id: null,
                     estado:'',
                     municipio:'',
-                    seccion: ''
+                    seccion: '',
+                    cargo:''
 
                 },
                 loading2: false,
@@ -772,7 +644,7 @@
                 first = Math.max(first, 1)
                 first = Math.min(first, this.totalPaginas2() - numShown2 + 1)
                 return [...Array(numShown2)].map((k, i) => i + first)
-            },
+            }
         },
         watch: {
             'panel': function() {
@@ -790,8 +662,6 @@
                     this.evento.id = null
                     // console.log(this.evento)
                 }
-                
-               
             },
             buscar: function () {
                 if (!this.buscar.length == 0) {

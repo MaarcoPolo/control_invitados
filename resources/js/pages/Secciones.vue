@@ -31,8 +31,8 @@
             <v-container>
                 <v-expansion-panels v-model="panel">
                     <v-expansion-panel>
-                       <v-expansion-panel-title >
-                       </v-expansion-panel-title>
+                        <v-expansion-panel-title >
+                        </v-expansion-panel-title>
                         <v-expansion-panel-content>
                             <v-expansion-panel-text>
                                     <div class="text-center my-3 custom-border">
@@ -56,49 +56,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="row justify-content-between">
-                                        <div class="col-md-4 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_fecha_i">Fecha inicial:</label>
-                                                <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_i">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_fecha_i">Fecha final:</label>
-                                                <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_f">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_fecha_f">Horario:</label>
-                                                <input id="input_fecha_f" type="time" class="form-control" v-model="evento.horario">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-md-6 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_apellidoM">Sede:</label>
-                                                <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
-                                                <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_apellidoM">Domicilio de la Sede:</label>
-                                                <input id="input_apellidoM" type="text" class="form-control" v-model="evento.domicilio">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-md-12 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_apellidoM">Ubicación en Google Maps:</label>
-                                                <input id="input_apellidoM" type="text" class="form-control" v-model="evento.ubicacion">
-                                            </div>
-                                        </div>
-                                    </div> -->
                                     <div v-if="this.nuevo == 1" class="text-center mb-4 mt-2">
                                         <v-btn
                                             class="custom-button mr-2"
@@ -298,13 +255,7 @@ export default defineComponent({
             seccion: {
                     id: 0,
                     nombre: '',
-                    color:'',
-                    // sede:'',
-                    // fecha_i:null,
-                    // fecha_f: null,
-                    // horario: null,
-                    // domicilio: '',
-                    // ubicacion: ''
+                    color:''
                 },
                 loading: false,
                 elementosPorPagina: 10,
@@ -316,7 +267,6 @@ export default defineComponent({
                 numShown: 5,
                 current: 1,
                 buscar: '',
-                // input_background_color: '#0a0a0a',
         }
     },
     setup() {
@@ -328,7 +278,7 @@ export default defineComponent({
         return{
             seccion:{
                 nombre: {
-                   required
+                    required
                 },
                 color: {
                     required
