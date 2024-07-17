@@ -626,7 +626,7 @@ class InvitadoController extends Controller{
         try {
             $total_invitados = Invitado::where('evento_id',$request->evento_id)->count();
             $path = $request->file('file')->getRealPath();
-            Excel::import(new InvitadosImport($request->evento_id,$total_invitados),$path); 
+            Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$path); 
 
             return response()->json([
                 "status" => "ok",
@@ -708,6 +708,86 @@ class InvitadoController extends Controller{
             return response()->json([
                 "status" => "error",
                 "message" => "Ocurrió un error al encontrar al invitado.",
+                "error" => $th->getMessage(),
+                "location" => $th->getFile(),
+                "line" => $th->getLine(),
+            ], 200);
+        }
+    }
+
+    public function enviarCorreosMasivo(Request $request)
+    {
+        try{
+            // $invitado = Invitado::find($request->id);
+            $evento = Evento::find($request->evento_id);
+
+            $invitados = Invitado::where('evento_id',$evento->id)->get();
+
+            foreach($invitados as $invitado)
+            {
+    
+                $date = new Carbon($evento->fecha_inicial);
+                $f = $this->formatearFecha($date->dayOfWeek, $date->day, $date->month, $date->year);
+        
+                $h = Carbon::createFromFormat('H:i:s',$evento->horario)->format('H:i');
+        
+                if($h >= '13:00'){
+                    $w = 'PM';
+                }else{
+                    $w = 'AM';
+                }
+                $hora = $h.' '.$w;
+        
+                //header
+                PDF::setHeaderCallBack(function($pdf){
+                    $logo = public_path() . '/img/logo_poder_j.png';
+                    $pdf->Image($logo,26,0,160,45);
+                });
+        
+                $style = array(
+                    'border' => 2,
+                    'vpadding' => 'auto',
+                    'hpadding' => 'auto',
+                    'fgcolor' => array(0,0,0),
+                    'bgcolor' => false, //array(255,255,255)
+                    'module_width' => 1, // width of a single module in points
+                    'module_height' => 1 // height of a single module in points
+                );
+                $view = View::make('pdf.invitacion', compact('invitado','evento','f',hora));
+                $html_content = $view->render();
+        
+                $PDF_MARGIN_LEFT = 15;
+                $PDF_MARGIN_TOP = 30;
+                $PDF_MARGIN_RIGHT = 15;
+                $PDF_MARGIN_BOTTOM = 05;
+        
+                PDF::SetMargins($PDF_MARGIN_LEFT, $PDF_MARGIN_TOP, $PDF_MARGIN_RIGHT,$PDF_MARGIN_BOTTOM);
+                PDF::SetAutoPageBreak(true, $PDF_MARGIN_BOTTOM);
+                
+                PDF::AddPage('P', 'A4');
+        
+                PDF::writeHTML($html_content, true, false, true, false, '');
+                // PDF::write2DBarcode('http://control_invitados.test/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
+                PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
+        
+                PDF::Text(65, 265, 'ESPERANDO CONTAR SON SU PRESENCIA');
+                PDF::Text(10, 280, 'FIRMA');
+                PDF::Text(180, 280, 'FIRMA2');
+                ob_end_clean();
+                $pdf = PDF::Output('Código.pdf','S');
+                Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
+            }
+
+            return response()->json([
+                "status" => "ok",
+                "message" => "Correos enviados con éxito.",
+            ], 200);      
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $exito = false;
+            return response()->json([
+                "status" => "error",
+                "message" => "Ocurrió un error al enviar los correos.",
                 "error" => $th->getMessage(),
                 "location" => $th->getFile(),
                 "line" => $th->getLine(),

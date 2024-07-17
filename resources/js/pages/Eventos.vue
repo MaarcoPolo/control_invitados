@@ -1197,6 +1197,7 @@
                 let formData = new FormData();
                 formData.append('file', this.archivo.archivo);
                 formData.append('evento_id', this.archivo.evento_id);
+                formData.append('zona_id', this.archivo.zona_id);
 
                 let response  =  await axios.post( '/api/invitados/import',formData, {
                     headers: {
