@@ -63,6 +63,9 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/secciones/crear-seccion', [ZonaController::class, 'guardarSeccion']);
     Route::post('/secciones/actualizar-seccion', [ZonaController::class, 'actualizarSeccion']);
     Route::post('/secciones/eliminar-seccion', [ZonaController::class, 'eliminarSeccion']);
+    Route::post('/invitados/import', [InvitadoController::class, 'importInvitados']);
+
+
 
 });
 

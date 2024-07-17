@@ -420,7 +420,9 @@
             </v-dialog> -->
             
             <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
+                
                 <v-card>
+                   
                     <v-card-title class="text-center">
                         <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
                     </v-card-title>
@@ -428,6 +430,26 @@
                         <div class="text-center my-3 custom-border">
                             <div class="custom-subtitle">
                                 <p>Datos</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="div-custom-input-form">
+                                <v-file-input
+                                    v-model="archivo.archivo"
+                                    show-size
+                                    label="invitados"
+                                    variant="outlined"
+                                ></v-file-input>  
+                            </div>
+
+                            <div class="text-center mb-4 mt-6">
+                                <v-btn
+                                    class="custom-button ml-2"
+                                    color="#6a73a0"
+                                    @click="EventSubir()"
+                                    >
+                                    importar
+                                </v-btn>
                             </div>
                         </div>
                         <div class="row justify-content-center">
@@ -645,6 +667,9 @@
         name: 'eventos',
         data () {
             return { 
+                archivo: {
+                    archivo: ''
+                },
                 nuevo: 0,
                 panel: [],
                 // opened: 0,
@@ -1252,6 +1277,34 @@
             },
             setCurrentPage2(pagina) {
                 this.current2 = pagina
+            },
+
+            async importarInvitados() {
+                try {
+                    this.loading = true
+                    let response = await axios.post('/api/invitados/import', this.archivo,{
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                    return response
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al registrar la practica .')
+                }
+            },
+
+            EventSubir(){
+                let formData = new FormData();
+                formData.append('file', this.archivo.archivo);
+                axios.post( '/api/invitados/import',formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function(){
+                        console.log('SUCCESS!!');
+                }).catch(function(){
+                    console.log('FAILURE!!');
+                });
             },
         }
     })

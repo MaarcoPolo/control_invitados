@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EnviarCorreo;
 use Carbon\Carbon;
 use App\Models\Evento;
+use App\Imports\InvitadosImport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 
 
@@ -489,6 +492,15 @@ class InvitadoController extends Controller{
         ], 200);
     }
 
+    }
+
+    public function importInvitados(Request $request)
+    {
+        $path = $request->file('file')->getRealPath();
+        $evento_id = 2;
+        $ex =  Excel::import(new InvitadosImport($evento_id),$path);
+
+       return compact($ex);
     }
 
 }
