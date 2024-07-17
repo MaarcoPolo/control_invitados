@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EnviarCorreo;
 use Carbon\Carbon;
 use App\Models\Evento;
+use App\Imports\InvitadosImport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 
 
@@ -616,6 +619,86 @@ class InvitadoController extends Controller{
 
         $fecha_formateada = $nombre_dia . ', ' . $day . ' de ' . $nombre_mes . ' de ' . $year;
         return $fecha_formateada;
+    }
+
+    public function importInvitados(Request $request)
+    {
+        // dd($request->archivo);
+        $path = $request->file('archivo');
+        // $evento_id = 2;
+        $ex =  Excel::import(new InvitadosImport($request->evento_id),$path);
+
+       return compact($ex);
+    }
+
+    public function confirmarAsistencia(Request $request) {
+        // $current_day = Carbon::now();
+        try {
+            $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
+            // dd($request->folio);
+            if($invitado){
+                // $hora = $current_day->toTimeString();
+                if($invitado->confirmo == 0){
+                    DB::beginTransaction();
+                    // $invitado->hora_ingreso = $hora;
+                    $invitado->confirmo = 1;
+                    $invitado->save();
+
+                    DB::commit();
+                    return response()->json([
+                        "status" => "ok",
+                        "message" => "Folio confirmado con éxito",
+                        // "cita" => $invitado->verificado,
+                    ], 200);
+                }
+                if($invitado->confirmo == 1){
+
+                    // $nombre =$invitado->nombre;
+                    return response()->json([
+                        "status" => "usado",
+                        "message" => "Folio ya está confirmado",
+                        "nombre" => $invitado->nombre,
+                        "hora" => $invitado->hora_ingreso
+                    ], 200);
+                }
+            }
+           else{
+                return response()->json([
+                    "status" => "no_existe",
+                    "message" => "Folio no existe",
+                    // "cita" => $request->folio
+                ], 200);
+            }
+            // $objectInvitado = new \stdClass();
+            // $objectInvitado->id = $invitado->id;
+            // $objectInvitado->nombre = $invitado->nombre;
+            // $objectInvitado->dependencia = $invitado->dependencia;
+            // $objectInvitado->area = $invitado->area;
+            // $objectInvitado->telefono = $invitado->telefono;
+            // $objectInvitado->email = $invitado->email;
+            // $objectInvitado->folio = $invitado->folio;
+            // $objectInvitado->verificado = $invitado->verificado;
+            // $objectInvitado->evento_id = $invitado->evento_id;
+
+            // return response()->json([
+            //     "status" => "ok",
+            //     "message" => "Invitado encontrado.",
+            //     "folio" => $objectInvitado
+            // ], 200);
+            
+
+        
+        }catch (\Throwable $th) {
+            DB::rollback();
+            $exito = false;
+            return response()->json([
+                "status" => "error",
+                "message" => "Ocurrió un error al encontrar al invitado.",
+                "error" => $th->getMessage(),
+                "location" => $th->getFile(),
+                "line" => $th->getLine(),
+            ], 200);
+        }
     }
 
 }

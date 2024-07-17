@@ -6,6 +6,7 @@ import Usuarios from './pages/Usuarios.vue'
 import Eventos from './pages/Eventos.vue'
 import Invitados from './pages/Invitados.vue'
 import ValidarInvitado from './pages/ValidarInvitado.vue'
+import ConfirmarInvitacion from './pages/ConfirmarInvitacion.vue'
 import Secciones from './pages/Secciones.vue'
 import Ingresados from './pages/Ingresados.vue'
 
@@ -68,6 +69,11 @@ const routes = [
         path: '/validar-invitado',
         name: 'ValidarInvitado',
         component: ValidarInvitado,
+    },
+    {
+        path: '/confirmacion',
+        name: 'ConfirmarInvitacion',
+        component: ConfirmarInvitacion,
     },
 ]
 

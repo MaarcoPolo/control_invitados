@@ -43,6 +43,8 @@
     </style>
 </head>
 <body>
+    CONFIRMA TU ASISTENCIA DANDO CLIC AL SIGUIENTE ENLACE<br>
+    https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}
     {{--  <p class="texto">EL _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </p>
     <p class="texto">TIENE EL HONOR DE INVITARLE A LOS </p>
     <p class="nombre-evento"><span>{{$evento->nombre}}</span></p>
@@ -51,6 +53,11 @@
     <p class="hora">{{$evento->horario}}</p>
     <p class="lugar">{{$evento->sede}}</p>
     <p class="texto">{{$evento->domicilio_sede}}</p>  --}}
+    <br><br><br>
     Favor de abrir o descargar el archivo PDF para poder visualizar su invitación
+
+    
+        {{--  http://control_invitados.test/confirmacion?folio={{$invitado->folio}}  --}}
+
 </body>
 </html>

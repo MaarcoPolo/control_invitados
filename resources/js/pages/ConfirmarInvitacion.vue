@@ -1,0 +1,105 @@
+<template>
+    <div>
+        <!-- <template v-if="user"> -->
+            <!-- <div class="col-12">
+                <p class="boton-logout text-center mt-4" @click="logout()"><b>CERRAR SESIÓN</b></p>
+            </div> -->
+        <!-- </template> -->
+    </div>
+</template>
+
+<script>
+    import { defineComponent } from "vue";
+    import { errorSweetAlert, successSweetAlert, warningSweetAlert } from "../helpers/sweetAlertGlobals"
+    export default defineComponent({
+        name: 'confirmacion',
+        data(){
+            return {
+                buscar_folio:{
+                    folio:''
+                },
+                // invitado:{
+                //     nombre:'',
+                //     dependencia:'',
+                //     area:'',
+                //     folio:'',
+                //     verificado:'',
+                //     evento_id:'',
+                //     archivo_oficio: [],   
+                // },
+            }
+        },
+        
+        created() {
+            this.confirmacion()
+            // if(this.user){
+            //     this.buscarOficio()
+            // }
+        },
+        computed: {
+            // user() {
+            //     return this.$store.getters.user
+            // }
+        },
+        methods:{
+            // logout() {
+            //     this.$store.dispatch('logout')
+            // },
+            async confirmacion() {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+
+                // console.log(urlParams.get('folio'))
+
+                let folio = urlParams.get('folio')
+
+                // console.log("folio", folio)
+
+                if(folio)
+                {
+                    this.buscar_folio.folio = folio
+
+                    try {
+                        let response = await axios.post('/api/invitados/confirmar-asistencia', this.buscar_folio)
+                        if (response.status === 200) {
+                            if (response.data.status === "ok") {
+                                Swal.fire({
+                                    title: "CONFIRMACIÓN",
+                                    text: "ASISTENCIA CONFIRMADA",
+                                    icon: "success",
+                                    allowOutsideClick: false,
+                                    });
+                            } else if(response.data.status === "usado"){
+                                Swal.fire({
+                                    title: "CONFIRMACION YA REALIZADA",
+                                    text: "ASISTENCIA CONFIRMADA CON ANTERIORIDAD",
+                                    // html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>HORA INGRESO:</strong> "+`${response.data.hora}`,
+                                    // text: "Nombre: "+`${response.data.nombre}`+'<br>'+"Hora:",
+                                    icon: "warning",
+                                    allowOutsideClick: false,
+                                    });
+                            }
+                            else if(response.data.status === "no_existe"){
+                                Swal.fire({
+                                    // timer: 20000,
+                                    title: "NO EXISTE",
+                                    text: "El acceso al evento no está registrado",
+                                    icon: "error",
+                                    allowOutsideClick: false,
+                                    });
+                            }
+                            else {
+                                errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                            }
+                        } else {
+                            errorSweetAlert('Ocurrió un error al buscar cita.')
+                        }
+                    } catch (error) {
+                        errorSweetAlert('Ocurrió un error al buscar el folio.')
+                    }
+                }
+            }
+        }
+    })
+    
+</script>

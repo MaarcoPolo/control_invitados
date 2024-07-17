@@ -110,17 +110,11 @@
                                     <td class="custom-data-table text-uppercase">
                                         {{seccion.nombre}}
                                     </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{seccion.color}}
+                                    <td :class="seccion.color == '#D91729' ? 'color_zona_uno' : seccion.color == '#E6ED02' ? 'color_zona_dos' : seccion.color == '#5AD235' ? 'color_zona_tres' : seccion.color == '#87202D' ? 'color_zona_cuatro' : seccion.color == '#DFAD0C' ? 'color_zona_cinco' : 'color_zona_seis'">
+                                        
                                     </td>
-                                    <!-- <td class="custom-data-table text-uppercase">
-                                        {{evento.sede}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{evento.fecha_i}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{evento.fecha_f}}
+                                    <!-- <td style="background-color: #E6ED02">
+                                        git 
                                     </td> -->
                                     <td>
                                         <div class="text-center row justify-content-center">
@@ -267,6 +261,7 @@ export default defineComponent({
                 numShown: 5,
                 current: 1,
                 buscar: '',
+                // input_background_color: '#D6AAED',
         }
     },
     setup() {
