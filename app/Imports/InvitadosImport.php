@@ -15,6 +15,7 @@ class InvitadosImport implements ToCollection, WithHeadingRow
 {
     public $evento_id;
     public $n_invitados;
+    public $zona_id;
     /**
     * @param array $row
     *
@@ -25,16 +26,13 @@ class InvitadosImport implements ToCollection, WithHeadingRow
     {
         $this->evento_id = $evento_id;  
         $this->n_invitados = $n_invitados+1;
+        $this->zona_id = $zona_id;
     }
     public function collection(collection $rows)
     {
         $array = [];
-
         $tamaño = count($rows);
-        // dd($rows);
         $cont = 1;
-
-        // dd($cont);
         foreach($rows as $row)
         {
             if($cont <= (count($rows)-1))
@@ -50,9 +48,10 @@ class InvitadosImport implements ToCollection, WithHeadingRow
                     'telefono' => $row["telefono"],
                     'email' => $row['email'],
                     'folio' => $this->evento_id.'-'.Str::random(10),          
-                    'hora_ingreso' => $row["hora_ingreso"],
+                    // 'hora_ingreso' => $row["hora_ingreso"],
                     'estado' => $row["estado"],
                     'municipio' => $row["municipio"],
+                    'zona_id' => $this->zona_id,
                     'evento_id' => $this->evento_id,
 
                     //n_invitado = cont obtener numero de invitados

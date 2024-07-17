@@ -312,7 +312,7 @@
                                 <v-btn
                                     class="custom-button ml-2"
                                     color="#6a73a0"
-                                    @click="importarInvitados()"
+                                    @click="EventSubir()"
                                     >
                                     importar
                                 </v-btn>
@@ -540,7 +540,8 @@
             return { 
                 archivo: {
                     evento_id: '',
-                    archivo: ''
+                    archivo: '',
+                    zona_id: '',
                 },
                 nuevo: 0,
                 panel: [],
@@ -1155,6 +1156,7 @@
                 let formData = new FormData();
                 formData.append('file', this.archivo.archivo);
                 formData.append('evento_id', this.archivo.evento_id);
+                formData.append('zona_id', this.archivo.zona_id);
 
                 let response  =  await axios.post( '/api/invitados/import',formData, {
                     headers: {
