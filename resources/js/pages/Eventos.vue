@@ -207,6 +207,21 @@
                                             </div>
                                             <div>
                                                 <v-icon
+                                                    @click="abrirModalExcel(evento)"
+                                                    class="ml-1"
+                                                    >
+                                                    mdi-account-arrow-down-outline                                          
+                                                    </v-icon>
+
+                                                <v-tooltip
+                                                    activator="parent"
+                                                    location="bottom"
+                                                    >
+                                                    <span style="font-size: 15px;">subir invitados</span>
+                                                </v-tooltip>
+                                            </div>
+                                            <div>
+                                                <v-icon
                                                     @click="eliminarEvento(evento)"
                                                     class="ml-1"
                                                     >
@@ -286,9 +301,7 @@
                 </div>
             </div>            
             <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
-                
                 <v-card>
-                   
                     <v-card-title class="text-center">
                         <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
                     </v-card-title>
@@ -296,26 +309,6 @@
                         <div class="text-center my-3 custom-border">
                             <div class="custom-subtitle">
                                 <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="div-custom-input-form">
-                                <v-file-input
-                                    v-model="archivo.archivo"
-                                    show-size
-                                    label="invitados"
-                                    variant="outlined"
-                                ></v-file-input>  
-                            </div>
-
-                            <div class="text-center mb-4 mt-6">
-                                <v-btn
-                                    class="custom-button ml-2"
-                                    color="#6a73a0"
-                                    @click="importarInvitados()"
-                                    >
-                                    importar
-                                </v-btn>
                             </div>
                         </div>
                         <div class="row justify-content-center">
@@ -523,9 +516,57 @@
         </div>
         </v-card>
             </v-dialog>
-            
         </div>
     </div>
+    <v-dialog v-model="dialogExcel" max-width="100rem" persistent>
+                <v-card>
+                    <v-card-title class="text-center">
+                        <h3 class="mt-5 custom-dialog-title">Subir archivo de invitados</h3>
+                    </v-card-title>
+                    <v-card-text>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_seccion">Selecciona la sección a la cual pertenecen tus invitados:</label>
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
+                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 col-12 mt-6">
+                                <v-file-input
+                                    v-model="archivo.archivo"
+                                    show-size
+                                    label="invitados"
+                                    variant="outlined"
+                                ></v-file-input>  
+                            </div>
+                        </div>
+                            <div class="row justify-content-center">
+                            <div class=" text-center col-md-4 col-12  mt-8">
+                                <v-btn
+                                    class="custom-button ml-2"
+                                    color="#c4f45d"
+                                    @click="EventSubir()"
+                                    >
+                                    Importar
+                                </v-btn>
+                            </div>
+                                <div class=" text-center col-md-4 col-12  mt-8">
+                                <v-btn
+                                    class="custom-button ml-2"
+                                    color="#6a73a0"
+                                    @click="cerrarDialodExcel()"
+                                    >
+                                    Cerrar
+                                </v-btn>
+                            </div>
+                        </div>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
 </template>
 
 <script>
@@ -540,6 +581,7 @@
             return { 
                 archivo: {
                     evento_id: '',
+                    zona_id:'',
                     archivo: ''
                 },
                 nuevo: 0,
@@ -599,6 +641,7 @@
                 numShown2: 5,
                 current2: 1,
                 buscar2: '',
+                dialogExcel: false,
 
             }
         },
@@ -953,7 +996,6 @@
                             }
                         }
                     })
-                   
             },
             async eliminarEvento(evento) {
             
@@ -1165,21 +1207,12 @@
                     errorSweetAlert('Ocurrió un error al agregar los invitados.')
                 });
             },
-            // EventSubir(){
-            //     let formData = new FormData();
-            //     formData.append('file', this.archivo.archivo);
-            //     formData.append('evento_id', this.archivo.evento_id);
-
-            //     axios.post( '/api/invitados/import',formData, {
-            //         headers: {
-            //             'Content-Type': 'multipart/form-data'
-            //         }
-            //     }).then(function(){
-            //             successSweetAlert(response.data.message)
-            //     }).catch(function(){
-            //         errorSweetAlert('Ocurrió un error al agregar los invitados.')
-            //     });
-            // },
+            abrirModalExcel(evento){
+                this.dialogExcel = true
+            },
+            cerrarDialodExcel(){
+                this.dialogExcel = false
+            }
         }
     })
 </script>
