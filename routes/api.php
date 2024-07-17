@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/invitados/buscar-invitados', [InvitadoController::class, 'buscarInvitado']);
     Route::post('/invitados/enviar-correo', [InvitadoController::class, 'enviarCorreo']);
 
+    Route::post('/invitados/import', [InvitadoController::class, 'importInvitados']);
+
 
 
 });
