@@ -243,13 +243,14 @@ class ZonaController extends Controller
                 $objectZona->id = $zona->id;
                 $objectZona->nombre = $zona->nombre;
 
-                $confirmado = Invitado::where('status',1)->where('zona_id',$zona->id)->where('confirmo',1)->where('evento_id',$request->evento_id)->count();
+                $confirmados = Invitado::where('status',1)->where('zona_id',$zona->id)->where('confirmo',1)->where('evento_id',$request->evento_id)->count();
                 $ingresados = Invitado::where('status',1)->where('zona_id',$zona->id)->where('verificado',1)->where('evento_id',$request->evento_id)->count();
                 $pendientes = Invitado::where('status',1)->where('zona_id',$zona->id)->where('verificado',0)->where('evento_id',$request->evento_id)->count();
                 $total_seccion = Invitado::where('status',1)->where('zona_id',$zona->id)->where('evento_id',$request->evento_id)->count();
 
                 $objectZona->ingresados = $ingresados;
                 $objectZona->pendientes = $pendientes;
+                $objectZona->confirmados = $confirmados;
                 $objectZona->total_seccion = $total_seccion;
 
                 array_push($array_zonas, $objectZona);
