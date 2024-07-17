@@ -1151,37 +1151,12 @@
                 this.current2 = pagina
             },
 
-<<<<<<< HEAD
-            async importarInvitados() {
-                try {
-                    this.archivo.evento_id = this.invitado.evento_id
-                    console.log(this.archivo)
-                    this.loading = true
-                    let response = await axios.post('/api/invitados/import', this.archivo,{
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        }
-                    })
-                    return response
-                } catch (error) {
-                    errorSweetAlert('Ocurrió un error al registrar la practica .')
-                }
-            },
-
-            EventSubir(){
-                this.archivo.evento_id = this.invitado.evento_id
-                let formData = new FormData();
-                console.log(this.archivo)
-                formData.append('file', this.archivo);
-                axios.post( '/api/invitados/import',formData, {
-=======
             async EventSubir(){
                 let formData = new FormData();
                 formData.append('file', this.archivo.archivo);
                 formData.append('evento_id', this.archivo.evento_id);
 
                 let response  =  await axios.post( '/api/invitados/import',formData, {
->>>>>>> 754eaf671a217395d3ca6f8c2b62b0340527c20d
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }}).then((response) => {
