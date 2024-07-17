@@ -10,6 +10,7 @@ class Invitado extends Model
     use HasFactory;
 
     protected $guarded = [];
+    // protected $fillable = ['n_invitado','evento_id','nombre','apellido_p','apellido_m','dependencia','cargo','area','telefono','email','folio','hora_ingreso','estado','municipio'];
     // protected $fillable = ['n_invitado'];
     // // protected $fillable = ['nombre'];  
     // protected $fillable = ['apellido_p'];
@@ -20,7 +21,7 @@ class Invitado extends Model
     // protected $fillable = ['telefono']; 
     // protected $fillable = ['email'];
     // protected $fillable = ['folio'];
-    // protected $fillable = ['evento_id'];
+    
     // protected $fillable = ['hora_ingreso'];
     // protected $fillable = ['estado'];
     // protected $fillable = ['municipio'];

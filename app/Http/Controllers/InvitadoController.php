@@ -490,11 +490,26 @@ class InvitadoController extends Controller{
 
     public function importInvitados(Request $request)
     {
-        $path = $request->file('file')->getRealPath();
-        $evento_id = 2;
-        $ex =  Excel::import(new InvitadosImport($evento_id),$path);
+        try {
+            $total_invitados = Invitado::where('evento_id',$request->evento_id)->count();
+            $path = $request->file('file')->getRealPath();
+            Excel::import(new InvitadosImport($request->evento_id,$total_invitados),$path); 
 
-       return compact($ex);
+            return response()->json([
+                "status" => "ok",
+                "message" => "Invitados agregados con éxito.",
+                // "invitados" => $array_invitados
+            ], 200);       
+        } catch (\Throwable $th) {
+        
+            return response()->json([
+                "status" => "error",
+                "message" => "Ocurrió un error al agregar los invitados.",
+                "error" => $th->getMessage(),
+                "location" => $th->getFile(),
+                "line" => $th->getLine(),
+            ], 200);
+        }
     }
 
 }
