@@ -4,7 +4,7 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import { createApp } from 'vue'
 import App from './layouts/App.vue'
-import router from './router.js'
+import router from './router'
 import store from './store'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
