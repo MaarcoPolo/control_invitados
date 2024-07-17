@@ -22,7 +22,7 @@ class InvitadosImport implements ToCollection, WithHeadingRow
     * @return \Illuminate\Database\Eloquent\Model|null
     */
 
-    public function __construct($evento_id,$n_invitados)
+    public function __construct($evento_id,$n_invitados,$zona_id)
     {
         $this->evento_id = $evento_id;  
         $this->n_invitados = $n_invitados+1;

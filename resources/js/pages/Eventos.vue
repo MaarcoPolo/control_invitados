@@ -528,7 +528,7 @@
                             <div class="col-md-8 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="select_seccion">Selecciona la sección a la cual pertenecen tus invitados:</label>
-                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="archivo.zona_id">
                                         <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
                                     </select>
                                 </div>
@@ -558,7 +558,7 @@
                                 <v-btn
                                     class="custom-button ml-2"
                                     color="#6a73a0"
-                                    @click="cerrarDialodExcel()"
+                                    @click="cerrarDialogExcel()"
                                     >
                                     Cerrar
                                 </v-btn>
@@ -1209,9 +1209,10 @@
                 });
             },
             abrirModalExcel(evento){
+                this.archivo.evento_id = evento.id
                 this.dialogExcel = true
             },
-            cerrarDialodExcel(){
+            cerrarDialogExcel(){
                 this.dialogExcel = false
             }
         }

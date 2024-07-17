@@ -88,6 +88,7 @@
                                     <th class="custom-title-table">#</th>
                                     <th class="custom-title-table">Nombre</th>
                                     <th class="custom-title-table">Color</th>
+                                    <th class="custom-title-table">Nombre</th>
                                     <!-- <th class="custom-title-table">Sede</th>
                                     <th class="custom-title-table">Fecha inicial</th>
                                     <th class="custom-title-table">Fecha final</th> -->
@@ -112,6 +113,8 @@
                                     </td>
                                     <td :class="seccion.color == '#D91729' ? 'color_zona_uno' : seccion.color == '#E6ED02' ? 'color_zona_dos' : seccion.color == '#5AD235' ? 'color_zona_tres' : seccion.color == '#87202D' ? 'color_zona_cuatro' : seccion.color == '#DFAD0C' ? 'color_zona_cinco' : 'color_zona_seis'">
                                         
+                                    </td>
+                                    <td :class="seccion.color">                                        
                                     </td>
                                     <!-- <td style="background-color: #E6ED02">
                                         git 
