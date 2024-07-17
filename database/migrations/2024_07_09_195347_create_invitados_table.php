@@ -23,8 +23,10 @@ return new class extends Migration
             $table->string('telefono',10)->nullable();
             $table->string('email')->nullable();
             $table->string('folio')->unique();
+            $table->boolean('confirmo')->default(0);
             $table->boolean('verificado')->default(0);
             $table->foreignId('evento_id')->constrained();
+            $table->foreignId('zona_id')->constrained();
             $table->time('hora_ingreso')->nullable();
             $table->text('estado');
             $table->text('municipio');

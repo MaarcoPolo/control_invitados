@@ -6,7 +6,6 @@
                 <p>Eventos</p>
             </div>
         </div>
-        
         <div class="container mt-16">
             <!-- INICIO BOTON NUEVO Y BUSCADOR -->
             <div class="row justify-content-between">
@@ -21,20 +20,20 @@
                     </v-btn>
                 </div>
                 <div class="col-md-5 col-12"></div>
-                <div class="col-md-4 col-12">
-                    <div class="principal-div-custom-select">
-                        <div class="second-div-custom-select">
-                            <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
+                    <div class="col-md-4 col-12">
+                        <div class="principal-div-custom-select">
+                            <div class="second-div-custom-select">
+                                <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
             <!-- ///////////////////////////////////////// -->
             <v-container>
                 <v-expansion-panels v-model="panel">
                     <v-expansion-panel>
-                       <v-expansion-panel-title >
-                       </v-expansion-panel-title>
+                        <v-expansion-panel-title >
+                        </v-expansion-panel-title>
                         <v-expansion-panel-content>
                             <v-expansion-panel-text>
                                     <div class="text-center my-3 custom-border">
@@ -128,9 +127,8 @@
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
-             </v-container>
+            </v-container>
              <!-- //////////////////////////// -->
-              
             <!--INICIO DE LA TABLA EVENTOS-->
             <div class="my-2 mb-12 py-6">
                 <div class="">
@@ -205,6 +203,21 @@
                                                     location="bottom"
                                                     >
                                                     <span style="font-size: 15px;">Agregar Invitado</span>
+                                                </v-tooltip>
+                                            </div>
+                                            <div>
+                                                <v-icon
+                                                    @click="abrirModalExcel(evento)"
+                                                    class="ml-1"
+                                                    >
+                                                    mdi-account-arrow-down-outline                                          
+                                                    </v-icon>
+
+                                                <v-tooltip
+                                                    activator="parent"
+                                                    location="bottom"
+                                                    >
+                                                    <span style="font-size: 15px;">subir invitados</span>
                                                 </v-tooltip>
                                             </div>
                                             <div>
@@ -286,139 +299,7 @@
                         </template>
                     </div>
                 </div>
-            </div>
-            <!-- <v-dialog v-model="dialogNuevoEvento" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-5 custom-dialog-title">Nuevo Evento</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-center my-3 custom-border">
-                            <div class="custom-subtitle">
-                                <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-md-6 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
-                                    <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoP">Organizador:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
-                                    <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoM">Sede:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_fecha_i">Fecha inicial:</label>
-                                    <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_i">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_fecha_f">Fecha final:</label>
-                                    <input id="input_fecha_f" type="date" class="form-control" v-model="evento.fecha_f">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center mb-4 mt-6">
-                            <v-btn
-                                class="custom-button mr-2"
-                                color="#c4f45d"
-                                @click="guardarNuevoEvento()"
-                                >
-                                Guardar
-                            </v-btn>
-                            <v-btn
-                                class="custom-button ml-2"
-                                color="#6a73a0"
-                                @click="cerrarModalNuevoEvento()"
-                                >
-                                Cancelar
-                            </v-btn>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog> -->
-            <!-- INICIO MODAL PARA EDITAR DATOS DEL EVENTO -->
-            <!-- <v-dialog v-model="dialogEditarEvento" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-2 custom-dialog-title">Editar Evento</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-center my-8 custom-border">
-                            <div class="custom-subtitle">
-                                <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoP">Organizador:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoM">Sede:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_username">Fecha inicial:</label>
-                                    <input id="input_username" type="date" class="form-control" v-model="evento.fecha_i">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_pass">Fecha Final:</label>
-                                    <input id="input_pass" type="date" class="form-control" v-model="evento.fecha_f">
-                                </div>
-                            </div>                        
-                        </div>
-                        <div class="text-center mb-4 mt-6">
-                            <v-btn
-                                class="custom-button mr-2"
-                                color="#c4f45d"
-                                @click="guardarCambiosEditarEvento()"
-                                >
-                                Guardar
-                            </v-btn>
-                            <v-btn
-                                class="custom-button ml-2"
-                                color="#6a73a0"
-                                @click="cerrarModalNuevoEvento()"
-                                >
-                                Cancelar
-                            </v-btn>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog> -->
-            
+            </div>            
             <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
@@ -454,12 +335,20 @@
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-8 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_dependencia">Dependencia u Organismo:</label>
                                     <input id="input_dependencia" type="text" class="form-control" autocomplete="off" v-model="invitado.dependencia">
                                 </div>
                             </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_cargo">Cargo:</label>
+                                    <input id="input_cargo" type="text" class="form-control" autocomplete="off" v-model="invitado.cargo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_area">Área:</label>
@@ -468,12 +357,10 @@
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
-                                    <label for="input_telefono">Teléfono:</label>
+                                    <label for="input_telefono">Teléfono de la dependencia:</label>
                                     <input id="input_telefono" type="text" autocomplete="off" maxlength="10" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row justify-content-center">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_email">Correo:</label>
@@ -481,6 +368,8 @@
                                     <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row justify-content">
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_estado">Estado:</label>
@@ -491,6 +380,14 @@
                                 <div class="div-custom-input-form">
                                     <label for="input_municipio">Municipio:</label>
                                     <input id="input_municipio" type="text" autocomplete="off" class="form-control" v-model="invitado.municipio">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_seccion">Seccion:</label>
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
+                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -514,6 +411,9 @@
                                 <tr>
                                     <th class="custom-title-table">Id</th>
                                     <th class="custom-title-table">Nombre</th>
+                                    <th class="custom-title-table">Dependencia</th>
+                                    <th class="custom-title-table">Área</th>
+                                    <th class="custom-title-table">Sección</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -530,7 +430,16 @@
                                         {{invitado.numero_registro}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
-                                        {{invitado.nombre}}
+                                        {{invitado.nombreC}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.dependencia}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.area}}
+                                    </td>
+                                    <td class="custom-data-table text-uppercase">
+                                        {{invitado.zona}}
                                     </td>
                                 </tr>
                             </tbody>
@@ -607,9 +516,57 @@
         </div>
         </v-card>
             </v-dialog>
-            
         </div>
     </div>
+    <v-dialog v-model="dialogExcel" max-width="100rem" persistent>
+                <v-card>
+                    <v-card-title class="text-center">
+                        <h3 class="mt-5 custom-dialog-title">Subir archivo de invitados</h3>
+                    </v-card-title>
+                    <v-card-text>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_seccion">Selecciona la sección a la cual pertenecen tus invitados:</label>
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="archivo.zona_id">
+                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 col-12 mt-6">
+                                <v-file-input
+                                    v-model="archivo.archivo"
+                                    show-size
+                                    label="invitados"
+                                    variant="outlined"
+                                ></v-file-input>  
+                            </div>
+                        </div>
+                            <div class="row justify-content-center">
+                            <div class=" text-center col-md-4 col-12  mt-8">
+                                <v-btn
+                                    class="custom-button ml-2"
+                                    color="#c4f45d"
+                                    @click="EventSubir()"
+                                    >
+                                    Importar
+                                </v-btn>
+                            </div>
+                                <div class=" text-center col-md-4 col-12  mt-8">
+                                <v-btn
+                                    class="custom-button ml-2"
+                                    color="#6a73a0"
+                                    @click="cerrarDialogExcel()"
+                                    >
+                                    Cerrar
+                                </v-btn>
+                            </div>
+                        </div>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
 </template>
 
 <script>
@@ -622,6 +579,11 @@
         name: 'eventos',
         data () {
             return { 
+                archivo: {
+                    evento_id: '',
+                    zona_id:'',
+                    archivo: ''
+                },
                 nuevo: 0,
                 panel: [],
                 // opened: 0,
@@ -664,7 +626,9 @@
                     email:'',
                     evento_id: null,
                     estado:'',
-                    municipio:''
+                    municipio:'',
+                    seccion: '',
+                    cargo:''
 
                 },
                 loading2: false,
@@ -677,6 +641,7 @@
                 numShown2: 5,
                 current2: 1,
                 buscar2: '',
+                dialogExcel: false,
 
             }
         },
@@ -723,8 +688,12 @@
         created() {
             this.getEventos()
             this.getInvitados()
+            this.getSecciones()
         },
         computed: {
+            secciones() {
+                    return this.$store.getters.getSecciones
+            },
             pages() {
                 const numShown = Math.min(this.numShown, this.totalPaginas())
                 let first = this.current - Math.floor(numShown / 2)
@@ -744,7 +713,7 @@
                 first = Math.max(first, 1)
                 first = Math.min(first, this.totalPaginas2() - numShown2 + 1)
                 return [...Array(numShown2)].map((k, i) => i + first)
-            },
+            }
         },
         watch: {
             'panel': function() {
@@ -762,8 +731,6 @@
                     this.evento.id = null
                     // console.log(this.evento)
                 }
-                
-               
             },
             buscar: function () {
                 if (!this.buscar.length == 0) {
@@ -786,15 +753,26 @@
             },
         },
         methods: {
-            // async guardar(){
-            //     const isFormCorrect = await this.v$.evento.$validate()              
-            //     if (!isFormCorrect) return
-            //     if(this.evento.id == 100){
-            //         guardarNuevoEvento()
-            //     }else{
-            //         guardarCambiosEditarEvento()
-            //     }
-            // },
+            async getSecciones() {
+                this.loading = true
+                try {                   
+                    let response = await axios.get('/api/secciones')
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.$store.commit('setSecciones', response.data.secciones)
+                            this.input_background_color = response.data.secciones.color
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener las Secciones')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener las Secciones')
+                }
+                this.loading = false
+            },
             abrir(){
                 this.nuevo = 1
                 this.v$.$reset()
@@ -901,6 +879,7 @@
 
             },
             abrirModalEditarEvento(evento){
+                this.nuevo= 0
                 this.panel = [0] 
                 this.evento.id = evento.id
                 this.evento.nombre = evento.nombre
@@ -942,7 +921,7 @@
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setEventos', result.value.data.eventos)
                                     // this.loading = false
-                                    this.cerrarModalNuevoEvento()
+                                    // this.cerrarModalNuevoEvento()
                                     this.getDataPagina(1) 
                                     this.panel = []
                                     this.evento.nombre =''
@@ -1017,7 +996,6 @@
                             }
                         }
                     })
-                   
             },
             async eliminarEvento(evento) {
             
@@ -1060,6 +1038,7 @@
             
             // funciones para el invitado 
             abrirModalNuevoInvitado(evento){
+                this.archivo.evento_id = evento.id
                 this.dialogNuevoInvitado = true
                 this.invitado.evento_id = evento.id
                 this.getInvitados(evento)
@@ -1110,10 +1089,15 @@
                                     this.mostrar2 = true
                                     this.invitado.id = ''
                                     this.invitado.nombre =''
+                                    this.invitado.apellido_p =''
+                                    this.invitado.apellido_m =''
                                     this.invitado.dependencia =''
                                     this.invitado.area =''
                                     this.invitado.telefono = ''
                                     this.invitado.email = ''
+                                    this.invitado.estado =''
+                                    this.invitado.municipio = ''
+                                    this.invitado.seccion = ''
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
                                     this.loading2 = false
@@ -1208,6 +1192,29 @@
             setCurrentPage2(pagina) {
                 this.current2 = pagina
             },
+
+            async EventSubir(){
+                let formData = new FormData();
+                formData.append('file', this.archivo.archivo);
+                formData.append('evento_id', this.archivo.evento_id);
+                formData.append('zona_id', this.archivo.zona_id);
+
+                let response  =  await axios.post( '/api/invitados/import',formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }}).then((response) => {
+                        successSweetAlert(response.data.message)
+                }).catch(function(){
+                    errorSweetAlert('Ocurrió un error al agregar los invitados.')
+                });
+            },
+            abrirModalExcel(evento){
+                this.archivo.evento_id = evento.id
+                this.dialogExcel = true
+            },
+            cerrarDialogExcel(){
+                this.dialogExcel = false
+            }
         }
     })
 </script>
