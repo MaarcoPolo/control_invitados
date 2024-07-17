@@ -539,8 +539,8 @@
         data () {
             return { 
                 archivo: {
-                    archivo:'',
-                    evento_id: ''
+                    evento_id: '',
+                    archivo: ''
                 },
                 nuevo: 0,
                 panel: [],
@@ -996,6 +996,7 @@
             
             // funciones para el invitado 
             abrirModalNuevoInvitado(evento){
+                this.archivo.evento_id = evento.id
                 this.dialogNuevoInvitado = true
                 this.invitado.evento_id = evento.id
                 this.getInvitados(evento)
@@ -1150,6 +1151,7 @@
                 this.current2 = pagina
             },
 
+<<<<<<< HEAD
             async importarInvitados() {
                 try {
                     this.archivo.evento_id = this.invitado.evento_id
@@ -1172,15 +1174,37 @@
                 console.log(this.archivo)
                 formData.append('file', this.archivo);
                 axios.post( '/api/invitados/import',formData, {
+=======
+            async EventSubir(){
+                let formData = new FormData();
+                formData.append('file', this.archivo.archivo);
+                formData.append('evento_id', this.archivo.evento_id);
+
+                let response  =  await axios.post( '/api/invitados/import',formData, {
+>>>>>>> 754eaf671a217395d3ca6f8c2b62b0340527c20d
                     headers: {
                         'Content-Type': 'multipart/form-data'
-                    }
-                }).then(function(){
-                        console.log('SUCCESS!!');
+                    }}).then((response) => {
+                        successSweetAlert(response.data.message)
                 }).catch(function(){
-                    console.log('FAILURE!!');
+                    errorSweetAlert('Ocurrió un error al agregar los invitados.')
                 });
             },
+            // EventSubir(){
+            //     let formData = new FormData();
+            //     formData.append('file', this.archivo.archivo);
+            //     formData.append('evento_id', this.archivo.evento_id);
+
+            //     axios.post( '/api/invitados/import',formData, {
+            //         headers: {
+            //             'Content-Type': 'multipart/form-data'
+            //         }
+            //     }).then(function(){
+            //             successSweetAlert(response.data.message)
+            //     }).catch(function(){
+            //         errorSweetAlert('Ocurrió un error al agregar los invitados.')
+            //     });
+            // },
         }
     })
 </script>

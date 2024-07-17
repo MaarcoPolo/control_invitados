@@ -6,48 +6,77 @@ use App\Models\Invitado;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Support\Str;
 // use Maatwebsite\Excel\Concerns\ToModel;
 
 // class InvitadosImport implements ToModel
-class InvitadosImport implements ToCollection
+class InvitadosImport implements ToCollection, WithHeadingRow
 {
-    private $evento_id = null;
+    public $evento_id;
+    public $n_invitados;
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
 
-    public function __construct($evento_id)
+    public function __construct($evento_id,$n_invitados)
     {
-        $this->evento_id = $evento_id;
-        
+        $this->evento_id = $evento_id;  
+        $this->n_invitados = $n_invitados+1;
     }
     public function collection(collection $rows)
     {
+        $array = [];
+
+        $tamaño = count($rows);
+        // dd($rows);
+        $cont = 1;
+
+        // dd($cont);
         foreach($rows as $row)
         {
-            $inv = new \stdClass();
-            $inv->ninvitado = $row[0];
+            if($cont <= (count($rows)-1))
+            {
+                Invitado::create([
+                    'n_invitado' => $this->n_invitados,
+                    'nombre' => $row["nombre"], 
+                    'apellido_p' => $row["apellido_paterno"],
+                    'apellido_m' => $row["apellido_materno"],
+                    'dependencia' => $row["dependencia"],
+                    'cargo' => $row["cargo"],
+                    'area' => $row["area"],
+                    'telefono' => $row["telefono"],
+                    'email' => $row['email'],
+                    'folio' => $this->evento_id.'-'.Str::random(10),          
+                    'hora_ingreso' => $row["hora_ingreso"],
+                    'estado' => $row["estado"],
+                    'municipio' => $row["municipio"],
+                    'evento_id' => $this->evento_id,
 
-            // dd($inv);
-            Invitado::create([
-                'n_invitado' => $inv->ninvitado,
-                'nombre' => $row[1], 
-                'apellido_p' => $row[2],
-                'apellido_m' => $row[3],
-                'dependencia' => $row[4],
-                'cargo' => $row[5],
-                'area' => $row[6],
-                'telefono' => $row[7],
-                'email' => $row[8],
-                'folio' => $row[9],            
-                'hora_ingreso' => $row[10],
-                'estado' => $row[11],
-                'municipio' => $row[12],
-                'evento_id' => $this->evento_id
-                // 'evento_id' => 3
-            ]);
+                    //n_invitado = cont obtener numero de invitados
+                    //folio evento_id + - + rand(10)
+                ]);
+                $this->n_invitados++;
+                // Invitado::create([
+                //     'n_invitado' => $row[0],
+                //     'nombre' => $row[1], 
+                //     'apellido_p' => $row[2],
+                //     'apellido_m' => $row[3],
+                //     'dependencia' => $row[4],
+                //     'cargo' => $row[5],
+                //     'area' => $row[6],
+                //     'telefono' => $row[7],
+                //     'email' => $row[8],
+                //     'folio' => $row[9],            
+                //     'hora_ingreso' => $row[10],
+                //     'estado' => $row[11],
+                //     'municipio' => $row[12],
+                //     'evento_id' => $this->evento_id,
+                // ]);
+                $cont++;
+            }
         }
     }
     // public function model(array $row)
