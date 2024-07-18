@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Invitado;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

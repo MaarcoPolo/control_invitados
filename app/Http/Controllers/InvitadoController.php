@@ -672,7 +672,7 @@ class InvitadoController extends Controller{
                     return response()->json([
                         "status" => "usado",
                         "message" => "Folio ya está confirmado",
-                        "nombre" => $invitado->nombre,
+                        "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
                         "hora" => $invitado->hora_ingreso
                     ], 200);
                 }
