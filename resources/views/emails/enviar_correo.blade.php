@@ -70,7 +70,7 @@
     Agradecemos de antemano su atención y esperamos contar con su valiosa presencia en este importante diálogo.
     <br><br>
     Atentamente,
-
+    <br><br>
     Cámara de Diputados, LXV Legislatura
     <br><br><br>
     
