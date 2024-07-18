@@ -65,17 +65,28 @@
                             if (response.data.status === "ok") {
                                 Swal.fire({
                                     title: "VERIFICADO",
-                                    text: "Acceso permitido",
+                                    // text: "Acceso permitido",
+                                    html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>CARGO:</strong> "+`${response.data.cargo}`+"<br><strong>ZONA:</strong> "+`${response.data.zona}`,
                                     icon: "success",
                                     allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    }).then((result) =>{
+                                            if (result.isConfirmed) {
+                                            window.location.href = "/login";
+                                    }
                                     });
                             } else if(response.data.status === "usado"){
                                 Swal.fire({
-                                    title: "USADO",
+                                    title: "ACCESO USADO",
                                     html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>HORA INGRESO:</strong> "+`${response.data.hora}`,
                                     // text: "Nombre: "+`${response.data.nombre}`+'<br>'+"Hora:",
                                     icon: "warning",
+                                    confirmButtonText: "Ok",
                                     allowOutsideClick: false,
+                                }).then((result) =>{
+                                        if (result.isConfirmed) {
+                                        window.location.href = "/login";
+                                    }
                                     });
                             }
                             else if(response.data.status === "no_existe"){
@@ -85,6 +96,12 @@
                                     text: "El acceso al evento no está registrado",
                                     icon: "error",
                                     allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    
+                                    }).then((result) =>{
+                                        if (result.isConfirmed) {
+                                        window.location.href = "/login";
+                                    }
                                     });
                             }
                             else {

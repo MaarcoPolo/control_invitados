@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 // use Maatwebsite\Excel\Concerns\ToModel;
 
 // class InvitadosImport implements ToModel

@@ -64,10 +64,16 @@
                         if (response.status === 200) {
                             if (response.data.status === "ok") {
                                 Swal.fire({
-                                    title: "CONFIRMACIÓN",
-                                    text: "ASISTENCIA CONFIRMADA",
+                                    title: "ASISTENCIA CONFIRMADA",
+                                    html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>CARGO:</strong> "+`${response.data.cargo}`+"<br><strong>ZONA:</strong> "+`${response.data.zona}`,
+                                    // text: "ASISTENCIA CONFIRMADA",
                                     icon: "success",
                                     allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    }).then((result) =>{
+                                            if (result.isConfirmed) {
+                                            window.location.href = "/login";
+                                    }
                                     });
                             } else if(response.data.status === "usado"){
                                 Swal.fire({
@@ -77,6 +83,11 @@
                                     // text: "Nombre: "+`${response.data.nombre}`+'<br>'+"Hora:",
                                     icon: "warning",
                                     allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    }).then((result) =>{
+                                            if (result.isConfirmed) {
+                                            window.location.href = "/login";
+                                    }
                                     });
                             }
                             else if(response.data.status === "no_existe"){
@@ -86,6 +97,11 @@
                                     text: "El acceso al evento no está registrado",
                                     icon: "error",
                                     allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    }).then((result) =>{
+                                            if (result.isConfirmed) {
+                                            window.location.href = "/login";
+                                    }
                                     });
                             }
                             else {

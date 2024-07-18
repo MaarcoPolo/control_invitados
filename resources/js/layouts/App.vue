@@ -19,7 +19,7 @@
                     <li @click="irInicio()">Inicio</li>   
                     <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>
                     <li v-if="user.user.tipo_usuario_id == 1" @click="irZonas()">Secciones</li>   
-                    <li @click="irIngresados()">Ingresados</li>   
+                    <li @click="irIngresados()">Ingresos</li>   
                     <!-- <li @click="irEventos()">Eventos</li>
                     <li @click="irInvitado()">Invitados</li>   -->
                     <li @click="logout()">Cerrar Sesión</li>
