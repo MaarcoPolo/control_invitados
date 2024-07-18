@@ -23,33 +23,51 @@
             color: #6a73a0;
             font-weight: bold;
         }
-        .texto{
+        .primera-linea{
             text-align: center;
+            font-weight: bold;
+            font-size: 28rem;
+        }
+        .segunda-linea{
+            text-align: center;
+            font-size: 20rem;
         }
         .texto-fecha{
+            margin-top: 0%;
             text-align: center;
             font-size: 30rem;
+            text-transform: uppercase;
+
         }
         .hora{
             text-align: center;
             font-size: 35rem;
         }
-        .firma{
-            text-align: left;
+        .sede{
+            text-align: center;
+
         }
-        .firma2{
-            text-align: right;
+        .domicilio{
+            text-align: center;
+            
         }
     </style>
 </head>
 <body>
-    <p class="texto">EL _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </p>
-    <p class="texto">TIENE EL HONOR DE INVITARLE A LOS </p>
-    <p class="nombre-evento"><span>{{$evento->nombre}}</span></p>
-    <p class="texto">EL EVENTO SE LLEVARÁ A CABO EL PRÓXIMO</p>
-    <p class="texto-fecha">{{$f}}</p>
-    <p class="hora">{{$hora}}</p>
-    <p class="lugar">{{$evento->sede}}</p>
-    <p class="texto">{{$evento->domicilio_sede}}</p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p><span class="primera-linea">TRIBUNALES DE JUSTICIA LOCAL</span><br><br>
+    <span class="segunda-linea">EL  EVENTO  SE  LLEVARÁ  A  CABO  EL  PRÓXIMO</span><br><br>
+    <span class="texto-fecha">{{$f}}</span><br><br><br>
+    <span class="hora">{{$hora}}</span><br><br><br>
+    <span class="sede">{{$evento->sede}}</span><br><br><br>
+    <span class="direccion">{{$evento->domicilio_sede}}</span>
+    </p>
 </body>
 </html>
