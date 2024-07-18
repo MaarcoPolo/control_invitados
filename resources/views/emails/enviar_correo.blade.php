@@ -15,7 +15,7 @@
             font-family: "Montserrat", sans-serif;
             text-align: justify;
             font-size: 1rem;
-            text-transform: uppercase;
+            /* text-transform: uppercase; */
             color: black;
             /* font-weight: bold; */
         }
@@ -72,8 +72,7 @@
     Atentamente,
 
     Cámara de Diputados, LXV Legislatura
-    <br><br>
-    Si necesitas alguna modificación o información adicional, por favor házmelo saber.<br><br><br>
+    <br><br><br>
     
     CONFIRMA TU ASISTENCIA DANDO CLIC AL SIGUIENTE ENLACE<br>
     https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}</p>

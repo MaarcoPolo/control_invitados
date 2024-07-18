@@ -1223,6 +1223,10 @@
                         'Content-Type': 'multipart/form-data'
                     }}).then((response) => {
                         successSweetAlert(response.data.message)
+                        this.archivo.archivo = ''
+                        this.archivo.evento_id = ''
+                        this.archivo.zona_id = ''
+                        this.cerrarDialogExcel()
                 }).catch(function(){
                     errorSweetAlert('Ocurrió un error al agregar los invitados.')
                 });
