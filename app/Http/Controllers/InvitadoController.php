@@ -316,7 +316,7 @@ class InvitadoController extends Controller{
             PDF::setPageMark();
 
             PDF::writeHTML($html_content, true, false, true, false, '');
-            PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 66, 196, 76, 76, $style, 'N');
+            PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 70, 198, 70, 70, $style, 'N');
 
             PDF::Text(65, 275, 'CÓDIGO DE VESTIMENTA: FORMAL');
 
