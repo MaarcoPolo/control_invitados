@@ -343,7 +343,9 @@ class InvitadoController extends Controller{
                     return response()->json([
                         "status" => "ok",
                         "message" => "Folio encontrada con éxito",
-                        // "cita" => $invitado->verificado,
+                        "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
+                        "cargo" => $invitado->cargo,
+                        "zona" => $invitado->zona->nombre,
                     ], 200);
                 }
                 if($invitado->verificado == 1){
@@ -352,7 +354,7 @@ class InvitadoController extends Controller{
                     return response()->json([
                         "status" => "usado",
                         "message" => "Folio ya usado",
-                        "nombre" => $invitado->nombre,
+                        "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
                         "hora" => $invitado->hora_ingreso
                     ], 200);
                 }
@@ -658,6 +660,9 @@ class InvitadoController extends Controller{
                     return response()->json([
                         "status" => "ok",
                         "message" => "Folio confirmado con éxito",
+                        "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
+                        "cargo" => $invitado->cargo,
+                        "zona" => $invitado->zona->nombre,
                         // "cita" => $invitado->verificado,
                     ], 200);
                 }
@@ -667,7 +672,7 @@ class InvitadoController extends Controller{
                     return response()->json([
                         "status" => "usado",
                         "message" => "Folio ya está confirmado",
-                        "nombre" => $invitado->nombre,
+                        "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
                         "hora" => $invitado->hora_ingreso
                     ], 200);
                 }
