@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 // use Maatwebsite\Excel\Concerns\ToModel;
 
 // class InvitadosImport implements ToModel
@@ -78,6 +78,14 @@ class InvitadosImport implements ToCollection, WithHeadingRow
                 $cont++;
             }
         }
+    }
+
+    public function ruler()
+    {
+        return [
+            '1' => Rule::in(['flopez@pjpuebla.gob.mx']),
+            // 'nombre' => Rule::notIn(['vacio o null'])
+        ];
     }
     // public function model(array $row)
     // {
