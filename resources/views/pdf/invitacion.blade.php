@@ -10,46 +10,48 @@
         font-family: "Montserrat", sans-serif;
         }
         .nombre-evento{
-            text-align: center;
+            justify-content: center;;
             font-size: 20rem;
             text-transform: uppercase;
             color: #6a73a0;
             font-weight: bold;
         }
         .lugar{
-            text-align: center;
+            justify-content: center;
             font-size: 20rem;
             text-transform: uppercase;
             color: #6a73a0;
             font-weight: bold;
         }
         .primera-linea{
-            text-align: center;
+            justify-content: center;
             font-weight: bold;
             font-size: 28rem;
         }
         .segunda-linea{
-            text-align: center;
+            justify-content: center;
             font-size: 20rem;
         }
         .texto-fecha{
             margin-top: 0%;
-            text-align: center;
+            justify-content: center;
             font-size: 30rem;
             text-transform: uppercase;
 
         }
         .hora{
+            justify-content: center;
             text-align: center;
-            font-size: 35rem;
+            font-size: 30rem;
         }
         .sede{
-            text-align: center;
+            justify-content: center;
+            font-size: 30rem;
 
         }
-        .domicilio{
-            text-align: center;
-            
+        .direccion{
+            justify-content: center;
+
         }
     </style>
 </head>
@@ -64,9 +66,9 @@
     <br>
     <p><span class="primera-linea">TRIBUNALES DE JUSTICIA LOCAL</span><br><br>
     <span class="segunda-linea">EL  EVENTO  SE  LLEVARÁ  A  CABO  EL  PRÓXIMO</span><br><br>
-    <span class="texto-fecha">{{$f}}</span><br><br><br>
-    <span class="hora">{{$hora}}</span><br><br><br>
-    <span class="sede">{{$evento->sede}}</span><br><br><br>
+    <span class="texto-fecha">{{$f}}</span><br><br>
+    <span class="hora">{{$hora}}</span><br><br>
+    <span class="sede">{{$evento->sede}}</span><br><br>
     <span class="direccion">{{$evento->domicilio_sede}}</span>
     </p>
 </body>

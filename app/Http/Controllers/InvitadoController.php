@@ -639,8 +639,10 @@ class InvitadoController extends Controller{
     {
         try {
             $total_invitados = Invitado::where('evento_id',$request->evento_id)->count();
-            $path = $request->file('file')->getRealPath();
-            Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$path); 
+            // $path = $request->file('file')->getRealPath();
+            // Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$path); 
+            // $path = $request->file('file')->getRealPath();
+            Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$request->file('file')); 
 
             return response()->json([
                 "status" => "ok",
@@ -737,6 +739,8 @@ class InvitadoController extends Controller{
 
             $invitados = Invitado::where('evento_id',$evento->id)->get();
 
+            // dd($invitados);
+
             foreach($invitados as $invitado)
             {
     
@@ -767,9 +771,10 @@ class InvitadoController extends Controller{
                     'module_width' => 1, // width of a single module in points
                     'module_height' => 1 // height of a single module in points
                 );
-                $view = View::make('pdf.invitacion', compact('invitado','evento','f',hora));
+                $view = View::make('pdf.invitacion', compact('invitado','evento','f','hora'));                
                 $html_content = $view->render();
-        
+                PDF::reset();
+                
                 $PDF_MARGIN_LEFT = 15;
                 $PDF_MARGIN_TOP = 30;
                 $PDF_MARGIN_RIGHT = 15;
@@ -787,9 +792,12 @@ class InvitadoController extends Controller{
                 PDF::Text(65, 265, 'ESPERANDO CONTAR SON SU PRESENCIA');
                 PDF::Text(10, 280, 'FIRMA');
                 PDF::Text(180, 280, 'FIRMA2');
-                ob_end_clean();
+                
                 $pdf = PDF::Output('Código.pdf','S');
+                // $pdf->lastPage();
+                // $pdf->endPage(); 
                 Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
+                // ob_end_clean();
             }
 
             return response()->json([
@@ -797,8 +805,6 @@ class InvitadoController extends Controller{
                 "message" => "Correos enviados con éxito.",
             ], 200);      
         } catch (\Throwable $th) {
-            DB::rollback();
-            $exito = false;
             return response()->json([
                 "status" => "error",
                 "message" => "Ocurrió un error al enviar los correos.",

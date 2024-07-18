@@ -235,6 +235,22 @@
                                                     <span style="font-size: 15px;">Eliminar Evento</span>
                                                 </v-tooltip>
                                             </div>
+
+                                            <div>
+                                                <v-icon
+                                                    @click="enviarCorreos(evento)"
+                                                    class="ml-1"
+                                                    >
+                                                    mdi-email-arrow-right
+                                                </v-icon>
+
+                                                <v-tooltip
+                                                    activator="parent"
+                                                    location="bottom"
+                                                    >
+                                                    <span style="font-size: 15px;">Enviar Invitaciones</span>
+                                                </v-tooltip>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -583,6 +599,9 @@
                     evento_id: '',
                     zona_id:'',
                     archivo: ''
+                },
+                notificacion: {
+                    evento_id: '',
                 },
                 nuevo: 0,
                 panel: [],
@@ -1214,7 +1233,32 @@
             },
             cerrarDialogExcel(){
                 this.dialogExcel = false
-            }
+            },
+
+            async enviarCorreos(evento) {  
+                this.notificacion.evento_id = evento.id              
+
+                this.loading = true
+                console.log(this.notificacion)
+                try {                   
+                    let response = await axios.post('/api/invitados/eviarCorreos',this.notificacion)
+                    console.log(response)
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            console.log("duidgiud")
+                            successSweetAlert(response.data.message)
+
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al enviar los correos')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener los correos')
+                }
+                this.loading = false
+            },
         }
     })
 </script>
