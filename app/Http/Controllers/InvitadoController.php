@@ -278,11 +278,6 @@ class InvitadoController extends Controller{
             $w = 'AM';
         }
         $hora = $h.' '.$w;
-                
-        // PDF::setHeaderCallBack(function($pdf){
-        //     $logo = public_path() . '/img/logo_dialogos.png';
-        //     $pdf->Image($logo,26,0,160,45);
-        // });
 
             $style = array(
                 'border' => 0,
@@ -293,8 +288,6 @@ class InvitadoController extends Controller{
                 'module_width' => 1, // width of a single module in points
                 'module_height' => 1 // height of a single module in points
             );
-
-
 
             $view = View::make('pdf.invitacion', compact('invitado','evento','f','hora'));
             $html_content = $view->render();
@@ -322,15 +315,10 @@ class InvitadoController extends Controller{
             // set the starting point for the page content
             PDF::setPageMark();
 
-
             PDF::writeHTML($html_content, true, false, true, false, '');
-            // PDF::write2DBarcode('http://control_invitados.test/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
             PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 66, 196, 76, 76, $style, 'N');
 
             PDF::Text(65, 275, 'CÓDIGO DE VESTIMENTA: FORMAL');
-            // PDF::Text(10, 280, 'FIRMA');
-            // PDF::Text(180, 280, 'FIRMA2');
-
 
             ob_end_clean();
 
@@ -375,24 +363,7 @@ class InvitadoController extends Controller{
                     "message" => "Folio no existe",
                     // "cita" => $request->folio
                 ], 200);
-            }
-            // $objectInvitado = new \stdClass();
-            // $objectInvitado->id = $invitado->id;
-            // $objectInvitado->nombre = $invitado->nombre;
-            // $objectInvitado->dependencia = $invitado->dependencia;
-            // $objectInvitado->area = $invitado->area;
-            // $objectInvitado->telefono = $invitado->telefono;
-            // $objectInvitado->email = $invitado->email;
-            // $objectInvitado->folio = $invitado->folio;
-            // $objectInvitado->verificado = $invitado->verificado;
-            // $objectInvitado->evento_id = $invitado->evento_id;
-
-            // return response()->json([
-            //     "status" => "ok",
-            //     "message" => "Invitado encontrado.",
-            //     "folio" => $objectInvitado
-            // ], 200);
-            
+            }          
 
         
         }catch (\Throwable $th) {
@@ -480,7 +451,7 @@ class InvitadoController extends Controller{
         });
 
         $style = array(
-            'border' => 2,
+            'border' => 0,
             'vpadding' => 'auto',
             'hpadding' => 'auto',
             'fgcolor' => array(0,0,0),
@@ -504,14 +475,23 @@ class InvitadoController extends Controller{
         
         PDF::AddPage('P', 'A4');
 
+        $bMargin = PDF::getBreakMargin();
+        // get current auto-page-break mode
+        $auto_page_break = PDF::getAutoPageBreak();
+        // disable auto-page-break
+        PDF::SetAutoPageBreak(false, 0);
+        // set bacground image
+        $img_file = public_path() . '/img/fondo_invitacion.jpg';
+        PDF::Image($img_file, 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+        // restore auto-page-break status
+        PDF::SetAutoPageBreak($auto_page_break, $bMargin);
+        // set the starting point for the page content
+        PDF::setPageMark();
+
         PDF::writeHTML($html_content, true, false, true, false, '');
-        // PDF::write2DBarcode('http://control_invitados.test/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
-        PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
+        PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 66, 196, 76, 76, $style, 'N');
 
-        PDF::Text(65, 265, 'ESPERANDO CONTAR SON SU PRESENCIA');
-        PDF::Text(10, 280, 'FIRMA');
-        PDF::Text(180, 280, 'FIRMA2');
-
+        PDF::Text(65, 275, 'CÓDIGO DE VESTIMENTA: FORMAL');
 
         ob_end_clean();
 
@@ -692,31 +672,13 @@ class InvitadoController extends Controller{
                     ], 200);
                 }
             }
-           else{
+            else{
                 return response()->json([
                     "status" => "no_existe",
                     "message" => "Folio no existe",
                     // "cita" => $request->folio
                 ], 200);
             }
-            // $objectInvitado = new \stdClass();
-            // $objectInvitado->id = $invitado->id;
-            // $objectInvitado->nombre = $invitado->nombre;
-            // $objectInvitado->dependencia = $invitado->dependencia;
-            // $objectInvitado->area = $invitado->area;
-            // $objectInvitado->telefono = $invitado->telefono;
-            // $objectInvitado->email = $invitado->email;
-            // $objectInvitado->folio = $invitado->folio;
-            // $objectInvitado->verificado = $invitado->verificado;
-            // $objectInvitado->evento_id = $invitado->evento_id;
-
-            // return response()->json([
-            //     "status" => "ok",
-            //     "message" => "Invitado encontrado.",
-            //     "folio" => $objectInvitado
-            // ], 200);
-            
-
         
         }catch (\Throwable $th) {
             DB::rollback();
@@ -763,7 +725,7 @@ class InvitadoController extends Controller{
                 });
         
                 $style = array(
-                    'border' => 2,
+                    'border' => 0,
                     'vpadding' => 'auto',
                     'hpadding' => 'auto',
                     'fgcolor' => array(0,0,0),
@@ -771,8 +733,10 @@ class InvitadoController extends Controller{
                     'module_width' => 1, // width of a single module in points
                     'module_height' => 1 // height of a single module in points
                 );
+
                 $view = View::make('pdf.invitacion', compact('invitado','evento','f','hora'));                
                 $html_content = $view->render();
+
                 PDF::reset();
                 
                 $PDF_MARGIN_LEFT = 15;
@@ -784,20 +748,28 @@ class InvitadoController extends Controller{
                 PDF::SetAutoPageBreak(true, $PDF_MARGIN_BOTTOM);
                 
                 PDF::AddPage('P', 'A4');
+
+                $bMargin = PDF::getBreakMargin();
+                // get current auto-page-break mode
+                $auto_page_break = PDF::getAutoPageBreak();
+                // disable auto-page-break
+                PDF::SetAutoPageBreak(false, 0);
+                // set bacground image
+                $img_file = public_path() . '/img/fondo_invitacion.jpg';
+                PDF::Image($img_file, 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                // restore auto-page-break status
+                PDF::SetAutoPageBreak($auto_page_break, $bMargin);
+                // set the starting point for the page content
+                PDF::setPageMark();
         
                 PDF::writeHTML($html_content, true, false, true, false, '');
-                // PDF::write2DBarcode('http://control_invitados.test/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
-                PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 85, 210, 50, 50, $style, 'N');
+                PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 66, 196, 76, 76, $style, 'N');
         
-                PDF::Text(65, 265, 'ESPERANDO CONTAR SON SU PRESENCIA');
-                PDF::Text(10, 280, 'FIRMA');
-                PDF::Text(180, 280, 'FIRMA2');
+                PDF::Text(65, 275, 'CÓDIGO DE VESTIMENTA: FORMAL');
                 
                 $pdf = PDF::Output('Código.pdf','S');
-                // $pdf->lastPage();
-                // $pdf->endPage(); 
+            
                 Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
-                // ob_end_clean();
             }
 
             return response()->json([
