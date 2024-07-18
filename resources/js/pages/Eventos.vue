@@ -241,14 +241,14 @@
                                                     @click="enviarCorreos(evento)"
                                                     class="ml-1"
                                                     >
-                                                    mdi-trash-can
+                                                    mdi-email-arrow-right
                                                 </v-icon>
 
                                                 <v-tooltip
                                                     activator="parent"
                                                     location="bottom"
                                                     >
-                                                    <span style="font-size: 15px;">Enviar correos</span>
+                                                    <span style="font-size: 15px;">Enviar Invitaciones</span>
                                                 </v-tooltip>
                                             </div>
                                         </div>
@@ -1238,6 +1238,7 @@
             async enviarCorreos(evento) {  
                 this.notificacion.evento_id = evento.id              
 
+                this.loading = true
                 console.log(this.notificacion)
                 try {                   
                     let response = await axios.post('/api/invitados/eviarCorreos',this.notificacion)
@@ -1256,7 +1257,7 @@
                 } catch (error) {
                     errorSweetAlert('Ocurrió un error al obtener los correos')
                 }
-                this.loading2 = false
+                this.loading = false
             },
         }
     })

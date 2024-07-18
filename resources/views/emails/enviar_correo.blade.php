@@ -7,14 +7,17 @@
     <title>Invitación</title>
     <style>
         body{
-        font-family: "Montserrat", sans-serif;
+            /* font-family: "Montserrat", sans-serif;
+            text-align: justify;
+            font-size: 14; */
         }
         .nombre-evento{
-            text-align: center;
-            font-size: 20rem;
+            font-family: "Montserrat", sans-serif;
+            text-align: justify;
+            font-size: 1rem;
             text-transform: uppercase;
-            color: #6a73a0;
-            font-weight: bold;
+            color: black;
+            /* font-weight: bold; */
         }
         .lugar{
             text-align: center;
@@ -40,24 +43,40 @@
         .firma2{
             text-align: right;
         }
+        .correo {
+            font-family: "Montserrat", sans-serif;
+            text-align: justify;
+            font-size: 2rem;
+        }
     </style>
 </head>
-<body>
-    CONFIRMA TU ASISTENCIA DANDO CLIC AL SIGUIENTE ENLACE<br>
-    https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}
-    {{--  <p class="texto">EL _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </p>
-    <p class="texto">TIENE EL HONOR DE INVITARLE A LOS </p>
-    <p class="nombre-evento"><span>{{$evento->nombre}}</span></p>
-    <p class="texto">EL EVENTO SE LLEVARÁ A CABO EL PRÓXIMO</p>
-    <p class="texto-fecha">{{$evento->fecha_inicial}}</p>
-    <p class="hora">{{$evento->horario}}</p>
-    <p class="lugar">{{$evento->sede}}</p>
-    <p class="texto">{{$evento->domicilio_sede}}</p>  --}}
-    <br><br><br>
-    Favor de abrir o descargar el archivo PDF para poder visualizar su invitación
+<body >
 
+
+    <p class="nombre-evento">
+    <b>Estimado/a: </b> {{$invitado->nombre}} {{$invitado->apellido_p}} {{$invitado->apellido_m}} <br><br>
+
+    Espero este mensaje le encuentre bien. <br><br>
+
+    Por medio del presente, tenemos el agrado de invitarle al evento <strong>"Diálogos Nacionales sobre Tribunales de Justicia Local"</strong>, organizado por la Cámara de Diputados, LXV Legislatura. El evento se llevará a cabo el próximo <strong> martes 23 de julio a las 10:30 AM en el Centro Expositor "Salón Fuerte de Loreto", ubicado en Av. Ejército de Oriente No. 100, Centro Cívico Cultural 5 de Mayo, Zona de los Fuertes, Puebla, México.</strong>
+
+    <br><br>
+    Adjunto encontrará la imagen con todos los detalles del evento.
+    <br><br>
+
+    Le recordamos que es imprescindible presentar el código QR al momento del acceso, ya que es de uso personal e intransferible.
+
+    <br><br>
+    Agradecemos de antemano su atención y esperamos contar con su valiosa presencia en este importante diálogo.
+    <br><br>
+    Atentamente,
+
+    Cámara de Diputados, LXV Legislatura
+    <br><br>
+    Si necesitas alguna modificación o información adicional, por favor házmelo saber.<br><br><br>
     
-        {{--  http://control_invitados.test/confirmacion?folio={{$invitado->folio}}  --}}
+    CONFIRMA TU ASISTENCIA DANDO CLIC AL SIGUIENTE ENLACE<br>
+    https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}</p>
 
 </body>
 </html>
