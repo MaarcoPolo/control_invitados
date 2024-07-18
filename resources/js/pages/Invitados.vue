@@ -539,8 +539,9 @@
                                 if (result.value.data.status === "ok") {
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setInvitados', result.value.data.invitados)
-                                    this.cerrarModalNuevoInvitado()
                                     this.getDataPagina(1)
+                                    this.cerrarModalNuevoInvitado()
+                                    this.BuscarInvitado()
                                 } else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                                 }

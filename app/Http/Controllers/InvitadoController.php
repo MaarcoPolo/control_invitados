@@ -48,6 +48,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -113,6 +114,7 @@ class InvitadoController extends Controller{
                     $objectInvitado->nombre_evento = $invitado->evento->nombre;
                     $objectInvitado->zona = $invitado->zona->nombre;
                     $objectInvitado->cargo = $invitado->cargo;
+                    $objectInvitado->seccion = $invitado->zona_id;
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -179,6 +181,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -237,6 +240,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -524,6 +528,7 @@ class InvitadoController extends Controller{
             $objectInvitado->nombre_evento = $invitado->evento->nombre;
             $objectInvitado->zona = $invitado->zona->nombre;
             $objectInvitado->cargo = $invitado->cargo;
+            $objectInvitado->seccion = $invitado->zona_id;
             array_push($array_invitados, $objectInvitado);
             $cont++;
         }
