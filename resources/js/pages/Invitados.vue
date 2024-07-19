@@ -41,7 +41,7 @@
                                     <th class="custom-title-table">Nombre</th>
                                     <th class="custom-title-table">Dependencia</th>
                                     <th class="custom-title-table">Área</th>
-                                    <th class="custom-title-table">Evento</th>
+                                    <th class="custom-title-table">Confirmado</th>
                                     <th class="custom-title-table">Sección</th>
                                     <th class="custom-title-table">Acciones</th>
                                 </tr>
@@ -69,7 +69,7 @@
                                         {{invitado.area}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
-                                        {{invitado.nombre_evento}}
+                                        {{invitado.confirmo}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
                                         {{invitado.zona}}
@@ -404,7 +404,12 @@
             buscar: function () {
                 if (!this.buscar.length == 0) {
                     this.datosPaginados = this.invitados.filter(item => {
-                        return item.nombre.toLowerCase().includes(this.buscar.toLowerCase())                    
+                        return item.nombre.toLowerCase().includes(this.buscar.toLowerCase()) 
+                        || item.dependencia.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.area.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.confirmo.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.zona.toLowerCase().includes(this.buscar.toLowerCase())
+                   
                     })
                 } else {
                     this.getDataPagina(1)

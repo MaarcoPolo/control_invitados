@@ -48,6 +48,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->confirmo = $invitado->confirmo;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -113,6 +114,7 @@ class InvitadoController extends Controller{
                     $objectInvitado->nombre_evento = $invitado->evento->nombre;
                     $objectInvitado->zona = $invitado->zona->nombre;
                     $objectInvitado->cargo = $invitado->cargo;
+                    $objectInvitado->confirmo = $invitado->confirmo;
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -156,6 +158,7 @@ class InvitadoController extends Controller{
             $invitado->estado = $request->estado;
             $invitado->municipio = $request->municipio;
             $invitado->zona_id = $request->seccion;
+            $invitado->confirmo = $invitado->confirmo;
             $invitado->save();
             
             $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
@@ -237,6 +240,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->confirmo = $invitado->confirmo;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -407,6 +411,7 @@ class InvitadoController extends Controller{
                     $objectInvitado->estado = $invitado->estado;
                     $objectInvitado->municipio = $invitado->municipio;
                     $objectInvitado->seccion = $invitado->zona_id;
+                    $objectInvitado->confirmo = $invitado->confirmo == 1 ? 'SI' : 'NO';
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -429,9 +434,12 @@ class InvitadoController extends Controller{
         }
     }
     public function enviarCorreo(Request $request) {
-        
+        DB::beginTransaction();
         try{
+        
         $invitado = Invitado::find($request->id);
+        $invitado->correo_enviado = 1;
+        $invitado->save();
         $evento = Evento::find($request->evento_id);
 
         $date = new Carbon($evento->fecha_inicial);
@@ -501,7 +509,7 @@ class InvitadoController extends Controller{
 
 
         Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
-
+        DB::commit();
 
         $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
 
@@ -534,7 +542,7 @@ class InvitadoController extends Controller{
         ], 200);
 
     }catch (\Throwable $th) {
-    
+        DB::rollback();
         return response()->json([
             "status" => "error",
             "message" => "Ocurrió un error al enviar el correo.",
@@ -624,12 +632,14 @@ class InvitadoController extends Controller{
             // $path = $request->file('file')->getRealPath();
             // Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$path); 
             // $path = $request->file('file')->getRealPath();
-            Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$request->file('file')); 
-
+            $ex = new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id);
+           Excel::import($ex,$request->file('file')); 
+            // $total = $ex->cont;
+            // dd($ex->cont);
             return response()->json([
                 "status" => "ok",
                 "message" => "Invitados agregados con éxito.",
-                // "invitados" => $array_invitados
+                "invitados" => $ex->cont,
             ], 200);       
         } catch (\Throwable $th) {
         
@@ -700,17 +710,20 @@ class InvitadoController extends Controller{
 
     public function enviarCorreosMasivo(Request $request)
     {
+        DB::beginTransaction();
         try{
             // $invitado = Invitado::find($request->id);
             $evento = Evento::find($request->evento_id);
 
-            $invitados = Invitado::where('evento_id',$evento->id)->get();
+            $invitados = Invitado::where('evento_id',$evento->id)->where('status',1)->where('correo_enviado',0)->get();
 
             // dd($invitados);
 
             foreach($invitados as $invitado)
             {
     
+                $invitado->correo_enviado = 1;
+                $invitado->save();
                 $date = new Carbon($evento->fecha_inicial);
                 $f = $this->formatearFecha($date->dayOfWeek, $date->day, $date->month, $date->year);
         
@@ -775,6 +788,7 @@ class InvitadoController extends Controller{
                 $pdf = PDF::Output('Código.pdf','S');
             
                 Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
+                DB::commit();
             }
 
             return response()->json([
@@ -782,6 +796,7 @@ class InvitadoController extends Controller{
                 "message" => "Correos enviados con éxito.",
             ], 200);      
         } catch (\Throwable $th) {
+            DB::rollback();
             return response()->json([
                 "status" => "error",
                 "message" => "Ocurrió un error al enviar los correos.",
