@@ -789,7 +789,9 @@ class InvitadoController extends Controller{
             return response()->json([
                 "status" => "ok",
                 "message" => "Correos enviados con éxito.",
-            ], 200);      
+                "total" => $cont_correos
+            ], 200); 
+
         } catch (\Throwable $th) {
             return response()->json([
                 "status" => "error",
