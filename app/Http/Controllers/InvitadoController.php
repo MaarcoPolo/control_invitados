@@ -49,6 +49,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
                 $objectInvitado->confirmo = $invitado->confirmo;
+                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -115,6 +116,7 @@ class InvitadoController extends Controller{
                     $objectInvitado->zona = $invitado->zona->nombre;
                     $objectInvitado->cargo = $invitado->cargo;
                     $objectInvitado->confirmo = $invitado->confirmo;
+                    $objectInvitado->seccion = $invitado->zona_id;
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -182,6 +184,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -241,6 +244,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
                 $objectInvitado->confirmo = $invitado->confirmo;
+                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -320,7 +324,7 @@ class InvitadoController extends Controller{
             PDF::setPageMark();
 
             PDF::writeHTML($html_content, true, false, true, false, '');
-            PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 66, 196, 76, 76, $style, 'N');
+            PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 70, 198, 70, 70, $style, 'N');
 
             PDF::Text(65, 275, 'CÓDIGO DE VESTIMENTA: FORMAL');
 
@@ -499,7 +503,7 @@ class InvitadoController extends Controller{
         PDF::setPageMark();
 
         PDF::writeHTML($html_content, true, false, true, false, '');
-        PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 66, 196, 76, 76, $style, 'N');
+        PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 70, 198, 70, 70, $style, 'N');
 
         PDF::Text(65, 275, 'CÓDIGO DE VESTIMENTA: FORMAL');
 
@@ -532,6 +536,7 @@ class InvitadoController extends Controller{
             $objectInvitado->nombre_evento = $invitado->evento->nombre;
             $objectInvitado->zona = $invitado->zona->nombre;
             $objectInvitado->cargo = $invitado->cargo;
+            $objectInvitado->seccion = $invitado->zona_id;
             array_push($array_invitados, $objectInvitado);
             $cont++;
         }
@@ -781,7 +786,7 @@ class InvitadoController extends Controller{
                 PDF::setPageMark();
         
                 PDF::writeHTML($html_content, true, false, true, false, '');
-                PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 66, 196, 76, 76, $style, 'N');
+                PDF::write2DBarcode('https://eventos.pjpuebla.gob.mx/validar-invitado?folio='.$invitado->folio, 'QRCODE,M', 70, 198, 70, 70, $style, 'N');
         
                 PDF::Text(65, 275, 'CÓDIGO DE VESTIMENTA: FORMAL');
                 

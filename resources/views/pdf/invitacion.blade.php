@@ -10,44 +10,52 @@
         font-family: "Montserrat", sans-serif;
         }
         .primera-linea{
+            line-height: 20%;
             justify-content: center;
             text-align: center;
             font-weight: bold;
-            font-size: 28rem;
+            font-size: 27rem;
+            color: #565658;
         }
         .segunda-linea{
-            line-height: 0%;
+            line-height: 20%;
             justify-content: center;
             text-align: center;
-            font-size: 20rem;
+            font-size: 15rem;
             
         }
         .texto-fecha{
-            line-height: 0%;
             justify-content: center;
-            
             text-align: center;
-            font-size: 30rem;
+            font-size: 25rem;
             text-transform: uppercase;
 
         }
         .hora{
-            line-height: 0%;
-            justify-content: center;
-            text-align: center;
-            font-size: 35rem;
-        }
-        .sede{
-            
             justify-content: center;
             text-align: center;
             font-size: 30rem;
-
+        }
+        .sede{
+            font-weight: bold;
+            justify-content: center;
+            text-align: center;
+            font-size: 25rem;
         }
         .direccion{
             justify-content: center;
             text-align: center;
-            
+        }
+        .nombre{
+            line-height: 20%;
+            font-weight: bold;
+            justify-content: center;
+            text-align: center;
+            font-size: 25rem;
+        }
+        .cargo{            
+            justify-content: center;
+            text-align: center;
         }
     </style>
 </head>
@@ -60,11 +68,15 @@
     <br>
     <br>
     <br>
-    <p><span class="primera-linea">TRIBUNALES DE JUSTICIA LOCAL</span><br></p>
-    <p><span class="segunda-linea">EL  EVENTO  SE  LLEVARÁ  A  CABO  EL  PRÓXIMO</span></p><br>
-    <p><span class="texto-fecha">{{$f}}</span><br></p>
-    <p><span class="hora">{{$hora}}</span></p><br>
-    <p><span class="sede">{{$evento->sede}}</span><br></p>
+    <br>
+    <p><span class="primera-linea">TRIBUNALES DE JUSTICIA LOCAL</span></p>
+    <p><span class="segunda-linea">EL  EVENTO  SE  LLEVARÁ  A  CABO  EL  PRÓXIMO</span></p>
+    <p><span class="texto-fecha">{{$f}}</span></p>
+    <p><span class="hora">{{$hora}}</span></p>
+    <p><span class="sede">{{$evento->sede}}</span></p>
     <p><span class="direccion">{{$evento->domicilio_sede}}</span></p>
+    <p><span class="nombre">{{$invitado->nombre}} {{$invitado->apellido_p}} {{$invitado->apellido_m}}</span></p>
+    <p><span class="cargo">{{$invitado->cargo}}</span></p>
+
 </body>
 </html>
