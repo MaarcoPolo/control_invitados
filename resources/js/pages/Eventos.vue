@@ -1231,7 +1231,7 @@
                             }
                             else {
                             errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
-                        }
+                            }
                         }
                         else {
                         errorSweetAlert('Ocurrió un error al obtener los invitados')
@@ -1260,8 +1260,13 @@
                     console.log(response)
                     if (response.status === 200) {
                         if (response.data.status === "ok") {
-                            console.log("duidgiud")
-                            successSweetAlert(response.data.message)
+                            // console.log("duidgiud")
+                            // successSweetAlert(response.data.message)
+                            Swal.fire({
+                            title: "Correos enviados con éxito.",
+                            html: "<strong>Se mandaron "+`${response.data.total}`+" correos</strong>",
+                            icon: "success"
+                                });
 
                         } else {
                             errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)

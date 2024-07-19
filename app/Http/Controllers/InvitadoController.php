@@ -643,8 +643,9 @@ class InvitadoController extends Controller{
             // dd($ex->cont);
             return response()->json([
                 "status" => "ok",
-                "message" => "Invitados agregados con éxito.",
+                "message" => "Importados ".$ex->cont. " de ".$ex->total,
                 "invitados" => $ex->cont,
+                "total" => $ex->total,
             ], 200);       
         } catch (\Throwable $th) {
         
@@ -723,7 +724,7 @@ class InvitadoController extends Controller{
             $invitados = Invitado::where('evento_id',$evento->id)->where('status',1)->where('correo_enviado',0)->get();
 
             // dd($invitados);
-
+            $cont_correos = 0;
             foreach($invitados as $invitado)
             {
     
@@ -794,11 +795,13 @@ class InvitadoController extends Controller{
             
                 Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
                 DB::commit();
+                $cont_correos++;
             }
 
             return response()->json([
                 "status" => "ok",
                 "message" => "Correos enviados con éxito.",
+                "total" => $cont_correos
             ], 200);      
         } catch (\Throwable $th) {
             DB::rollback();

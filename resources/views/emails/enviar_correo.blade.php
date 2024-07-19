@@ -74,8 +74,9 @@
     Cámara de Diputados, LXV Legislatura
     <br><br><br>
     
-    CONFIRMA TU ASISTENCIA DANDO CLIC AL SIGUIENTE ENLACE<br>
-    https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}</p>
+    <a href="https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}">CONFIRMA TU ASISTENCIA DANDO CLIC AQUI</a></p>.
+    {{--  <a href="url">Enlace de texto u objeto  --}}
+    {{--  https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}</p>  --}}
 
 </body>
 </html>

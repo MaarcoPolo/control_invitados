@@ -18,6 +18,7 @@ class InvitadosImport implements ToCollection, WithHeadingRow
     public $n_invitados;
     public $zona_id;
     public $cont;
+    public $total;
     /**
     * @param array $row
     *
@@ -41,67 +42,73 @@ class InvitadosImport implements ToCollection, WithHeadingRow
         $cont_insert= 0;
         foreach($rows as $row)
         {
-            if($invitado = Invitado::where('nombre',$row["nombre"])
-            ->where('apellido_p',$row["apellido_paterno"])
-            ->where('apellido_m',$row["apellido_materno"])
-            ->where('dependencia',$row["dependencia"])
-            ->where('cargo',$row["cargo"])
-            ->where('area',$row["area"])
-            ->where('telefono',$row["telefono"])
-            ->where('email',$row["email"])
-            ->exists()){
+            if($row["email"] != ''){
+                if($invitado = Invitado::where('nombre',$row["nombre"])
+                    ->where('apellido_p',$row["apellido_paterno"])
+                    ->where('apellido_m',$row["apellido_materno"])
+                    ->where('dependencia',$row["dependencia"])
+                    ->where('cargo',$row["cargo"])
+                    ->where('area',$row["area"])
+                    ->where('telefono',$row["telefono"])
+                    ->where('email',$row["email"])
+                    ->exists()){
 
                 // return response()->json([
                 //     "status" => "ok",
                 //     "message" => "Registro duplicado.",
                 // ], 200); 
-            }else{
-                if($cont <= (count($rows)-1))
-                {
-                Invitado::create([
-                    'n_invitado' => $this->n_invitados,
-                    'nombre' => $row["nombre"], 
-                    'apellido_p' => $row["apellido_paterno"],
-                    'apellido_m' => $row["apellido_materno"],
-                    'dependencia' => $row["dependencia"],
-                    'cargo' => $row["cargo"],
-                    'area' => $row["area"],
-                    'telefono' => $row["telefono"],
-                    'email' => $row['email'],
-                    'folio' => $this->evento_id.'-'.Str::random(10),          
-                    // 'hora_ingreso' => $row["hora_ingreso"],
-                    'estado' => $row["estado"],
-                    'municipio' => $row["municipio"],
-                    'zona_id' => $this->zona_id,
-                    'evento_id' => $this->evento_id,
+                }else{
+                    if($cont <= (count($rows)))
+                    {
+                    Invitado::create([
+                        'n_invitado' => $this->n_invitados,
+                        'nombre' => $row["nombre"], 
+                        'apellido_p' => $row["apellido_paterno"],
+                        'apellido_m' => $row["apellido_materno"],
+                        'dependencia' => $row["dependencia"],
+                        'cargo' => $row["cargo"],
+                        'area' => $row["area"],
+                        'telefono' => $row["telefono"],
+                        'email' => $row['email'],
+                        'folio' => $this->evento_id.'-'.Str::random(10),          
+                        // 'hora_ingreso' => $row["hora_ingreso"],
+                        'estado' => $row["estado"],
+                        'municipio' => $row["municipio"],
+                        'zona_id' => $this->zona_id,
+                        'evento_id' => $this->evento_id,
 
-                    //n_invitado = cont obtener numero de invitados
-                    //folio evento_id + - + rand(10)
-                ]);
-                $this->n_invitados++;
-                // Invitado::create([
-                //     'n_invitado' => $row[0],
-                //     'nombre' => $row[1], 
-                //     'apellido_p' => $row[2],
-                //     'apellido_m' => $row[3],
-                //     'dependencia' => $row[4],
-                //     'cargo' => $row[5],
-                //     'area' => $row[6],
-                //     'telefono' => $row[7],
-                //     'email' => $row[8],
-                //     'folio' => $row[9],            
-                //     'hora_ingreso' => $row[10],
-                //     'estado' => $row[11],
-                //     'municipio' => $row[12],
-                //     'evento_id' => $this->evento_id,
-                // ]);
-                $cont++;
+                        //n_invitado = cont obtener numero de invitados
+                        //folio evento_id + - + rand(10)
+                    ]);
+                    $this->n_invitados++;
+                    // Invitado::create([
+                    //     'n_invitado' => $row[0],
+                    //     'nombre' => $row[1], 
+                    //     'apellido_p' => $row[2],
+                    //     'apellido_m' => $row[3],
+                    //     'dependencia' => $row[4],
+                    //     'cargo' => $row[5],
+                    //     'area' => $row[6],
+                    //     'telefono' => $row[7],
+                    //     'email' => $row[8],
+                    //     'folio' => $row[9],            
+                    //     'hora_ingreso' => $row[10],
+                    //     'estado' => $row[11],
+                    //     'municipio' => $row[12],
+                    //     'evento_id' => $this->evento_id,
+                    // ]);
+                    $cont++;
+                    $cont_insert++;
+                    }
+
                 }
 
             }
             
+            
         }
-        $this->cont = $cont;
+        $this->cont = $cont_insert;
+        $this->total = $tamaño;
         // return $total;
     }
 
