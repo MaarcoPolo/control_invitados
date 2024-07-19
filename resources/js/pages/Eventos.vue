@@ -735,22 +735,22 @@
             }
         },
         watch: {
-            'panel': function() {
-                if(!this.panel){
-                    this.nuevo = 1
-                    this.v$.$reset()
-                    this.evento.nombre =''
-                    this.evento.organizador =''
-                    this.evento.sede =''
-                    this.evento.fecha_i = ''
-                    this.evento.fecha_f = ''
-                    this.evento.horario =''
-                    this.evento.domicilio = ''
-                    this.evento.ubicacion = ''
-                    this.evento.id = null
-                    // console.log(this.evento)
-                }
-            },
+            // 'panel': function() {
+            //     if(!this.panel){
+            //         this.nuevo = 1
+            //         this.v$.$reset()
+            //         this.evento.nombre =''
+            //         this.evento.organizador =''
+            //         this.evento.sede =''
+            //         this.evento.fecha_i = ''
+            //         this.evento.fecha_f = ''
+            //         this.evento.horario =''
+            //         this.evento.domicilio = ''
+            //         this.evento.ubicacion = ''
+            //         this.evento.id = null
+            //         // console.log(this.evento)
+            //     }
+            // },
             buscar: function () {
                 if (!this.buscar.length == 0) {
                     this.datosPaginados = this.eventos.filter(item => {

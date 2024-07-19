@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('folio')->unique();
             $table->boolean('confirmo')->default(0);
             $table->boolean('correo_enviado')->default(0);
+            $table->boolean('con_parking')->default(0);
+            $table->boolean('parking')->default(0);
             $table->boolean('verificado')->default(0);
             $table->foreignId('evento_id')->constrained();
             $table->foreignId('zona_id')->constrained();

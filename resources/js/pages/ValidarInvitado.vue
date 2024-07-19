@@ -64,11 +64,12 @@
                         if (response.status === 200) {
                             if (response.data.status === "ok") {
                                 Swal.fire({
-                                    title: "VERIFICADO",
+                                    title: "ACCESO PERMITIDO",
                                     // text: "Acceso permitido",
                                     html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>CARGO:</strong> "+`${response.data.cargo}`+"<br><strong>ZONA:</strong> "+`${response.data.zona}`,
                                     icon: "success",
                                     allowOutsideClick: false,
+                                    // background: "#D6AAED",
                                     confirmButtonText: "Ok",
                                     }).then((result) =>{
                                             if (result.isConfirmed) {
@@ -89,11 +90,70 @@
                                     }
                                     });
                             }
-                            else if(response.data.status === "no_existe"){
+                            else if(response.data.status === "no_existe_e"){
                                 Swal.fire({
                                     // timer: 20000,
                                     title: "NO EXISTE",
                                     text: "El acceso al evento no está registrado",
+                                    icon: "error",
+                                    allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    
+                                    }).then((result) =>{
+                                        if (result.isConfirmed) {
+                                        window.location.href = "/login";
+                                    }
+                                    });
+                            }
+                            else if(response.data.status === "entro"){
+                                Swal.fire({
+                                    // timer: 20000,
+                                    title: "ACCESO PERMITIDO",
+                                    html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>CARGO:</strong> "+`${response.data.cargo}`+"<br><strong>ZONA:</strong> "+`${response.data.zona}`,
+                                    icon: "success",
+                                    allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    
+                                    }).then((result) =>{
+                                        if (result.isConfirmed) {
+                                        window.location.href = "/login";
+                                    }
+                                    });
+                            }
+                            else if(response.data.status === "entro_antes"){
+                                Swal.fire({
+                                    // timer: 20000,
+                                    title: "ACCEDIO CON ANTERIORIDAD",
+                                    html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>CARGO:</strong> "+`${response.data.cargo}`+"<br><strong>ZONA:</strong> "+`${response.data.zona}`,
+                                    icon: "warning",
+                                    allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    
+                                    }).then((result) =>{
+                                        if (result.isConfirmed) {
+                                        window.location.href = "/login";
+                                    }
+                                    });
+                            }
+                            else if(response.data.status === "sin_estacionamiento"){
+                                Swal.fire({
+                                    // timer: 20000,
+                                    title: "SIN ACCESO",
+                                    text: "No tiene acceso al estacionamiento",                                    icon: "error",
+                                    allowOutsideClick: false,
+                                    confirmButtonText: "Ok",
+                                    
+                                    }).then((result) =>{
+                                        if (result.isConfirmed) {
+                                        window.location.href = "/login";
+                                    }
+                                    });
+                            }
+                            else if(response.data.status === "no_existe"){
+                                Swal.fire({
+                                    // timer: 20000,
+                                    title: "NO EXISTE",
+                                    text: "El acceso al estacionamiento no está registrado",
                                     icon: "error",
                                     allowOutsideClick: false,
                                     confirmButtonText: "Ok",
