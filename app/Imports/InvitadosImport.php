@@ -51,6 +51,7 @@ class InvitadosImport implements ToCollection, WithHeadingRow
                     ->where('area',$row["area"])
                     ->where('telefono',$row["telefono"])
                     ->where('email',$row["email"])
+                    ->where('status',1)
                     ->exists()){
 
                 // return response()->json([
