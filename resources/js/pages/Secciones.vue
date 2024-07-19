@@ -112,7 +112,7 @@
                                         {{seccion.nombre}}
                                     </td>
                                     <!-- <td :class="seccion.color == '#D91729' ? 'color_zona_uno' : seccion.color == '#E6ED02' ? 'color_zona_dos' : seccion.color == '#5AD235' ? 'color_zona_tres' : seccion.color == '#87202D' ? 'color_zona_cuatro' : seccion.color == '#DFAD0C' ? 'color_zona_cinco' : 'color_zona_seis'"> -->
-                                        <td :bgcolor="seccion.color"></td>
+                                    <td :bgcolor="seccion.color"></td>
                                     <!-- </td> -->
                                     <!-- <td :class="seccion.color">                                        
                                     </td> -->

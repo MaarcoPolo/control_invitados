@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+// use App\Models\Invitado;
 // use Maatwebsite\Excel\Concerns\ToModel;
 
 // class InvitadosImport implements ToModel
@@ -105,8 +106,6 @@ class InvitadosImport implements ToCollection, WithHeadingRow
                 }
 
             }
-            
-            
         }
         $this->cont = $cont_insert;
         $this->total = $tamaño;
