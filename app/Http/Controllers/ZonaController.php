@@ -235,7 +235,7 @@ class ZonaController extends Controller
     }
     public function BusquedaInvitados(Request $request){
         try{
-            $invitados = Invitado::where('status',1)->where('zona_id',$request->seccion_id)->where('evento_id',$request->evento_id)->get();
+            $invitados = Invitado::where('status',1)->where('zona_id',$request->seccion_id)->where('evento_id',$request->evento_id)->orderBy('verificado', 'desc')->get();
 
             $array_invitados = array();
 
@@ -274,7 +274,7 @@ class ZonaController extends Controller
     }
     public function BusquedaGeneral(Request $request){
         try{
-            $invitados = Invitado::where('status',1)->where('evento_id',$request->evento_id)->get();
+            $invitados = Invitado::where('status',1)->where('evento_id',$request->evento_id)->orderBy('verificado', 'desc')->get();
 
             $array_invitados = array();
 
