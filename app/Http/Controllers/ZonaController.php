@@ -65,13 +65,6 @@ class ZonaController extends Controller
             $zona = new Zona;
             $zona->nombre = $request->nombre;
             $zona->color = $request->color;
-            // $zona->sede = $request->sede;
-            // $zona->fecha_inicial = $request->fecha_i;
-            // $zona->fecha_final = $request->fecha_f;
-            // $zona->horario = $request->horario;
-            // $zona->domicilio_sede = $request->domicilio;
-            // $zona->ubicacion = $request->ubicacion;
-            // $zona->user_id = $user->id;
             $zona->save();
 
             $zonas = Zona::where('status',1)->get();
@@ -83,12 +76,6 @@ class ZonaController extends Controller
                 $objectZona->numero_registro = $cont;
                 $objectZona->nombre = $zona->nombre;
                 $objectZona->color = $zona->color;
-                // $objectEvento->sede = $evento->sede;
-                // $objectEvento->fecha_i = $evento->fecha_inicial;
-                // $objectEvento->fecha_f = $evento->fecha_final;
-                // $objectEvento->domicilio_sede = $evento->domicilio_sede;
-                // $objectEvento->ubicacion = $evento->ubicacion;
-                // $objectEvento->horario = $evento->horario;
                 array_push($array_zonas, $objectZona);
                 $cont++;
             }
@@ -125,12 +112,6 @@ class ZonaController extends Controller
             $seccion = Zona::find($request->id);
             $seccion->nombre = $request->nombre;
             $seccion->color = $request->color;
-            // $seccion->sede = $request->sede;
-            // $seccion->fecha_inicial = $request->fecha_i;
-            // $seccion->fecha_final = $request->fecha_f;
-            // $seccion->horario = $request->horario;     
-            // $seccion->domicilio_sede = $request->domicilio;
-            // $seccion->ubicacion = $request->ubicacion;       
             $seccion->save();
             
             $zonas = Zona::where('status',1)->get();
@@ -142,12 +123,6 @@ class ZonaController extends Controller
                 $objectZona->numero_registro = $cont;
                 $objectZona->nombre = $zona->nombre;
                 $objectZona->color = $zona->color;
-                // $objectEvento->sede = $evento->sede;
-                // $objectEvento->fecha_i = $evento->fecha_inicial;
-                // $objectEvento->fecha_f = $evento->fecha_final;
-                // $objectEvento->domicilio_sede = $evento->domicilio_sede;
-                // $objectEvento->ubicacion = $evento->ubicacion;
-                // $objectEvento->horario = $evento->horario;
                 array_push($array_zonas, $objectZona);
                 $cont++;
             }
@@ -183,14 +158,6 @@ class ZonaController extends Controller
             $seccion->status = false;
             $seccion->save();
 
-            // $invitados= Invitado::where('evento_id',$request->id)->where('status',1)->get();
-
-            // foreach($invitados as $invitado){
-            //     $invitado->status = false;
-            //     $invitado->save();
-            // }
-
-
             $zonas = Zona::where('status',1)->get();
             $array_zonas = array();
             $cont = 1;
@@ -200,12 +167,6 @@ class ZonaController extends Controller
                 $objectZona->numero_registro = $cont;
                 $objectZona->nombre = $zona->nombre;
                 $objectZona->color = $zona->color;
-                // $objectEvento->sede = $evento->sede;
-                // $objectEvento->fecha_i = $evento->fecha_inicial;
-                // $objectEvento->fecha_f = $evento->fecha_final;
-                // $objectEvento->domicilio_sede = $evento->domicilio_sede;
-                // $objectEvento->ubicacion = $evento->ubicacion;
-                // $objectEvento->horario = $evento->horario;
                 array_push($array_zonas, $objectZona);
                 $cont++;
             }
@@ -266,6 +227,84 @@ class ZonaController extends Controller
             return response()->json([
                 "status" => "error",
                 "message" => "Ocurrió un error al obtener el conteo de las secciones",
+                "error" => $th->getMessage(),
+                "location" => $th->getFile(),
+                "line" => $th->getLine(),
+            ], 200);
+        }
+    }
+    public function BusquedaInvitados(Request $request){
+        try{
+            $invitados = Invitado::where('status',1)->where('zona_id',$request->seccion_id)->where('evento_id',$request->evento_id)->get();
+
+            $array_invitados = array();
+
+            foreach($invitados as $invitado){
+                $objectInvitado = new \stdClass();
+                $objectInvitado->id = $invitado->id;
+                $objectInvitado->nombreC = $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m;
+                $objectInvitado->dependencia = $invitado->dependencia;
+                $objectInvitado->area = $invitado->area;
+                $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->evento_id = $invitado->evento_id;
+                $objectInvitado->nombre_evento = $invitado->evento->nombre;
+                $objectInvitado->zona = $invitado->zona->nombre;
+                $objectInvitado->seccion = $invitado->zona_id;
+                $objectInvitado->verificado = $invitado->verificado == 1 ? 'si' : 'no';
+                $objectInvitado->confirmado = $invitado->confirmado == 1 ? 'si' : 'no';
+                $objectInvitado->hora = $invitado->hora_ingreso;
+
+                array_push($array_invitados, $objectInvitado);
+            }
+            return response()->json([
+                "status" => "ok",
+                "message" => "Busqueda éxitosa",
+                "invitados" => $array_invitados
+            ], 200);
+
+        }catch(\Throwable $th) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Ocurrió un error al hacer la busqueda",
+                "error" => $th->getMessage(),
+                "location" => $th->getFile(),
+                "line" => $th->getLine(),
+            ], 200);
+        }
+    }
+    public function BusquedaGeneral(Request $request){
+        try{
+            $invitados = Invitado::where('status',1)->where('evento_id',$request->evento_id)->get();
+
+            $array_invitados = array();
+
+            foreach($invitados as $invitado){
+                $objectInvitado = new \stdClass();
+                $objectInvitado->id = $invitado->id;
+                $objectInvitado->nombreC = $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m;
+                $objectInvitado->dependencia = $invitado->dependencia;
+                $objectInvitado->area = $invitado->area;
+                $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->evento_id = $invitado->evento_id;
+                $objectInvitado->nombre_evento = $invitado->evento->nombre;
+                $objectInvitado->zona = $invitado->zona->nombre;
+                $objectInvitado->seccion = $invitado->zona_id;
+                $objectInvitado->verificado = $invitado->verificado == 1 ? 'si' : 'no';
+                $objectInvitado->confirmado = $invitado->confirmado == 1 ? 'si' : 'no';
+                $objectInvitado->hora = $invitado->hora_ingreso;
+
+                array_push($array_invitados, $objectInvitado);
+            }
+            return response()->json([
+                "status" => "ok",
+                "message" => "Busqueda éxitosa",
+                "invitados" => $array_invitados
+            ], 200);
+
+        }catch(\Throwable $th) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Ocurrió un error al hacer la busqueda",
                 "error" => $th->getMessage(),
                 "location" => $th->getFile(),
                 "line" => $th->getLine(),

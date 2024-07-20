@@ -68,6 +68,9 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
 
 
     Route::post('/secciones/contar-invitados', [ZonaController::class, 'SeccionesConteo']);
+    Route::post('/secciones/buscar-invitados', [ZonaController::class, 'BusquedaInvitados']);
+    Route::post('/secciones/buscar-generales', [ZonaController::class, 'BusquedaGeneral']);
+
 
 });
 

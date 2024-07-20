@@ -259,7 +259,7 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_telefono">Teléfono de la dependencia:</label>
-                                    <input id="input_telefono" type="text" autocomplete="off" maxlength="10" class="form-control" v-model="invitado.telefono">
+                                    <input id="input_telefono" type="number" autocomplete="off" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
