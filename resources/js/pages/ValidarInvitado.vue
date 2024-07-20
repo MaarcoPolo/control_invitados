@@ -66,7 +66,8 @@
                                 Swal.fire({
                                     title: "ACCESO PERMITIDO",
                                     // text: "Acceso permitido",
-                                    html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>CARGO:</strong> "+`${response.data.cargo}`+"<br><strong>ZONA:</strong> "+`${response.data.zona}`,
+                                    html: "<strong>NOMBRE:</strong> "+`${response.data.nombre}`+"<br><strong>CARGO:</strong> "+`${response.data.cargo}`+
+                                    "<br><strong>ZONA:</strong> "+`${response.data.zona}`,
                                     icon: "success",
                                     allowOutsideClick: false,
                                     // background: "#D6AAED",

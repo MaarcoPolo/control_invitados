@@ -356,6 +356,7 @@ class InvitadoController extends Controller{
                             "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
                             "cargo" => $invitado->cargo,
                             "zona" => $invitado->zona->nombre,
+                            "color" => $invitado->zona->color,
                         ], 200);
                     }
                     if($invitado->verificado == 1){
