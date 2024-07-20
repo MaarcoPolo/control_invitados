@@ -374,7 +374,7 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_telefono">Teléfono de la dependencia:</label>
-                                    <input id="input_telefono" type="text" autocomplete="off" maxlength="10" class="form-control" v-model="invitado.telefono">
+                                    <input id="input_telefono" type="number" autocomplete="off" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
@@ -1069,11 +1069,16 @@
                 this.dialogNuevoInvitado = false
                 this.invitado.id = ''
                 this.invitado.nombre =''
+                this.invitado.apellido_p =''
+                this.invitado.apellido_m =''
                 this.invitado.dependencia =''
                 this.invitado.area =''
                 this.invitado.telefono = ''
                 this.invitado.email = ''
-                this.invitado.evento_id = null
+                this.invitado.estado =''
+                this.invitado.municipio = ''
+                this.invitado.seccion = ''
+                this.invitado.cargo = ''
             },
             async guardarNuevoInvitado() {
                 const isFormCorrect = await this.v$.invitado.$validate()              
@@ -1117,6 +1122,7 @@
                                     this.invitado.estado =''
                                     this.invitado.municipio = ''
                                     this.invitado.seccion = ''
+                                    this.invitado.cargo = ''
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
                                     this.loading2 = false

@@ -41,7 +41,6 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/usuarios/actualizar-usuario', [UserController::class, 'actualizarUsuario']);
     Route::post('/usuarios/eliminar-usuario', [UserController::class, 'eliminarUsuario']);
 
-
     //Eventos
     Route::get('/eventos', [EventoController::class, 'getEventos']);
     Route::post('/eventos/crear-evento', [EventoController::class, 'guardarEvento']);
@@ -65,10 +64,14 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/secciones/eliminar-seccion', [ZonaController::class, 'eliminarSeccion']);
     Route::post('/invitados/import', [InvitadoController::class, 'importInvitados']);
     Route::post('/invitados/eviarCorreos', [InvitadoController::class, 'enviarCorreosMasivo']);
+    Route::post('/invitados/exportar-excel', [InvitadoController::class, 'ExportarExcel']);
 
     Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
 
     Route::post('/secciones/contar-invitados', [ZonaController::class, 'SeccionesConteo']);
+    Route::post('/secciones/buscar-invitados', [ZonaController::class, 'BusquedaInvitados']);
+    Route::post('/secciones/buscar-generales', [ZonaController::class, 'BusquedaGeneral']);
+
 
 });
 

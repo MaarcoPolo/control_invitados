@@ -19,7 +19,15 @@
                 </div>
             </div>
             <div class="row justify-content-flex-start mt-6">
-                <div class="col-md-4 col-12"></div>
+                <div class="col-md-4 col-12">
+                    <v-btn
+                        class="custom-button mr-2"
+                        color="#c4f45d"
+                        @click="exportarExcel()"
+                        >
+                        Exportar Datos
+                    </v-btn>
+                </div>
                 <div class="col-md-4 col-12"></div>
                 <div class="col-md-4 col-12">
                     <div class="principal-div-custom-select">
@@ -28,6 +36,8 @@
                         </div>
                     </div>
                 </div>
+                
+
             </div>
 
             <!--INICIO DE LA TABLA INVITADOS-->
@@ -259,7 +269,7 @@
                             <div class="col-md-4 col-12">
                                 <div class="div-custom-input-form">
                                     <label for="input_telefono">Teléfono de la dependencia:</label>
-                                    <input id="input_telefono" type="text" autocomplete="off" maxlength="10" class="form-control" v-model="invitado.telefono">
+                                    <input id="input_telefono" type="number" autocomplete="off" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" v-model="invitado.telefono">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
@@ -355,7 +365,11 @@
                 numShown: 5,
                 current: 1,
                 buscar: '',
-                invitados:[]
+                invitados:[],
+                export: {
+                    invitados: [],
+                    evento_id: '',
+                }
             }
         },
         setup() {
@@ -688,7 +702,28 @@
                     errorSweetAlert('Ocurrió un error al obtener las Secciones')
                 }
                 this.loading = false
-            }
+            },
+
+            //checar mañana
+            async exportarExcel()
+            {
+                console.log(this.invitados)
+
+                this.export.evento_id = this.invitado.evento_id
+                // this.export.invitados = this.invitados
+                let response = await axios.post('/api/invitados/exportar-excel',this.export,{
+                    responseType: "blob",
+                }).then((response)=>{    
+                    var blob = new Blob([response.data], {
+                        type: response.headers["content-type"],
+                    });
+                    const link = document.createElement("a");
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = `Invitados.xlsx`;
+                    link.click();
+                })
+                this.loading2 = false 
+            },
         }
-    })
+    }) 
 </script>
