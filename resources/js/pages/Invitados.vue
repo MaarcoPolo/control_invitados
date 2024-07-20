@@ -19,7 +19,15 @@
                 </div>
             </div>
             <div class="row justify-content-flex-start mt-6">
-                <div class="col-md-4 col-12"></div>
+                <div class="col-md-4 col-12">
+                    <v-btn
+                        class="custom-button mr-2"
+                        color="#c4f45d"
+                        @click="exportarExcel()"
+                        >
+                        Exportar Datos
+                    </v-btn>
+                </div>
                 <div class="col-md-4 col-12"></div>
                 <div class="col-md-4 col-12">
                     <div class="principal-div-custom-select">
@@ -28,6 +36,8 @@
                         </div>
                     </div>
                 </div>
+                
+
             </div>
 
             <!--INICIO DE LA TABLA INVITADOS-->
@@ -41,7 +51,7 @@
                                     <th class="custom-title-table">Nombre</th>
                                     <th class="custom-title-table">Dependencia</th>
                                     <th class="custom-title-table">Área</th>
-                                    <th class="custom-title-table">Evento</th>
+                                    <th class="custom-title-table">Confirmado</th>
                                     <th class="custom-title-table">Sección</th>
                                     <th class="custom-title-table">Acciones</th>
                                 </tr>
@@ -69,7 +79,7 @@
                                         {{invitado.area}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
-                                        {{invitado.nombre_evento}}
+                                        {{invitado.confirmo}}
                                     </td>
                                     <td class="custom-data-table text-uppercase">
                                         {{invitado.zona}}
@@ -355,7 +365,11 @@
                 numShown: 5,
                 current: 1,
                 buscar: '',
-                invitados:[]
+                invitados:[],
+                export: {
+                    invitados: [],
+                    evento_id: '',
+                }
             }
         },
         setup() {
@@ -404,7 +418,12 @@
             buscar: function () {
                 if (!this.buscar.length == 0) {
                     this.datosPaginados = this.invitados.filter(item => {
-                        return item.nombre.toLowerCase().includes(this.buscar.toLowerCase())                    
+                        return item.nombre.toLowerCase().includes(this.buscar.toLowerCase()) 
+                        || item.dependencia.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.area.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.confirmo.toLowerCase().includes(this.buscar.toLowerCase())
+                        || item.zona.toLowerCase().includes(this.buscar.toLowerCase())
+                   
                     })
                 } else {
                     this.getDataPagina(1)
@@ -683,7 +702,28 @@
                     errorSweetAlert('Ocurrió un error al obtener las Secciones')
                 }
                 this.loading = false
-            }
+            },
+
+            //checar mañana
+            async exportarExcel()
+            {
+                console.log(this.invitados)
+
+                this.export.evento_id = this.invitado.evento_id
+                // this.export.invitados = this.invitados
+                let response = await axios.post('/api/invitados/exportar-excel',this.export,{
+                    responseType: "blob",
+                }).then((response)=>{    
+                    var blob = new Blob([response.data], {
+                        type: response.headers["content-type"],
+                    });
+                    const link = document.createElement("a");
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = `Invitados.xlsx`;
+                    link.click();
+                })
+                this.loading2 = false 
+            },
         }
-    })
+    }) 
 </script>

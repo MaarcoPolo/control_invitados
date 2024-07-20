@@ -16,13 +16,13 @@ return new class extends Migration
             // $table->primary(['nombre','apellido_p','apellido_m'],'asignaturas_alumno_pk');
             $table->integer('n_invitado');
             $table->string('nombre');
-            $table->string('apellido_p');
-            $table->string('apellido_m');
+            $table->string('apellido_p')->nullable();;
+            $table->string('apellido_m')->nullable();;
             $table->text('dependencia')->nullable();
             $table->text('cargo')->nullable();
             $table->text('area')->nullable();
             $table->string('telefono',10)->nullable();
-            $table->string('email')->nullable();
+            $table->string('email');
             $table->string('folio')->unique();
             $table->boolean('confirmo')->default(0);
             $table->boolean('correo_enviado')->default(0);

@@ -48,7 +48,6 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
-                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -114,7 +113,6 @@ class InvitadoController extends Controller{
                     $objectInvitado->nombre_evento = $invitado->evento->nombre;
                     $objectInvitado->zona = $invitado->zona->nombre;
                     $objectInvitado->cargo = $invitado->cargo;
-                    $objectInvitado->seccion = $invitado->zona_id;
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -181,7 +179,6 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
-                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -240,7 +237,6 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
-                $objectInvitado->seccion = $invitado->zona_id;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -528,7 +524,6 @@ class InvitadoController extends Controller{
             $objectInvitado->nombre_evento = $invitado->evento->nombre;
             $objectInvitado->zona = $invitado->zona->nombre;
             $objectInvitado->cargo = $invitado->cargo;
-            $objectInvitado->seccion = $invitado->zona_id;
             array_push($array_invitados, $objectInvitado);
             $cont++;
         }
@@ -629,12 +624,15 @@ class InvitadoController extends Controller{
             // $path = $request->file('file')->getRealPath();
             // Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$path); 
             // $path = $request->file('file')->getRealPath();
-            Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$request->file('file')); 
-
+            $ex = new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id);
+           Excel::import($ex,$request->file('file')); 
+            // $total = $ex->cont;
+            // dd($ex->cont);
             return response()->json([
                 "status" => "ok",
-                "message" => "Invitados agregados con éxito.",
-                // "invitados" => $array_invitados
+                "message" => "Importados ".$ex->cont. " de ".$ex->total,
+                "invitados" => $ex->cont,
+                "total" => $ex->total,
             ], 200);       
         } catch (\Throwable $th) {
         
@@ -705,17 +703,19 @@ class InvitadoController extends Controller{
 
     public function enviarCorreosMasivo(Request $request)
     {
+        DB::beginTransaction();
         try{
             // $invitado = Invitado::find($request->id);
             $evento = Evento::find($request->evento_id);
-
-            $invitados = Invitado::where('evento_id',$evento->id)->get();
-
+            $invitados = Invitado::where('evento_id',$evento->id)->where('status',1)->where('correo_enviado',0)->get();
             // dd($invitados);
-
+            $cont_correos = 0;
             foreach($invitados as $invitado)
             {
     
+                $invitado->correo_enviado = 1;
+                $invitado->save();
+
                 $date = new Carbon($evento->fecha_inicial);
                 $f = $this->formatearFecha($date->dayOfWeek, $date->day, $date->month, $date->year);
         
@@ -779,13 +779,19 @@ class InvitadoController extends Controller{
                 
                 $pdf = PDF::Output('Código.pdf','S');
             
-                Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
+                if (filter_var($invitado->email, FILTER_VALIDATE_EMAIL)) {
+                    Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
+                }
+                DB::commit();
+                $cont_correos++;
             }
 
             return response()->json([
                 "status" => "ok",
                 "message" => "Correos enviados con éxito.",
-            ], 200);      
+                "total" => $cont_correos
+            ], 200); 
+
         } catch (\Throwable $th) {
             return response()->json([
                 "status" => "error",
