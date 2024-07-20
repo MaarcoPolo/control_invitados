@@ -30,7 +30,7 @@ const routes = [
                 next()
             }
             else {
-                next({name: 'EscanearCodigos'})
+                next({name: 'Ingresados'})
             }
         }
     },

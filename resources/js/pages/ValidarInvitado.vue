@@ -74,7 +74,7 @@
                                     confirmButtonText: "Ok",
                                     }).then((result) =>{
                                             if (result.isConfirmed) {
-                                            window.location.href = "/login";
+                                            window.location.href = "/ingresados";
                                     }
                                     });
                             } else if(response.data.status === "usado"){
@@ -87,7 +87,7 @@
                                     allowOutsideClick: false,
                                 }).then((result) =>{
                                         if (result.isConfirmed) {
-                                        window.location.href = "/login";
+                                        window.location.href = "/ingresados";
                                     }
                                     });
                             }
@@ -102,7 +102,7 @@
                                     
                                     }).then((result) =>{
                                         if (result.isConfirmed) {
-                                        window.location.href = "/login";
+                                        window.location.href = "/ingresados";
                                     }
                                     });
                             }
@@ -117,7 +117,7 @@
                                     
                                     }).then((result) =>{
                                         if (result.isConfirmed) {
-                                        window.location.href = "/login";
+                                        window.location.href = "/ingresados";
                                     }
                                     });
                             }
@@ -132,7 +132,7 @@
                                     
                                     }).then((result) =>{
                                         if (result.isConfirmed) {
-                                        window.location.href = "/login";
+                                        window.location.href = "/ingresados";
                                     }
                                     });
                             }
@@ -146,7 +146,7 @@
                                     
                                     }).then((result) =>{
                                         if (result.isConfirmed) {
-                                        window.location.href = "/login";
+                                        window.location.href = "/ingresados";
                                     }
                                     });
                             }
@@ -161,7 +161,7 @@
                                     
                                     }).then((result) =>{
                                         if (result.isConfirmed) {
-                                        window.location.href = "/login";
+                                        window.location.href = "/ingresados";
                                     }
                                     });
                             }

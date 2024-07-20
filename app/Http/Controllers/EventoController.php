@@ -12,12 +12,12 @@ class EventoController extends Controller
     public function getEventos(Request $request){
         try{
             $user = Auth::user();
-            if($user->tipo_usuario_id == 1){
+            // if($user->tipo_usuario_id == 1){
                 $eventos = Evento::where('status',1)->get();
-            }
-            else{
-                $eventos = Evento::where('status',1)->where('user_id',$user->id)->get();
-            }
+            // }
+            // else{
+            //     $eventos = Evento::where('status',1)->where('user_id',$user->id)->get();
+            // }
 
             $array_eventos = array();
             $cont = 1;
