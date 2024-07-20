@@ -1,5 +1,7 @@
 <template>
     <div class="container-fluid">
+        <div class="row justify-content-center" v-if="user.user.tipo_usuario_id == 3"><h1>ACCESO</h1></div>
+        <div class="row justify-content-center" v-if="user.user.tipo_usuario_id == 4"><h1>ESTACIONAMIENTO</h1></div>
         <div class="row justify-content-center">
             <div class="card-titulo-page">
                 <img class="icono-page" src="../../../public/icons/ventanilla.png" alt="">
@@ -341,6 +343,9 @@
             // this.recargar()       
         },
         computed: {
+            user() {
+                return this.$store.getters.user
+            },
             pages() {
                 const numShown = Math.min(this.numShown, this.totalPaginas())
                 let first = this.current - Math.floor(numShown / 2)
