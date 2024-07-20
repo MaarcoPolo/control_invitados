@@ -23,8 +23,6 @@
                 <th>Confirmo Asistencia</th>
                 <th>Ingreso al evento</th>
                 <th>Hora Ingreso</th>
-
-
             </tr>
         </thead>
         <tbody>

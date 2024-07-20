@@ -15,6 +15,7 @@ use App\Imports\InvitadosImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\InvitadosExport;
 
 
 class InvitadoController extends Controller{
@@ -859,6 +860,37 @@ class InvitadoController extends Controller{
                 "line" => $th->getLine(),
             ], 200);
         }
+    }
+
+    public function ExportarExcel(Request $request)
+    {
+        $invitados = Invitado::where('evento_id',$request->evento_id)->get();
+        // dd($invitados);
+        
+        $array_invitados = [];
+        foreach($invitados as $invitado)
+        {
+            $objectInvitado = new \stdClass();
+            $objectInvitado->id = $invitado->id;
+            $objectInvitado->nombreC = $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m;
+            $objectInvitado->dependencia = $invitado->dependencia;
+            $objectInvitado->cargo = $invitado->cargo;
+            $objectInvitado->area = $invitado->area;
+            $objectInvitado->telefono = $invitado->telefono;
+            $objectInvitado->email = $invitado->email;
+            $objectInvitado->estado = $invitado->estado;
+            $objectInvitado->municipio = $invitado->municipio;
+            $objectInvitado->evento = $invitado->evento->nombre;
+            $objectInvitado->zona = $invitado->zona->nombre;
+            $objectInvitado->confirmo = $invitado->confirmo == 1 ? "SI" : "NO";
+            $objectInvitado->ingreso = $invitado->verificado == 1 ? "SI" : "NO"; 
+            $objectInvitado->hora_ingreso = $invitado->hora_ingreso;
+            
+            array_push($array_invitados, $objectInvitado);
+        }
+
+        // dd($array_invitados);
+        return (new InvitadosExport($array_invitados))->download('Invitados.xlsx');
     }
 
 }
