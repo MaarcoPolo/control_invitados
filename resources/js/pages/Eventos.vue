@@ -407,6 +407,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row justify-content">
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_seccion">Estacionamiento:</label>
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.estacionamiento">
+                                        <option  v-for="item in estacionamiento" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="text-center mb-4 mt-6">
                             <v-btn
                                 class="custom-button mr-2"
@@ -647,7 +658,8 @@
                     estado:'',
                     municipio:'',
                     seccion: '',
-                    cargo:''
+                    cargo:'',
+                    estacionamiento: null,
 
                 },
                 loading2: false,
@@ -662,6 +674,17 @@
                 buscar2: '',
                 dialogExcel: false,
 
+                estacionamiento: [
+                    {
+                        id: 1,
+                        nombre: 'Si'
+                    },
+                    {
+                        id: 0,
+                        nombre: 'No'
+                        
+                    }
+                ]
             }
         },
         setup() {
@@ -1078,6 +1101,7 @@
                 this.invitado.estado =''
                 this.invitado.municipio = ''
                 this.invitado.seccion = ''
+                this.invitado.estacionamiento = ''
                 this.invitado.cargo = ''
             },
             async guardarNuevoInvitado() {
@@ -1122,6 +1146,7 @@
                                     this.invitado.estado =''
                                     this.invitado.municipio = ''
                                     this.invitado.seccion = ''
+                                    this.invitado.estacionamiento = ''
                                     this.invitado.cargo = ''
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)

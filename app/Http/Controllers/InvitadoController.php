@@ -49,6 +49,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->parking = $invitado->con_parking;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -91,6 +92,7 @@ class InvitadoController extends Controller{
                 $invitado->evento_id = $request->evento_id;
                 $invitado->zona_id = $request->seccion;
                 $invitado->cargo = $request->cargo;
+                $invitado->con_parking = $request->estacionamiento;
                 $invitado->save();
 
                 $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
@@ -114,6 +116,7 @@ class InvitadoController extends Controller{
                     $objectInvitado->nombre_evento = $invitado->evento->nombre;
                     $objectInvitado->zona = $invitado->zona->nombre;
                     $objectInvitado->cargo = $invitado->cargo;
+                    $objectInvitado->parking = $invitado->con_parking;
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -157,6 +160,7 @@ class InvitadoController extends Controller{
             $invitado->estado = $request->estado;
             $invitado->municipio = $request->municipio;
             $invitado->zona_id = $request->seccion;
+            $invitado->con_parking = $request->estacionamiento;
             $invitado->save();
             
             $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
@@ -180,6 +184,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->parking = $invitado->con_parking;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -238,6 +243,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->nombre_evento = $invitado->evento->nombre;
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
+                $objectInvitado->parking = $invitado->con_parking;
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -466,6 +472,7 @@ class InvitadoController extends Controller{
                     $objectInvitado->estado = $invitado->estado;
                     $objectInvitado->municipio = $invitado->municipio;
                     $objectInvitado->seccion = $invitado->zona_id;
+                    $objectInvitado->parking = $invitado->con_parking;
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -583,6 +590,7 @@ class InvitadoController extends Controller{
             $objectInvitado->nombre_evento = $invitado->evento->nombre;
             $objectInvitado->zona = $invitado->zona->nombre;
             $objectInvitado->cargo = $invitado->cargo;
+            $objectInvitado->parking = $invitado->con_parking;
             array_push($array_invitados, $objectInvitado);
             $cont++;
         }
