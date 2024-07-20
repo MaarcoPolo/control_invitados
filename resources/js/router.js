@@ -9,6 +9,7 @@ import ValidarInvitado from './pages/ValidarInvitado.vue'
 import ConfirmarInvitacion from './pages/ConfirmarInvitacion.vue'
 import Secciones from './pages/Secciones.vue'
 import Ingresados from './pages/Ingresados.vue'
+import EscanearCodigos from './pages/EscanearCodigos.vue'
 
 const routes = [
     {
@@ -18,12 +19,20 @@ const routes = [
     },
 
     {
-        path: '/',
+    path: '/',
         name: 'Home',
         component: Home,
         meta: {
             requiresAuth: true
         },
+        beforeEnter: (to, from, next) => {
+            if (store.state.user.user.tipo_usuario_id == 2 || store.state.user.user.tipo_usuario_id == 1) {
+                next()
+            }
+            else {
+                next({name: 'EscanearCodigos'})
+            }
+        }
     },
     {
         path: '/usuarios',
@@ -69,11 +78,30 @@ const routes = [
         path: '/validar-invitado',
         name: 'ValidarInvitado',
         component: ValidarInvitado,
+        meta: {
+            requiresAuth: true
+        },
+        beforeEnter: (to, from, next) => {
+            if (store.state.user.user.tipo_usuario_id == 4 || store.state.user.user.tipo_usuario_id == 3) {
+                next()
+            }
+            else {
+                next({name: ''})
+            }
+        }
     },
     {
         path: '/confirmacion',
         name: 'ConfirmarInvitacion',
         component: ConfirmarInvitacion,
+    },
+    {
+        path: '/escanear-codigos',
+        name: 'EscanearCodigos',
+        component: EscanearCodigos,
+        meta: {
+            requiresAuth: true
+        },
     },
 ]
 

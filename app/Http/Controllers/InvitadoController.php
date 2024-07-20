@@ -14,7 +14,7 @@ use App\Models\Evento;
 use App\Imports\InvitadosImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
 
 
 class InvitadoController extends Controller{
@@ -329,43 +329,100 @@ class InvitadoController extends Controller{
     public function buscarFolio(Request $request) {
         $current_day = Carbon::now();
         try {
-            $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
-            // dd($request->folio);
-            if($invitado){
-                $hora = $current_day->toTimeString();
-                if($invitado->verificado == 0){
-                    DB::beginTransaction();
-                    $invitado->hora_ingreso = $hora;
-                    $invitado->verificado = 1;
-                    $invitado->save();
-
-                    DB::commit();
-                    return response()->json([
-                        "status" => "ok",
-                        "message" => "Folio encontrada con éxito",
-                        "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
-                        "cargo" => $invitado->cargo,
-                        "zona" => $invitado->zona->nombre,
-                    ], 200);
+            $user = Auth::user();
+            if($user->tipo_usuario_id == 3){
+                $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
+                // dd($request->folio);
+                if($invitado){
+                    $hora = $current_day->toTimeString();
+                    if($invitado->verificado == 0){
+                        DB::beginTransaction();
+                        $invitado->hora_ingreso = $hora;
+                        $invitado->verificado = 1;
+                        $invitado->save();
+    
+                        DB::commit();
+                        return response()->json([
+                            "status" => "ok",
+                            "message" => "Folio encontrada con éxito",
+                            "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
+                            "cargo" => $invitado->cargo,
+                            "zona" => $invitado->zona->nombre,
+                        ], 200);
+                    }
+                    if($invitado->verificado == 1){
+    
+                        // $nombre =$invitado->nombre;
+                        return response()->json([
+                            "status" => "usado",
+                            "message" => "Folio ya usado",
+                            "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
+                            "hora" => $invitado->hora_ingreso
+                        ], 200);
+                    }
                 }
-                if($invitado->verificado == 1){
-
-                    // $nombre =$invitado->nombre;
+                else{
                     return response()->json([
-                        "status" => "usado",
-                        "message" => "Folio ya usado",
-                        "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
-                        "hora" => $invitado->hora_ingreso
+                        "status" => "no_existe_e",
+                        "message" => "Folio no existe",
+                        // "cita" => $request->folio
                     ], 200);
+                } 
+
+            }else{
+                $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
+                // dd($request->folio);
+                if($invitado){
+                    // $hora = $current_day->toTimeString();
+                    if($invitado->con_parking == 1){
+                        if($invitado->parking == 1){
+                            return response()->json([
+                                "status" => "entro_antes",
+                                "message" => "Accedio con anterioridad",
+                                "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
+                                "cargo" => $invitado->cargo,
+                                "zona" => $invitado->zona->nombre,
+                            ], 200);
+
+                        }else if($invitado->parking == 0){
+                            DB::beginTransaction();
+                        // $invitado->hora_ingreso = $hora;
+                            $invitado->parking = 1;
+                            $invitado->save();
+        
+                            DB::commit();
+                            return response()->json([
+                                "status" => "entro",
+                                "message" => "Llego al estacionamiento",
+                                "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
+                                "cargo" => $invitado->cargo,
+                                "zona" => $invitado->zona->nombre,
+                            ], 200);
+
+                        }
+                        
+                    }
+                    if($invitado->con_parking == 0){
+    
+                        // $nombre =$invitado->nombre;
+                        return response()->json([
+                            "status" => "sin_estacionamiento",
+                            "message" => "No tiene Aceso al estacionamiento",
+                            // "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
+                            // "hora" => $invitado->hora_ingreso
+                        ], 200);
+                    }
                 }
+                else{
+                    return response()->json([
+                        "status" => "no_existe",
+                        "message" => "Folio no existe",
+                        // "cita" => $request->folio
+                    ], 200);
+                } 
+
             }
-            else{
-                return response()->json([
-                    "status" => "no_existe",
-                    "message" => "Folio no existe",
-                    // "cita" => $request->folio
-                ], 200);
-            }          
+                    
 
         
         }catch (\Throwable $th) {

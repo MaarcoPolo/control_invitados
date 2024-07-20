@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
     Route::post('/invitados/eviarCorreos', [InvitadoController::class, 'enviarCorreosMasivo']);
     Route::post('/invitados/exportar-excel', [InvitadoController::class, 'ExportarExcel']);
 
+    Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
 
     Route::post('/secciones/contar-invitados', [ZonaController::class, 'SeccionesConteo']);
     Route::post('/secciones/buscar-invitados', [ZonaController::class, 'BusquedaInvitados']);
@@ -74,5 +75,4 @@ Route::group(['middleware' => 'auth:sanctum'], function($router) {
 
 });
 
-    Route::post('/invitados/buscar-folio', [InvitadoController::class, 'buscarFolio']);
     Route::post('/invitados/confirmar-asistencia', [InvitadoController::class, 'confirmarAsistencia']);
