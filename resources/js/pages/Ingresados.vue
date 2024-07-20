@@ -193,49 +193,49 @@
                                                     </th>
                                                 </tr>
                                                 <tr v-else v-for="invitados in datosPaginados2" :key="invitados.id">
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table-color text-uppercase">
+                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.nombreC}}
                                                     </td>
-                                                    <td v-else class="custom-data-table text-uppercase">
+                                                    <td v-else class="custom-data-table-color text-uppercase">
                                                         {{invitados.nombreC}}
                                                     </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table-color text-uppercase">
+                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.dependencia}}
                                                     </td>
-                                                    <td v-else class="custom-data-table text-uppercase">
+                                                    <td v-else class="custom-data-table-color text-uppercase">
                                                         {{invitados.dependencia}}
                                                     </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table-color text-uppercase">
+                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.area}}
                                                     </td>
-                                                    <td v-else class="custom-data-table text-uppercase">
+                                                    <td v-else class="custom-data-table-color text-uppercase">
                                                         {{invitados.area}}
                                                     </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table-color text-uppercase">
+                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.cargo}}
                                                     </td>
-                                                    <td v-else class="custom-data-table text-uppercase">
+                                                    <td v-else class="custom-data-table-color text-uppercase">
                                                         {{invitados.cargo}}
                                                     </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table-color text-uppercase">
+                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.zona}}
                                                     </td>
-                                                    <td v-else class="custom-data-table text-uppercase">
+                                                    <td v-else class="custom-data-table-color text-uppercase">
                                                         {{invitados.zona}}
                                                     </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table-color text-uppercase">
+                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.confirmado}}
                                                     </td>
-                                                    <td v-else class="custom-data-table text-uppercase">
+                                                    <td v-else class="custom-data-table-color text-uppercase">
                                                         {{invitados.confirmado}}
                                                     </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table-color text-uppercase">
+                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.verificado}}
                                                     </td>
-                                                    <td v-else class="custom-data-table text-uppercase">
+                                                    <td v-else class="custom-data-table-color text-uppercase">
                                                         {{invitados.verificado}}
                                                     </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table-color text-uppercase">
+                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.hora}}
                                                     </td>
                                                     <td v-else class="custom-data-table text-uppercase">
