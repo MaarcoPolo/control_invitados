@@ -78,6 +78,7 @@ class InvitadosImport implements ToCollection, WithHeadingRow
                         'municipio' => $row["municipio"],
                         'zona_id' => $this->zona_id,
                         'evento_id' => $this->evento_id,
+                        'con_parking' => $row['estacionamiento'],
 
                         //n_invitado = cont obtener numero de invitados
                         //folio evento_id + - + rand(10)

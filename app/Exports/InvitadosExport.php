@@ -58,10 +58,4 @@ class InvitadosExport implements FromView, WithEvents,ShouldAutoSize
         $active_sheet = $event->sheet->getDelegate();
         $active_sheet->getStyle('A1:W1')->applyFromArray($heads_font_style);
     }
-
-   
-    // public function collection()
-    // {
-    //     // return Invitados::all();
-    // }
 }
