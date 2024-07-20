@@ -238,7 +238,7 @@
                                                     <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
                                                         {{invitados.hora}}
                                                     </td>
-                                                    <td v-else class="custom-data-table text-uppercase">
+                                                    <td v-else class="custom-data-table-color text-uppercase">
                                                         {{invitados.hora}}
                                                     </td>
                                                 </tr>
