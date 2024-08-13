@@ -1,167 +1,195 @@
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 
+/* General Styles */
 .custom-border-table {
-    box-shadow: .2rem .3rem .4rem v.$gris_g3;
+  box-shadow: .2rem .3rem .4rem v.$gris_g3;
 }
 
 .headers-table {
-    background-color: v.$morado_m2;
+  background-color: v.$morado_m2;
 }
 
 .custom-title-table {
-    color: v.$blanco;
-    text-transform: uppercase;
-    font-weight: 500;
-    text-align: center;
+  color: v.$blanco;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-align: center;
 }
 
 .text-loading-data-table {
-    color: v.$gris_g2;
-    font-weight: 700;
+  color: v.$gris_g2;
+  font-weight: 700;
 }
 
 .linear-activity {
-    overflow: hidden;
-    width: 90%;
-    height: 4px;
-    background-color: #B3E5FC;
-    margin: 10px auto;
+  overflow: hidden;
+  width: 90%;
+  height: 4px;
+  background-color: #B3E5FC;
+  margin: 10px auto;
 }
 
 .indeterminate {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .indeterminate:before {
-    content: '';
-    position: absolute;
-    height: 100%;
-    background-color: #03A9F4;
-    animation: indeterminate_first 1.5s infinite ease-out;
+  content: '';
+  position: absolute;
+  height: 100%;
+  background-color: #03A9F4;
+  animation: indeterminate_first 1.5s infinite ease-out;
 }
 
 .indeterminate:after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    background-color: #4FC3F7;
-    animation: indeterminate_second 1.5s infinite ease-in;
+  content: '';
+  position: absolute;
+  height: 100%;
+  background-color: #4FC3F7;
+  animation: indeterminate_second 1.5s infinite ease-in;
 }
 
 @keyframes indeterminate_first {
-    0% {
-        left: -100%;
-        width: 100%;
-    }
-    100% {
-        left: 100%;
-        width: 10%;
-    }
+  0% {
+    left: -100%;
+    width: 100%;
+  }
+  100% {
+    left: 100%;
+    width: 10%;
+  }
 }
 
 @keyframes indeterminate_second {
-    0% {
-        left: -150%;
-        width: 100%;
-    }
-    100% {
-        left: 100%;
-        width: 10%;
-    }
+  0% {
+    left: -150%;
+    width: 100%;
+  }
+  100% {
+    left: 100%;
+    width: 10%;
+  }
 }
 
 .custom-data-table {
-    font-size: 1.2rem;
-    font-weight: 500;
-    text-align: center;
-    border-right: .1rem solid v.$gris_g3;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  border-right: .1rem solid v.$gris_g3;
 }
 
 .custom-text-show-results {
-    color: black;
-    font-size: 1.4rem;
+  color: black;
+  font-size: 1.4rem;
 }
 
 .cursor-paginator {
-    cursor: pointer;
-}
-
-.color_zona_uno {
-    background-color: #D91729;
-}
-
-.color_zona_dos {
-    background-color: #E6ED02;
-}
-
-.color_zona_tres {
-    background-color: #5AD235;
-}
-
-.color_zona_cuatro {
-    background-color: #87202D;
-}
-
-.color_zona_cinco {
-    background-color: #DFAD0C;
-}
-
-.color_zona_seis {
-    background-color: #D6AAED;
+  cursor: pointer;
 }
 
 .no-data-text {
-    color: black;
+  color: black;
 }
 
 .page-link {
-    color: v.$morado_m2;
+  color: v.$morado_m2;
 }
 
 .page-link span {
-    color: v.$morado_m2;
+  color: v.$morado_m2;
 }
 
 .page-item.active .page-link {
-    background-color: v.$morado_m2;
-    border-color: v.$morado_m2;
+  background-color: v.$morado_m2;
+  border-color: v.$morado_m2;
 }
 
-@media only screen and (max-width: 770px) {
-    .hidden-column {
-        display: none;
-    }
+/* Responsive Styles */
 
-    .hidden-card {
-        height: 200px;
-        width: 200px;
-        margin-left: 100px;
-        margin-bottom: 50px;
-    }
+/* Phones and small tablets */
+@media (max-width: 767px) {
+  .custom-data-table,
+  .custom-data-table2,
+  .custom-data-table-color {
+    font-size: 1rem;
+  }
 
-    .ocultar-titulo {
-        border: none!important;
-    }
+  .custom-title-table {
+    font-size: 1.2rem;
+  }
+
+  .text-loading-data-table {
+    font-size: 1.2rem;
+  }
+
+  .linear-activity {
+    width: 100%;
+  }
+
+  .hidden-column {
+    display: none;
+  }
+
+  .hidden-card {
+    height: 150px;
+    width: 150px;
+    margin-left: 0;
+    margin-bottom: 30px;
+  }
+
+  .ocultar-titulo {
+    border: none!important;
+  }
 }
 
-.custom-title-table-evidencias {
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .custom-data-table,
+  .custom-data-table2,
+  .custom-data-table-color {
+    font-size: 1.1rem;
+  }
+
+  .custom-title-table {
+    font-size: 1.4rem;
+  }
+
+  .text-loading-data-table {
+    font-size: 1.3rem;
+  }
+
+  .linear-activity {
+    width: 90%;
+  }
+
+  .hidden-card {
+    height: 180px;
+    width: 180px;
+    margin-left: 50px;
+    margin-bottom: 40px;
+  }
+}
+
+/* Desktops */
+@media (min-width: 1025px) {
+  .custom-data-table,
+  .custom-data-table2,
+  .custom-data-table-color {
+    font-size: 1.2rem;
+  }
+
+  .custom-title-table {
     font-size: 1.5rem;
-}
-.custom-data-table2 {
-    font-size: 1.2rem;
-    font-weight: 500;
-    text-align: center;
-    border-right: .1rem solid v.$gris_g3;
-    cursor:pointer;
-}
-.custom-data-table-color {
-    font-size: 1.2rem;
-    font-weight: 500;
-    text-align: center;
-    border-right: .1rem solid v.$gris_g3;
-    background-color: #C6C5C7;
+  }
 
+  .text-loading-data-table {
+    font-size: 1.4rem;
+  }
+
+  .linear-activity {
+    width: 90%;
+  }
 }

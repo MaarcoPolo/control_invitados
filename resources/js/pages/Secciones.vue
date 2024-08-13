@@ -7,8 +7,18 @@
             </div>
         </div>
 
-        <div class="container mt-16">
-            <div class="row justify-content-between">
+        <div class="container mt-6">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-12">
+                    <div class="div-custom-input-form">
+                        <label for="select_evento">Seleccione un evento:</label>
+                        <select id="select_evento" class="form-control minimal custom-select text-uppercase" v-model="seccion.evento_id">
+                            <option  v-for="item in eventos" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between mt-6">
                 <div class="col-md-3 col-12">
                     <v-btn
                         class="custom-button"
@@ -88,10 +98,6 @@
                                     <th class="custom-title-table">#</th>
                                     <th class="custom-title-table">Nombre</th>
                                     <th class="custom-title-table">Color</th>
-                                    <!-- <th class="custom-title-table">Nombre</th> -->
-                                    <!-- <th class="custom-title-table">Sede</th>
-                                    <th class="custom-title-table">Fecha inicial</th>
-                                    <th class="custom-title-table">Fecha final</th> -->
                                     <th class="custom-title-table">Acciones</th>
                                 </tr>
                             </thead>
@@ -252,7 +258,8 @@ export default defineComponent({
             seccion: {
                     id: 0,
                     nombre: '',
-                    color:''
+                    color:'',
+                    evento_id: null
                 },
                 loading: false,
                 elementosPorPagina: 10,
@@ -264,6 +271,7 @@ export default defineComponent({
                 numShown: 5,
                 current: 1,
                 buscar: '',
+                secciones: ''
                 // input_background_color: '#D6AAED',
         }
     },
@@ -286,12 +294,12 @@ export default defineComponent({
 
     },
     created(){
-        this.getSecciones()
+        this.getEventos()
     },
     computed:{
-        secciones() {
-                    return this.$store.getters.getSecciones
-            },
+        eventos() {
+            return this.$store.getters.getEventos
+        },
         inputColor() {
                 return {
                     
@@ -306,6 +314,7 @@ export default defineComponent({
                 first = Math.min(first, this.totalPaginas() - numShown + 1)
                 return [...Array(numShown)].map((k, i) => i + first)
         },
+        
     },
     watch:{
         // 'seccion.color': function() {
@@ -319,32 +328,19 @@ export default defineComponent({
         //         // })
         //     },
             'panel': function() {
+                
                 if(!this.panel){
                     this.nuevo = 1
                     this.v$.$reset()
+                    this.seccion.id = null
                     this.seccion.nombre =''
                     this.seccion.color =''
-                    // this.evento.sede =''
-                    // this.evento.fecha_i = ''
-                    // this.evento.fecha_f = ''
-                    // this.evento.horario =''
-                    // this.evento.domicilio = ''
-                    // this.evento.ubicacion = ''
-                    this.seccion.id = null
-                    // console.log(this.evento)
                 }
-                
-               
             },
         buscar: function () {
             if (!this.buscar.length == 0) {
                 this.datosPaginados = this.secciones.filter(item => {
-                     return item.nombre.toLowerCase().includes(this.buscar.toLowerCase())
-                    // || item.sede.toLowerCase().includes(this.buscar.toLowerCase())
-                    // || item.organizador.toLowerCase().includes(this.buscar.toLowerCase())
-                    // || item.fecha_i.toLowerCase().includes(this.buscar.toLowerCase())
-                    // || item.fecha_f.toLowerCase().includes(this.buscar.toLowerCase())
-                    
+                    return item.nombre.toLowerCase().includes(this.buscar.toLowerCase())                    
                 })
             } else {
                 this.getDataPagina(1)
@@ -355,130 +351,11 @@ export default defineComponent({
                 this.getDataPagina(1)
             }
         },
+        'seccion.evento_id': function(){
+            this.BuscarSecciones()
+        }
     },
     methods:{
-        async eliminarSeccion(seccion) {
-            
-            Swal.fire({
-            title: '¿Eliminar Seccion?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085D6',
-            cancelButtonColor: '#D33',
-            confirmButtonText: 'Si, eliminar',
-            cancelButtonText: 'Cancelar',
-            showLoaderOnConfirm: true,
-            preConfirm: async () => {
-                try {
-                    
-                    let response = await axios.post('/api/secciones/eliminar-seccion', seccion)
-                    return response
-                } catch (error) {
-                    errorSweetAlert('Ocurrió un error al eliminar la Seccion.')
-                }
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-        }).then((result) => {
-            if (result.isConfirmed) {
-                if (result.value.status === 200) {
-                    if (result.value.data.status === "ok") {
-                        successSweetAlert(result.value.data.message)
-                        this.$store.commit('setSecciones', result.value.data.secciones)
-                        this.getDataPagina(1)
-                    } else {
-                        errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
-                    }
-                } else {
-                    errorSweetAlert('Ocurrió un error al eliminar la Seccion.')
-                }
-            }
-        })
-        // this.loading = false
-    },
-        async guardarCambiosSeccion() {
-                const isFormCorrect = await this.v$.seccion.$validate()              
-                if (!isFormCorrect) return
-                    Swal.fire({
-                        title: '¿Guardar cambios?',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085D6',
-                        cancelButtonColor: '#D33',
-                        confirmButtonText: 'Si, guardar',
-                        cancelButtonText: 'Cancelar',
-                        showLoaderOnConfirm: true,
-                        preConfirm: async () => {
-                            try {
-
-                                let response = await axios.post('/api/secciones/actualizar-seccion', this.seccion)
-                                return response
-                            } catch (error) {
-                                errorSweetAlert('Ocurrió un error al actualizar los datos de la seccion.')
-                            }
-                        },
-                        allowOutsideClick: () => !Swal.isLoading()
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            if (result.value.status === 200) {
-                                if (result.value.data.status === "ok") {
-                                    successSweetAlert(result.value.data.message)
-                                    this.$store.commit('setSecciones', result.value.data.secciones)
-                                    // this.cerrarModalNuevoEvento()
-                                    this.panel = []
-                                    this.seccion.nombre =''
-                                    this.seccion.color =''
-                                    // this.evento.sede =''
-                                    // this.evento.fecha_i = ''
-                                    // this.evento.fecha_f = ''
-                                    // this.evento.horario =''
-                                    // this.evento.domicilio = ''
-                                    // this.evento.ubicacion = ''
-                                    this.getDataPagina(1)
-                                    this.v$.reset()
-                    
-                                } else {
-                                    errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
-                                }
-                            } else {
-                                errorSweetAlert('Ocurrió un error al actualizar los datos de la seccion.')
-                            }
-                        }
-                    })
-                   
-            },
-        abrirModalEditarSeccion(seccion){
-                this.nuevo= 0
-                this.panel = [0] 
-                this.seccion.id = seccion.id
-                this.seccion.nombre = seccion.nombre
-                this.seccion.color = seccion.color
-                // this.seccion.sede = seccion.sede
-                // this.seccion.fecha_i = seccion.fecha_i
-                // this.seccion.fecha_f = seccion.fecha_f
-                // this.seccion.horario = seccion.horario
-                // this.seccion.domicilio = seccion.domicilio_sede
-                // this.seccion.ubicacion = seccion.ubicacion
-            },
-        async getSecciones() {
-                this.loading = true
-                try {                   
-                    let response = await axios.get('/api/secciones')
-                    if (response.status === 200) {
-                        if (response.data.status === "ok") {
-                            this.$store.commit('setSecciones', response.data.secciones)
-                            this.input_background_color = response.data.secciones.color
-                            this.mostrar = true
-                        } else {
-                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
-                        }
-                    } else {
-                        errorSweetAlert('Ocurrió un error al obtener las Secciones')
-                    }
-                } catch (error) {
-                    errorSweetAlert('Ocurrió un error al obtener las Secciones')
-                }
-                this.loading = false
-            },
         logout() {
                 this.$store.dispatch('logout')
             },
@@ -541,13 +418,14 @@ export default defineComponent({
                 this.panel = [0]
                 this.seccion.nombre =''
                 this.seccion.color =''
-                // this.evento.sede =''
-                // this.evento.fecha_i = ''
-                // this.evento.fecha_f = ''
-                // this.evento.horario =''
-                // this.evento.domicilio = ''
-                // this.evento.ubicacion = ''
                 this.seccion.id = null
+            },
+            abrirModalEditarSeccion(seccion){
+                this.nuevo= 0
+                this.panel = [0] 
+                this.seccion.id = seccion.id
+                this.seccion.nombre = seccion.nombre
+                this.seccion.color = seccion.color
             },
             async guardarNuevaSeccion() {
                 const isFormCorrect = await this.v$.seccion.$validate()              
@@ -579,21 +457,11 @@ export default defineComponent({
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setSecciones', result.value.data.secciones)
                                     // this.loading = false
-                                    // this.cerrarModalNuevoEvento()
                                     this.getDataPagina(1) 
                                     this.panel = []
                                     this.seccion.nombre =''
                                     this.seccion.color =''
-                                    // this.evento.sede =''
-                                    // this.evento.fecha_i = ''
-                                    // this.evento.fecha_f = ''
-                                    // this.evento.horario =''
-                                    // this.evento.domicilio = ''
-                                    // this.evento.ubicacion = ''
                                     this.v$.reset()
-                                // } else if(result.value.data.status==="exists"){
-                                //     warningSweetAlert(result.value.data.message)
-                                //     // this.loading = false
                                 }
                                 else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
@@ -605,6 +473,122 @@ export default defineComponent({
                     })
                     // this.loading = false
                     this.v$.$reset()
+            },
+            async guardarCambiosSeccion() {
+                const isFormCorrect = await this.v$.seccion.$validate()              
+                if (!isFormCorrect) return
+                    Swal.fire({
+                        title: '¿Guardar cambios?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085D6',
+                        cancelButtonColor: '#D33',
+                        confirmButtonText: 'Si, guardar',
+                        cancelButtonText: 'Cancelar',
+                        showLoaderOnConfirm: true,
+                        preConfirm: async () => {
+                            try {
+
+                                let response = await axios.post('/api/secciones/actualizar-seccion', this.seccion)
+                                return response
+                            } catch (error) {
+                                errorSweetAlert('Ocurrió un error al actualizar los datos de la seccion.')
+                            }
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            if (result.value.status === 200) {
+                                if (result.value.data.status === "ok") {
+                                    successSweetAlert(result.value.data.message)
+                                    this.$store.commit('setSecciones', result.value.data.secciones)
+                                    this.panel = []
+                                    this.seccion.nombre =''
+                                    this.seccion.color =''
+                                    this.getDataPagina(1)
+                                    this.v$.reset()
+                    
+                                } else {
+                                    errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
+                                }
+                            } else {
+                                errorSweetAlert('Ocurrió un error al actualizar los datos de la seccion.')
+                            }
+                        }
+                    })
+            },
+            async eliminarSeccion(seccion) {
+                Swal.fire({
+                    title: '¿Eliminar Seccion?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085D6',
+                    cancelButtonColor: '#D33',
+                    confirmButtonText: 'Si, eliminar',
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        try {
+                            let response = await axios.post('/api/secciones/eliminar-seccion', seccion)
+                            return response
+                        } catch (error) {
+                            errorSweetAlert('Ocurrió un error al eliminar la Seccion.')
+                        }
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (result.value.status === 200) {
+                            if (result.value.data.status === "ok") {
+                                successSweetAlert(result.value.data.message)
+                                this.$store.commit('setSecciones', result.value.data.secciones)
+                                this.getDataPagina(1)
+                            } else {
+                                errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
+                            }
+                        } else {
+                            errorSweetAlert('Ocurrió un error al eliminar la Seccion.')
+                        }
+                    }
+                })
+            },
+            async getEventos() {
+                this.loading = true
+                try {                   
+                    let response = await axios.get('/api/eventos')
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.$store.commit('setEventos', response.data.eventos)
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener los Eventos')
+                }
+                this.loading = false
+            },
+            async BuscarSecciones() {
+                this.loading = true
+                try {                   
+                    let response = await axios.post('/api/secciones/buscar-secciones', this.seccion)
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.secciones = response.data.secciones
+                            this.getDataPagina(1)
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener las secciones')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener las secciones')
+                }
+                this.loading = false
             },
     }
 })

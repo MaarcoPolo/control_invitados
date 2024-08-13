@@ -1,6 +1,22 @@
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 
+.wrapper {
+    display: grid;
+    grid-template-areas: 
+        "header"
+        "content"
+        "footer";
+
+    @include m.tablet {
+        grid-template-columns: 1fr 5fr;
+        grid-template-areas:
+        "header header"
+        "content content"
+        "footer footer";
+    }
+}
+
 .main-head {
     grid-area: header;
 }
@@ -12,22 +28,6 @@
 
 .footer {
     grid-area: footer;
-}
-
-.wrapper {
-    display: grid;
-    grid-template-areas: 
-        "header"
-        "content"
-        "footer";
-
-    @include m.tablet {
-        grid-template-columns: 1fr 5fr;
-        grid-template-areas:
-            "header header"
-            "content content"
-            "footer footer";
-    }
 }
 
 .footer-first-line {
@@ -51,11 +51,9 @@
     background-color: v.$blanco;
     position: relative;
     z-index: 1;
-
     border-style: none none solid none;
     border-color: v.$morado_m2;
     border-width: .3rem;
-
     box-shadow: 0px 6px 10px -1px rgba(0,0,0,0.3);
     -webkit-box-shadow: 0px 6px 10px -1px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 6px 10px -1px rgba(0,0,0,0.3);
@@ -71,10 +69,10 @@
         grid-template-columns: auto 45rem;
     }
 
-    & .separador {
+    .separador {
         display: none;
 
-        @include m.telefono {
+    @include m.telefono {
             display: flex;
             justify-content: left;
             align-items: center;
@@ -82,7 +80,7 @@
         }
     }
 
-    & .separador-mobile {
+    .separador-mobile {
         background-color: rgb(140,146,188);
         padding: 1rem;
 
@@ -93,11 +91,34 @@
 }
 
 .custom-image-header {
-    margin: auto;
-    width: auto;
-    // height: 12rem;
-    height: 10.6rem;
+    display: block;            // Asegura que la imagen se comporta como un bloque
+    max-width: 100%;           // Limita el ancho máximo al 100% del contenedor
+    height: auto;             // Mantiene la relación de aspecto
+    margin: auto;             // Centra la imagen horizontalmente
+    object-fit: contain;      // Ajusta la imagen para que se ajuste al contenedor sin recortes
 }
+
+  /* Responsive Styles */
+    @media (max-width: 767px) {
+        .custom-image-header {
+            width: 100%;            // Asegura que la imagen ocupa el 100% del ancho del contenedor en pantallas pequeñas
+            height: auto;          // Mantiene la relación de aspecto
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .custom-image-header {
+            width: 100%;            // Asegura que la imagen ocupa el 100% del ancho del contenedor en pantallas medianas
+            height: auto;          // Mantiene la relación de aspecto
+        }
+    }
+
+    @media (min-width: 1025px) {
+        .custom-image-header {
+            max-width: 100%;       // Limita el ancho máximo al 100% del contenedor en pantallas grandes
+            height: auto;          // Mantiene la relación de aspecto
+        }
+    }
 
 .custom-border-header-1 {
     border-style: none none solid none;
@@ -116,7 +137,6 @@
     text-transform: uppercase;
     font-weight: 300;
     text-align: center;
-
     font-size: 2rem;
 
     @include m.telefono {
@@ -134,47 +154,105 @@
     font-weight: 700;
 }
 
+/* ================ MENU HAMBURGUESA Y NAVBAR ================ */
+.menu-toggle {
+    background: none;
+    border: none;
+    display: none;
+    cursor: pointer;
+    padding: 1rem;
+    margin-right: 1rem;
 
-/* ================ CUSTOM NAVBAR ================ */
+    @media (max-width: 767px) {
+        display: block;
+    }
+}
+
+.hamburger-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: v.$gris_g6;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+
+    &::before,
+    &::after {
+        content: '';
+        width: 25px;
+        height: 3px;
+        background-color: v.$gris_g6;
+        position: absolute;
+        left: 0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    &::before {
+        top: -8px;
+    }
+    &::after {
+        top: 8px;
+    }
+}
+
+.menu-toggle.active .hamburger-icon {
+    background-color: transparent;
+
+    &::before {
+        transform: rotate(45deg);
+        top: 0;
+    }
+
+    &::after {
+        transform: rotate(-45deg);
+        top: 0;
+    }
+}
+
+/* Estilos del navbar */
 .custom-navbar {
     display: flex;
     justify-content: flex-end;
-    // position: relative;
-    // z-index: -1;
 }
 
 .custom-ul-navbar {
     background-color: v.$verde_v2;
-    display: inline-flex;
-    position: relative;
-}
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
-.custom-ul-navbar::after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-right: 2.5rem solid transparent;
-    border-top: 2.5rem solid transparent;
-    border-left: 2.5rem solid v.$blanco;
-    border-bottom: 2.5rem solid v.$blanco;
-    position: absolute;
+    @media (max-width: 767px) {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    &.active {
+        display: flex;
+    }
 }
 
 .custom-ul-navbar li {
     list-style: none;
-
     padding-left: 4rem;
     padding-right: 4rem;
     padding-top: 1rem;
     padding-bottom: .5rem;
-    
     cursor: pointer;
     text-transform: uppercase;
     font-size: 1.5rem;
     font-weight: 500;
     position: relative;
 
-    // transition: .5s all ease-in-out;
+    @media (max-width: 767px) {
+        padding: 1rem 2rem;
+        width: 100%;
+        border-bottom: 1px solid v.$blanco;
+        text-align: center;
+    }
 }
 
 .custom-ul-navbar li:first-child {
@@ -182,7 +260,6 @@
 }
 
 .custom-ul-navbar li:hover {
-    // background-color: v.$verde_v1;
     background-color: #BFE273;
 }
 
@@ -195,103 +272,10 @@
     border-bottom: none;
 }
 
-.custom-dropdown-menu {
-    position: absolute;
-    background-color: v.$morado_m2;
-    padding-right: 1rem;
-    z-index: 999;
+.custom-dropdown {
+    display: none;
 }
 
-.dropdown-menu-catalogos {
-    transform: translate(-26%, 4%);
-    width: 20rem;
-}
-
-.dropdown-menu-acceso {
-    transform: translate(-37%, 6%);
-    width: 25rem;
-}
-
-.custom-dropdown-menu a:last-child {
-    border-bottom: none;
-}
-
-.custom-dropdown-item {
-    border-bottom: .1rem solid v.$blanco;
-    display: flex;
-    justify-content: left;
-    text-transform: capitalize;
-    color: v.$blanco;
-    padding-left: 1rem;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-    left: .5rem;
-    position: relative;
-    font-weight: 500;
-}
-
-.custom-dropdown-item::after {
-    content: '';
-    width: .3rem;
-    height: 1.5rem;
-    background-color: v.$verde_v2;
-    position: absolute;
-    top: .9rem;
-    margin-right: 1rem;
-    left: .3rem;
-}
-
-.custom-dropdown-item:hover {
-    color: v.$blanco;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.custom-dropdown-item-selected {
-    font-weight: 700;
-}
-
-.custom-dropdown-item-unselected {
-    font-weight: 500;
-}
-
-.custom-title-div-normal {
-    background: rgb(196,244,93);
-    background: linear-gradient(135deg, rgba(196,244,93,1) 0%, rgba(196,244,93,1) 43%, rgba(255,255,255,1) 43%, rgba(255,255,255,1) 100%);
-}
-
-.custom-title-page {
-    color: #5f5f5f;
-    margin: 0;
-    padding: .5rem 0;
-    text-transform: uppercase;
-    // font-size: 1.7rem;
-    // text-align: left;
-    // padding-left: .5rem;
-
-    font-size: 2.2rem;
-    font-weight: 700;
-    text-align: center;
-    padding-left: 2rem;
-}
-
-.custom-card-evento {
-    cursor: pointer;
-    transition: .3s all ease-in-out;
-    background-color: #ebebeb;
-}
-
-.custom-card-evento:hover {
-    background-color: #d8d8d8;
-}
-
-.custom-card-evento-div p {
-    margin: auto;
-    font-weight: 600;
-    color: v.$gris_g6;
-}
-
-.custom_card_evento_hora_inicio {
-    font-size: 1.2rem;
-    font-weight: 400;
+.custom-dropdown:hover {
+    background-color: #BFE273;
 }

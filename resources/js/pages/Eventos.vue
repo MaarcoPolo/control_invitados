@@ -28,107 +28,259 @@
                         </div>
                     </div>
             </div>
-            <!-- ///////////////////////////////////////// -->
             <v-container>
-                <v-expansion-panels v-model="panel">
+                <v-expansion-panels v-if="panel_evento" v-model="panel_evento">
                     <v-expansion-panel>
-                        <v-expansion-panel-title >
-                        </v-expansion-panel-title>
+                        <v-expansion-panel-title > Registro de evento </v-expansion-panel-title>
                         <v-expansion-panel-content>
                             <v-expansion-panel-text>
-                                    <div class="text-center my-3 custom-border">
-                                        <div class="custom-subtitle">
-                                            <p>Datos</p>
+                                <div class="text-center my-3 custom-border">
+                                    <div class="custom-subtitle">
+                                        <p>Datos</p>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_nombre">Nombre:</label>
+                                            <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
+                                            <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p>
                                         </div>
                                     </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-md-6 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_nombre">Nombre:</label>
-                                                <input id="input_nombre" type="text" class="form-control" v-model="v$.evento.nombre.$model">
-                                                <p class="text-validation-red" v-if="v$.evento.nombre.$error">*Campo obligatorio</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_apellidoP">Organizador:</label>
-                                                <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
-                                                <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p>
-                                            </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_apellidoP">Organizador:</label>
+                                            <input id="input_apellidoP" type="text" class="form-control" v-model="v$.evento.organizador.$model">
+                                            <p class="text-validation-red" v-if="v$.evento.organizador.$error">*Campo obligatorio</p>
                                         </div>
                                     </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-md-4 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_fecha_i">Fecha inicial:</label>
-                                                <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_i">
-                                                <!-- <p class="text-validation-red" v-if="v$.evento.fecha_i.$error">*Campo obligatorio</p> -->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_fecha_i">Fecha final:</label>
-                                                <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_f">
-                                                <!-- <p class="text-validation-red" v-if="v$.evento.fecha_i.$error">*Campo obligatorio</p> -->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_fecha_f">Horario:</label>
-                                                <input id="input_fecha_f" type="time" class="form-control" v-model="evento.horario">
-                                                <!-- <p class="text-validation-red" v-if="v$.evento.fecha_f.$error">*Campo obligatorio</p> -->
-                                            </div>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_fecha_i">Fecha inicial:</label>
+                                            <input id="input_fecha_i" type="date" class="form-control" v-model="evento.fecha_i">
                                         </div>
                                     </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-md-6 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_apellidoM">Sede:</label>
-                                                <input id="input_apellidoM" type="text" class="form-control" v-model="v$.evento.sede.$model">
-                                                <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_apellidoM">Domicilio de la Sede:</label>
-                                                <input id="input_apellidoM" type="text" class="form-control" v-model="evento.domicilio">
-                                                <!-- <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p> -->
-                                            </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_fecha_f">Fecha final:</label>
+                                            <input id="input_fecha_f" type="date" class="form-control" v-model="evento.fecha_f">
                                         </div>
                                     </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-md-12 col-12">
-                                            <div class="div-custom-input-form">
-                                                <label for="input_apellidoM">Ubicación en Google Maps:</label>
-                                                <input id="input_apellidoM" type="text" class="form-control" v-model="evento.ubicacion">
-                                                <!-- <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p> -->
-                                            </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_horario">Horario:</label>
+                                            <input id="input_horario" type="time" class="form-control" v-model="evento.horario">
                                         </div>
                                     </div>
-                                    <div v-if="this.nuevo == 1" class="text-center mb-4 mt-2">
-                                        <v-btn
-                                            class="custom-button mr-2"
-                                            color="#c4f45d"
-                                            @click="guardarNuevoEvento()"
-                                            >
-                                            Guardar
-                                        </v-btn>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_sede">Sede:</label>
+                                            <input id="input_sede" type="text" class="form-control" v-model="v$.evento.sede.$model">
+                                            <p class="text-validation-red" v-if="v$.evento.sede.$error">*Campo obligatorio</p>
+                                        </div>
                                     </div>
-                                    <div v-else class="text-center mb-4 mt-2">
-                                        <v-btn
-                                            class="custom-button mr-2"
-                                            color="#c4f45d"
-                                            @click="guardarCambiosEditarEvento()"
-                                            >
-                                            Guardar
-                                        </v-btn>
+                                    <div class="col-md-6 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_dom_sede">Domicilio de la Sede:</label>
+                                            <input id="input_dom_sede" type="text" class="form-control" v-model="evento.domicilio">
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-md-12 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_ubi">Ubicación en Google Maps:</label>
+                                            <input id="input_ubi" type="text" class="form-control" v-model="evento.ubicacion">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_logo">Logo para la invitación:</label>
+                                            <v-file-input 
+                                                v-model="evento.logo"
+                                                show-size
+                                                accept="image/*"
+                                                variant="outlined">
+                                            </v-file-input>
+                                            <!-- <input id="input_logo" accept="image/*" type="file" class="form-control" v-model="evento.logo"> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_fondo">Fondo para la invitación:</label>
+                                            <v-file-input 
+                                                v-model="evento.fondo"
+                                                show-size
+                                                accept="image/*"
+                                                variant="outlined">
+                                            </v-file-input>
+                                            <!-- <input id="input_fondo" accept="image/*" type="file" class="form-control" v-model="evento.fondo"> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="this.nuevo == 1" class="text-center mb-4 mt-2">
+                                    <v-btn
+                                        class="custom-button mr-2"
+                                        color="#c4f45d"
+                                        @click="guardarNuevoEvento()"
+                                        >
+                                        Guardar
+                                    </v-btn>
+                                    <v-btn
+                                        class="custom-button ml-2"
+                                        color="#6a73a0"
+                                        @click="cerrarNuevoEvento()"
+                                        >
+                                        Cerrar
+                                    </v-btn>
+                                </div>
+                                <div v-else class="text-center mb-4 mt-2">
+                                    <v-btn
+                                        class="custom-button mr-2"
+                                        color="#c4f45d"
+                                        @click="guardarCambiosEditarEvento()"
+                                        >
+                                        Guardar
+                                    </v-btn>
+                                    <v-btn
+                                        class="custom-button ml-2"
+                                        color="#6a73a0"
+                                        @click="cerrarNuevoEvento()"
+                                        >
+                                        Cerrar
+                                    </v-btn>
+                                </div>
+                            </v-expansion-panel-text>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+                <v-expansion-panels v-if="panel_invitado" v-model="panel_invitado">
+                    <v-expansion-panel>
+                        <v-expansion-panel-title> Registo de invitado </v-expansion-panel-title>
+                        <v-expansion-panel-content>
+                            <v-expansion-panel-text>
+                                <div class="text-center my-3 custom-border">
+                                    <div class="custom-subtitle">
+                                        <p>Datos</p>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_nombre">Nombre:</label>
+                                            <input id="input_nombre" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.nombre.$model">
+                                            <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_apellido_p">Apellido paterno:</label>
+                                            <input id="input_apellido_p" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_p.$model">
+                                            <p class="text-validation-red" v-if="v$.invitado.apellido_p.$error">*Campo obligatorio</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_apellido_m">Apellido materno:</label>
+                                            <input id="input_apellido_m" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_m.$model">
+                                            <p class="text-validation-red" v-if="v$.invitado.apellido_m.$error">*Campo obligatorio</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_dependencia">Dependencia u Organismo:</label>
+                                            <input id="input_dependencia" type="text" class="form-control" autocomplete="off" v-model="invitado.dependencia">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_cargo">Cargo:</label>
+                                            <input id="input_cargo" type="text" class="form-control" autocomplete="off" v-model="invitado.cargo">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_area">Área:</label>
+                                            <input id="input_area" type="text" class="form-control" autocomplete="off" v-model="invitado.area">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_telefono">Teléfono de la dependencia:</label>
+                                            <input id="input_telefono" type="number" autocomplete="off" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" v-model="invitado.telefono">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_email">Correo:</label>
+                                            <input id="input_email" type="email" autocomplete="off" class="form-control" v-model="v$.invitado.email.$model">
+                                            <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content">
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_estado">Estado:</label>
+                                            <input id="input_estado" type="text" autocomplete="off" class="form-control" v-model="invitado.estado">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="input_municipio">Municipio:</label>
+                                            <input id="input_municipio" type="text" autocomplete="off" class="form-control" v-model="invitado.municipio">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="select_seccion">Seccion:</label>
+                                            <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
+                                                <option  v-for="item in this.secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content">
+                                    <div class="col-md-4 col-12">
+                                        <div class="div-custom-input-form">
+                                            <label for="select_estacionamiento">Estacionamiento:</label>
+                                            <select id="select_estacionamiento" class="form-control minimal custom-select text-uppercase" v-model="invitado.estacionamiento">
+                                                <option  v-for="item in estacionamiento" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mb-4 mt-2">
+                                    <v-btn
+                                        class="custom-button mr-2"
+                                        color="#c4f45d"
+                                        @click="guardarNuevoInvitado()"
+                                        >
+                                        Guardar
+                                    </v-btn>
+                                    <v-btn
+                                        class="custom-button ml-2"
+                                        color="#6a73a0"
+                                        @click="cerrarNuevoInvitado()"
+                                        >
+                                        Cerrar
+                                    </v-btn>
+                                </div>
                             </v-expansion-panel-text>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
             </v-container>
-             <!-- //////////////////////////// -->
             <!--INICIO DE LA TABLA EVENTOS-->
             <div class="my-2 mb-12 py-6">
                 <div class="">
@@ -177,7 +329,7 @@
                                         <div class="text-center row justify-content-center">
                                             <div>
                                                 <v-icon
-                                                    @click="abrirModalEditarEvento(evento)"
+                                                    @click="abrirEditarEvento(evento)"
                                                     class="mr-1"
                                                     >
                                                     mdi-text-box-edit-outline
@@ -192,7 +344,7 @@
                                             </div>
                                             <div>
                                                 <v-icon
-                                                    @click="abrirModalNuevoInvitado(evento)"
+                                                    @click="abrirNuevoInvitado(evento)"
                                                     class="ml-1"
                                                     >
                                                     mdi-account-plus
@@ -235,7 +387,6 @@
                                                     <span style="font-size: 15px;">Eliminar Evento</span>
                                                 </v-tooltip>
                                             </div>
-
                                             <div>
                                                 <v-icon
                                                     @click="enviarCorreos(evento)"
@@ -316,7 +467,7 @@
                     </div>
                 </div>
             </div>            
-            <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
+            <!-- <v-dialog v-model="dialogNuevoInvitado" max-width="100rem" persistent>
                 <v-card>
                     <v-card-title class="text-center">
                         <h3 class="mt-5 custom-dialog-title">Nuevo Invitado</h3>
@@ -535,65 +686,65 @@
                 <v-btn
                     class="custom-button ml-2"
                     color="#6a73a0"
-                    @click="cerrarModalNuevoInvitado()"
+                    @click="cerrarNuevoInvitado()"
                     >
                     Cerrar
                 </v-btn>
             </div>
         </div>
         </v-card>
-            </v-dialog>
+            </v-dialog> -->
         </div>
     </div>
     <v-dialog v-model="dialogExcel" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-5 custom-dialog-title">Subir archivo de invitados</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="row justify-content-center">
-                            <div class="col-md-8 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="select_seccion">Selecciona la sección a la cual pertenecen tus invitados:</label>
-                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="archivo.zona_id">
-                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
-                                    </select>
-                                </div>
+        <v-card>
+            <v-card-title class="text-center">
+                <h3 class="mt-5 custom-dialog-title">Subir archivo de invitados</h3>
+            </v-card-title>
+                <v-card-text>
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-12">
+                            <div class="div-custom-input-form">
+                                <label for="select_seccion">Selecciona la sección a la cual pertenecen tus invitados:</label>
+                                <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="archivo.zona_id">
+                                    <option  v-for="item in this.secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="row justify-content-center">
-                            <div class="col-md-4 col-12 mt-6">
-                                <v-file-input
-                                    v-model="archivo.archivo"
-                                    show-size
-                                    label="invitados"
-                                    variant="outlined"
-                                ></v-file-input>  
-                            </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 col-12 mt-6">
+                            <v-file-input
+                                v-model="archivo.archivo"
+                                show-size
+                                label="invitados"
+                                variant="outlined"
+                            ></v-file-input>  
                         </div>
-                            <div class="row justify-content-center">
-                            <div class=" text-center col-md-4 col-12  mt-8">
-                                <v-btn
-                                    class="custom-button ml-2"
-                                    color="#c4f45d"
-                                    @click="EventSubir()"
-                                    >
-                                    Importar
-                                </v-btn>
-                            </div>
-                                <div class=" text-center col-md-4 col-12  mt-8">
-                                <v-btn
-                                    class="custom-button ml-2"
-                                    color="#6a73a0"
-                                    @click="cerrarDialogExcel()"
-                                    >
-                                    Cerrar
-                                </v-btn>
-                            </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class=" text-center col-md-4 col-12  mt-8">
+                            <v-btn
+                                class="custom-button ml-2"
+                                color="#c4f45d"
+                                @click="EventSubir()"
+                                >
+                                Importar
+                            </v-btn>
                         </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
+                        <div class=" text-center col-md-4 col-12  mt-8">
+                            <v-btn
+                                class="custom-button ml-2"
+                                color="#6a73a0"
+                                @click="cerrarDialogExcel()"
+                                >
+                                Cerrar
+                            </v-btn>
+                        </div>
+                    </div>
+                </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
@@ -608,28 +759,27 @@
             return { 
                 archivo: {
                     evento_id: '',
-                    zona_id:'',
+                    zona_id: '',
                     archivo: ''
                 },
                 notificacion: {
                     evento_id: '',
                 },
                 nuevo: 0,
-                panel: [],
-                // opened: 0,
+                panel_evento: [],
                 showNav: false,
-                // dialogNuevoEvento: false,
-                dialogEditarEvento: false,
                 evento: {
                     id: 0,
                     nombre: '',
                     organizador:'',
-                    sede:'',
-                    fecha_i:null,
+                    sede: '',
+                    fecha_i: null,
                     fecha_f: null,
                     horario: null,
                     domicilio: '',
-                    ubicacion: ''
+                    ubicacion: '',
+                    logo: [],
+                    fondo: []
                 },               
                 loading: false,
                 elementosPorPagina: 10,
@@ -641,10 +791,7 @@
                 numShown: 5,
                 current: 1,
                 buscar: '',
-
-                //variables para el modal y tabla de los invitados
                 
-                dialogNuevoInvitado: false,
                 invitado: {
                     id: null,
                     nombre: '',
@@ -662,16 +809,16 @@
                     estacionamiento: null,
 
                 },
-                loading2: false,
-                elementosPorPagina2: 5,
-                paginaActual2: 1,
-                datosPaginados2: [],
-                mostrar2: false,
-                from2: '',
-                to2: '',
-                numShown2: 5,
-                current2: 1,
-                buscar2: '',
+                // loading2: false,
+                // elementosPorPagina2: 5,
+                // paginaActual2: 1,
+                // datosPaginados2: [],
+                // mostrar2: false,
+                // from2: '',
+                // to2: '',
+                // numShown2: 5,
+                // current2: 1,
+                // buscar2: '',
                 dialogExcel: false,
 
                 estacionamiento: [
@@ -684,7 +831,11 @@
                         nombre: 'No'
                         
                     }
-                ]
+                ],
+                panel_invitado: [],
+                panel_invitado: false,
+                panel_evento: false,
+                secciones: ''
             }
         },
         setup() {
@@ -703,13 +854,7 @@
                         },
                         sede: {
                             required
-                        },
-                        // fecha_i: {
-                        //     required
-                        // },
-                        // fecha_f: {
-                        //     required
-                        // },
+                        }
                     },
                     invitado:{
                         nombre:{
@@ -729,13 +874,13 @@
         },
         created() {
             this.getEventos()
-            this.getInvitados()
-            this.getSecciones()
+            // this.getInvitados()
+            // this.getSecciones()
         },
         computed: {
-            secciones() {
-                    return this.$store.getters.getSecciones
-            },
+            // secciones() {
+            //         return this.$store.getters.getSecciones
+            // },
             pages() {
                 const numShown = Math.min(this.numShown, this.totalPaginas())
                 let first = this.current - Math.floor(numShown / 2)
@@ -746,16 +891,16 @@
             eventos() {
                     return this.$store.getters.getEventos
             },
-            invitados() {
-                    return this.$store.getters.getInvitados
-            },
-            pages2() {
-                const numShown2 = Math.min(this.numShown2, this.totalPaginas2())
-                let first = this.current2 - Math.floor(numShown2 / 2)
-                first = Math.max(first, 1)
-                first = Math.min(first, this.totalPaginas2() - numShown2 + 1)
-                return [...Array(numShown2)].map((k, i) => i + first)
-            }
+            // invitados() {
+            //         return this.$store.getters.getInvitados
+            // },
+            // pages2() {
+            //     const numShown2 = Math.min(this.numShown2, this.totalPaginas2())
+            //     let first = this.current2 - Math.floor(numShown2 / 2)
+            //     first = Math.max(first, 1)
+            //     first = Math.min(first, this.totalPaginas2() - numShown2 + 1)
+            //     return [...Array(numShown2)].map((k, i) => i + first)
+            // }
         },
         watch: {
             // 'panel': function() {
@@ -816,9 +961,10 @@
                 this.loading = false
             },
             abrir(){
+                this.panel_evento = [0]
+                this.panel_invitado = false
                 this.nuevo = 1
                 this.v$.$reset()
-                this.panel = [0]
                 this.evento.nombre =''
                 this.evento.organizador =''
                 this.evento.sede =''
@@ -828,6 +974,8 @@
                 this.evento.domicilio = ''
                 this.evento.ubicacion = ''
                 this.evento.id = null
+                this.evento.logo = []
+                this.evento.fondo = []
             },
             logout() {
                 this.$store.dispatch('logout')
@@ -885,9 +1033,6 @@
             setCurrentPage(pagina) {
                 this.current = pagina
             },
-            abrirModalNuevoEvento(){
-                this.dialogNuevoEvento = true
-            },
             async getEventos() {
                 this.loading = true
                 try {                   
@@ -907,22 +1052,26 @@
                 }
                 this.loading = false
             },
-            cerrarModalNuevoEvento(){
-                this.dialogNuevoEvento = false
-                this.dialogEditarEvento = false
+            cerrarNuevoEvento(){
+                this.panel_evento = []
+                this.panel_evento = false
                 this.evento.nombre =''
                 this.evento.organizador =''
                 this.evento.sede =''
                 this.evento.fecha_i = ''
                 this.evento.fecha_f = ''
+                this.evento.horario =''
+                this.evento.domicilio = ''
+                this.evento.ubicacion = ''
                 this.evento.id = null
-
-                // this.v$.reset()
-
+                this.evento.logo = []
+                this.evento.fondo = []
+                this.v$.$reset()
             },
-            abrirModalEditarEvento(evento){
-                this.nuevo= 0
-                this.panel = [0] 
+            abrirEditarEvento(evento){
+                this.nuevo = 0
+                this.panel_evento = [0] 
+                this.panel_invitado = false
                 this.evento.id = evento.id
                 this.evento.nombre = evento.nombre
                 this.evento.organizador = evento.organizador
@@ -948,7 +1097,11 @@
                     preConfirm: async () => {
                         try {
                                 // this.loading = true
-                                let response = await axios.post('/api/eventos/crear-evento', this.evento)
+                                let response = await axios.post('/api/eventos/crear-evento', this.evento,{
+                                    headers: {
+                                        'Content-Type':'multipart/form-data'
+                                    }
+                                })
                                 return response
                             } catch (error) {
                                 errorSweetAlert('Ocurrió un error al guardar el Evento.')
@@ -963,18 +1116,9 @@
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setEventos', result.value.data.eventos)
                                     // this.loading = false
-                                    // this.cerrarModalNuevoEvento()
-                                    this.getDataPagina(1) 
-                                    this.panel = []
-                                    this.evento.nombre =''
-                                    this.evento.organizador =''
-                                    this.evento.sede =''
-                                    this.evento.fecha_i = ''
-                                    this.evento.fecha_f = ''
-                                    this.evento.horario =''
-                                    this.evento.domicilio = ''
-                                    this.evento.ubicacion = ''
-                                    this.v$.reset()
+                                    this.cerrarNuevoEvento()
+                                    this.getDataPagina(1)
+
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
                                     // this.loading = false
@@ -986,7 +1130,6 @@
                             }
                         }
                     })
-                    // this.loading = false
                     this.v$.$reset()
             },
             async guardarCambiosEditarEvento() {
@@ -1017,18 +1160,8 @@
                                 if (result.value.data.status === "ok") {
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setEventos', result.value.data.eventos)
-                                    this.cerrarModalNuevoEvento()
-                                    this.panel = []
-                                    this.evento.nombre =''
-                                    this.evento.organizador =''
-                                    this.evento.sede =''
-                                    this.evento.fecha_i = ''
-                                    this.evento.fecha_f = ''
-                                    this.evento.horario =''
-                                    this.evento.domicilio = ''
-                                    this.evento.ubicacion = ''
+                                    this.cerrarNuevoEvento()
                                     this.getDataPagina(1)
-                                    this.v$.reset()
                     
                                 } else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
@@ -1079,17 +1212,17 @@
             },
             
             // funciones para el invitado 
-            abrirModalNuevoInvitado(evento){
+            abrirNuevoInvitado(evento){
                 this.archivo.evento_id = evento.id
-                this.dialogNuevoInvitado = true
+                this.panel_invitado = [0]
                 this.invitado.evento_id = evento.id
-                this.getInvitados(evento)
-                this.getDataPagina2(1)
-
-
+                this.panel_evento = false
+                this.v$.$reset()
+                this.BuscarSecciones(this.invitado)
             },
-            cerrarModalNuevoInvitado(){
-                this.dialogNuevoInvitado = false
+            cerrarNuevoInvitado(){
+                this.panel_invitado = []
+                this.panel_invitado = false
                 this.invitado.id = ''
                 this.invitado.nombre =''
                 this.invitado.apellido_p =''
@@ -1103,6 +1236,9 @@
                 this.invitado.seccion = ''
                 this.invitado.estacionamiento = ''
                 this.invitado.cargo = ''
+                this.invitado.seccion = ''
+                this.v$.$reset()
+
             },
             async guardarNuevoInvitado() {
                 const isFormCorrect = await this.v$.invitado.$validate()              
@@ -1135,19 +1271,7 @@
                                     this.loading2 = false
                                     this.getDataPagina2(1)
                                     this.mostrar2 = true
-                                    this.invitado.id = ''
-                                    this.invitado.nombre =''
-                                    this.invitado.apellido_p =''
-                                    this.invitado.apellido_m =''
-                                    this.invitado.dependencia =''
-                                    this.invitado.area =''
-                                    this.invitado.telefono = ''
-                                    this.invitado.email = ''
-                                    this.invitado.estado =''
-                                    this.invitado.municipio = ''
-                                    this.invitado.seccion = ''
-                                    this.invitado.estacionamiento = ''
-                                    this.invitado.cargo = ''
+                                    this.cerrarNuevoInvitado()
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
                                     this.loading2 = false
@@ -1160,88 +1284,88 @@
                         }
                     })
             },
-            async getInvitados(evento) {
-                this.loading2 = true
-                if(evento){
-                    this.invitado.evento_id = evento.id                
+            // async getInvitados(evento) {
+            //     this.loading2 = true
+            //     if(evento){
+            //         this.invitado.evento_id = evento.id                
 
-                }else{
-                    this.loading2 = false
+            //     }else{
+            //         this.loading2 = false
 
-                }
-                try {                   
-                    let response = await axios.post('/api/invitados',this.invitado)
-                    if (response.status === 200) {
-                        if (response.data.status === "ok") {
-                            this.$store.commit('setInvitados', response.data.invitados)
-                            this.mostrar2 = true
-                            this.getDataPagina2(1)
-                            // this.loading = false
+            //     }
+            //     try {                   
+            //         let response = await axios.post('/api/invitados',this.invitado)
+            //         if (response.status === 200) {
+            //             if (response.data.status === "ok") {
+            //                 this.$store.commit('setInvitados', response.data.invitados)
+            //                 this.mostrar2 = true
+            //                 this.getDataPagina2(1)
+            //                 // this.loading = false
 
-                        } else {
-                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
-                        }
-                    } else {
-                        errorSweetAlert('Ocurrió un error al obtener los invitados')
-                    }
-                } catch (error) {
-                    errorSweetAlert('Ocurrió un error al obtener los invitados')
-                }
-                this.loading2 = false
-            },
-            totalPaginas2() {
-                return Math.ceil(this.invitados.length / this.elementosPorPagina2)
-            },
-            getDataPagina2(noPagina) {
-                this.paginaActual2 = noPagina
-                this.datosPaginados2 = []
+            //             } else {
+            //                 errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+            //             }
+            //         } else {
+            //             errorSweetAlert('Ocurrió un error al obtener los invitados')
+            //         }
+            //     } catch (error) {
+            //         errorSweetAlert('Ocurrió un error al obtener los invitados')
+            //     }
+            //     this.loading2 = false
+            // },
+            // totalPaginas2() {
+            //     return Math.ceil(this.invitados.length / this.elementosPorPagina2)
+            // },
+            // getDataPagina2(noPagina) {
+            //     this.paginaActual2 = noPagina
+            //     this.datosPaginados2 = []
 
-                let ini = (noPagina * this.elementosPorPagina2) - this.elementosPorPagina2
-                let fin = (noPagina * this.elementosPorPagina2)
+            //     let ini = (noPagina * this.elementosPorPagina2) - this.elementosPorPagina2
+            //     let fin = (noPagina * this.elementosPorPagina2)
 
-                for (let index = ini; index < fin; index++) {
-                    if (this.invitados[index]) {
-                        this.datosPaginados2.push(this.invitados[index])
-                    }
-                }
-                // Para el texto "Mostrando 1 - 10 de 20 resultados"
-                this.from = ini+1
-                if (noPagina < this.totalPaginas2()) {
-                    this.to = fin
-                } else {
-                    this.to = this.invitados.length
-                }
-            },
-            getFirstPage2() {
-                this.paginaActual2 = 1
-                this.setCurrentPage2(this.paginaActual2)
-                this.getDataPagina2(this.paginaActual2)
-            },
-            getPreviousPage2() {
-                if (this.paginaActual2 > 1) {
-                    this.paginaActual2--
-                }
-                this.setCurrentPage2(this.paginaActual2)
-                this.getDataPagina2(this.paginaActual2)
-            },
-            getNextPage2() {
-                if (this.paginaActual2 < this.totalPaginas2()) {
-                    this.paginaActual2++
-                }
-                this.setCurrentPage2(this.paginaActual2)
-                this.getDataPagina2(this.paginaActual2)
-            },
-            getLastPage2() {
-                this.paginaActual2 = this.totalPaginas2()
-                this.setCurrentPage2(this.paginaActual2)
-                this.getDataPagina2(this.paginaActual2)
-            },
-            isActive2 (noPagina) {
-                return noPagina == this.paginaActual2 ? 'active' : ''
-            },
-            setCurrentPage2(pagina) {
-                this.current2 = pagina
-            },
+            //     for (let index = ini; index < fin; index++) {
+            //         if (this.invitados[index]) {
+            //             this.datosPaginados2.push(this.invitados[index])
+            //         }
+            //     }
+            //     // Para el texto "Mostrando 1 - 10 de 20 resultados"
+            //     this.from = ini+1
+            //     if (noPagina < this.totalPaginas2()) {
+            //         this.to = fin
+            //     } else {
+            //         this.to = this.invitados.length
+            //     }
+            // },
+            // getFirstPage2() {
+            //     this.paginaActual2 = 1
+            //     this.setCurrentPage2(this.paginaActual2)
+            //     this.getDataPagina2(this.paginaActual2)
+            // },
+            // getPreviousPage2() {
+            //     if (this.paginaActual2 > 1) {
+            //         this.paginaActual2--
+            //     }
+            //     this.setCurrentPage2(this.paginaActual2)
+            //     this.getDataPagina2(this.paginaActual2)
+            // },
+            // getNextPage2() {
+            //     if (this.paginaActual2 < this.totalPaginas2()) {
+            //         this.paginaActual2++
+            //     }
+            //     this.setCurrentPage2(this.paginaActual2)
+            //     this.getDataPagina2(this.paginaActual2)
+            // },
+            // getLastPage2() {
+            //     this.paginaActual2 = this.totalPaginas2()
+            //     this.setCurrentPage2(this.paginaActual2)
+            //     this.getDataPagina2(this.paginaActual2)
+            // },
+            // isActive2 (noPagina) {
+            //     return noPagina == this.paginaActual2 ? 'active' : ''
+            // },
+            // setCurrentPage2(pagina) {
+            //     this.current2 = pagina
+            // },
 
             async EventSubir(){
                 let formData = new FormData();
@@ -1268,7 +1392,6 @@
                         errorSweetAlert('Ocurrió un error al obtener los invitados')
                         }
                         successSweetAlert(response.data.message)
-                       
                 }).catch(function(){
                     errorSweetAlert('Ocurrió un error al agregar los invitados.')
                 });
@@ -1307,6 +1430,26 @@
                     }
                 } catch (error) {
                     errorSweetAlert('Ocurrió un error al obtener los correos')
+                }
+                this.loading = false
+            },
+            async BuscarSecciones() {
+                this.loading = true
+                try {                   
+                    let response = await axios.post('/api/secciones/buscar-secciones', this.invitado)
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.secciones = response.data.secciones
+                            this.getDataPagina(1)
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener las secciones')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener las secciones')
                 }
                 this.loading = false
             },

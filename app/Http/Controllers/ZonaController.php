@@ -12,13 +12,12 @@ class ZonaController extends Controller
 {
     public function getSecciones(Request $request){
         try{
-            // $user = Auth::user();
-            // if($user->tipo_usuario_id == 1){
+            if($request->evento_id){
+                $zonas = Zona::where('status',1)->where('evento_id',$request->evento_id)->get();
+            }else{
                 $zonas = Zona::where('status',1)->get();
-            // }
-            // else{
-                // $zonas = Zona::where('status',1)->where('user_id',$user->id)->get();
-            // }
+
+            }
 
             $array_zonas = array();
             $cont = 1;
@@ -28,12 +27,6 @@ class ZonaController extends Controller
                 $objectZona->numero_registro = $cont;
                 $objectZona->nombre = $zona->nombre;
                 $objectZona->color = $zona->color;
-                // $objectEvento->sede = $evento->sede;
-                // $objectEvento->fecha_i = $evento->fecha_inicial;
-                // $objectEvento->fecha_f = $evento->fecha_final;
-                // $objectEvento->domicilio_sede = $evento->domicilio_sede;
-                // $objectEvento->ubicacion = $evento->ubicacion;
-                // $objectEvento->horario = $evento->horario;
                 array_push($array_zonas, $objectZona);
                 $cont++;
             }
@@ -65,6 +58,7 @@ class ZonaController extends Controller
             $zona = new Zona;
             $zona->nombre = $request->nombre;
             $zona->color = $request->color;
+            $zona->evento_id = $request->evento_id;
             $zona->save();
 
             $zonas = Zona::where('status',1)->get();
@@ -305,6 +299,40 @@ class ZonaController extends Controller
             return response()->json([
                 "status" => "error",
                 "message" => "Ocurrió un error al hacer la busqueda",
+                "error" => $th->getMessage(),
+                "location" => $th->getFile(),
+                "line" => $th->getLine(),
+            ], 200);
+        }
+    }
+    public function BusquedaSeccion(Request $request){
+        try{
+                
+            $zonas = Zona::where('status',1)->where('evento_id',$request->evento_id)->get();
+
+            $array_zonas = array();
+            $cont = 1;
+            foreach($zonas as $zona){
+                $objectZona = new \stdClass();
+                $objectZona->id = $zona->id;
+                $objectZona->numero_registro = $cont;
+                $objectZona->nombre = $zona->nombre;
+                $objectZona->color = $zona->color;
+                $objectZona->evento_id = $zona->evento_id;
+                array_push($array_zonas, $objectZona);
+                $cont++;
+            }
+
+            return response()->json([
+                "status" => "ok",
+                "message" => "Secciones obtenidos con exito",
+                "secciones" => $array_zonas
+            ], 200);
+
+        }catch(\Throwable $th) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Ocurrió un error al obtener los eventos",
                 "error" => $th->getMessage(),
                 "location" => $th->getFile(),
                 "line" => $th->getLine(),

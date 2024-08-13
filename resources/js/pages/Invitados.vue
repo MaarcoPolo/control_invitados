@@ -19,7 +19,16 @@
                 </div>
             </div>
             <div class="row justify-content-flex-start mt-6">
-                <div class="col-md-4 col-12">
+                <div class="col-md-3 col-12">
+                    <v-btn
+                        class="custom-button mr-2"
+                        color="#c4f45d"
+                        @click="abrirNuevoInvitado()"
+                        >
+                        Nuevo Invitado
+                    </v-btn>
+                </div>
+                <div class="col-md-3 col-12">
                     <v-btn
                         class="custom-button mr-2"
                         color="#c4f45d"
@@ -28,17 +37,160 @@
                         Exportar Datos
                     </v-btn>
                 </div>
-                <div class="col-md-4 col-12"></div>
-                <div class="col-md-4 col-12">
+                <div class="col-md-6 col-12">
                     <div class="principal-div-custom-select">
                         <div class="second-div-custom-select">
                             <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
                         </div>
                     </div>
                 </div>
-                
-
             </div>
+            <v-container>
+                <v-expansion-panels v-if="panel_editar_invitado" v-model="panel_editar_invitado">
+                    <v-expansion-panel>
+                        <v-expansion-panel-title>
+                        </v-expansion-panel-title>
+                        <v-expansion-panel-content>
+                            <v-expansion-panel-text>
+                                <div class="row justify-content-center">
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_nombre">Nombre:</label>
+                                    <input id="input_nombre" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.nombre.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_apellido_p">Apellido paterno:</label>
+                                    <input id="input_apellido_p" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_p.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.apellido_p.$error">*Campo obligatorio</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_apellido_m">Apellido materno:</label>
+                                    <input id="input_apellido_m" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_m.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.apellido_m.$error">*Campo obligatorio</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_dependencia">Dependencia u Organismo:</label>
+                                    <input id="input_dependencia" type="text" class="form-control" autocomplete="off" v-model="invitado.dependencia">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_cargo">Cargo:</label>
+                                    <input id="input_cargo" type="text" class="form-control" autocomplete="off" v-model="invitado.cargo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_area">Área:</label>
+                                    <input id="input_area" type="text" class="form-control" autocomplete="off" v-model="invitado.area">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_telefono">Teléfono de la dependencia:</label>
+                                    <input id="input_telefono" type="number" autocomplete="off" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" v-model="invitado.telefono">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_email">Correo:</label>
+                                    <input id="input_email" type="email" autocomplete="off" class="form-control" v-model="v$.invitado.email.$model">
+                                    <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content">
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_estado">Estado:</label>
+                                    <input id="input_estado" type="text" autocomplete="off" class="form-control" v-model="invitado.estado">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="input_municipio">Municipio:</label>
+                                    <input id="input_municipio" type="text" autocomplete="off" class="form-control" v-model="invitado.municipio">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_seccion">Seccion:</label>
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
+                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content">
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_seccion">Estacionamiento:</label>
+                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.estacionamiento">
+                                        <option  v-for="item in estacionamiento" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="div-custom-input-form">
+                                    <label for="select_confirmo">¿Confirmo?:</label>
+                                    <v-switch
+                                        v-model="invitado.confirmo"
+                                        :label="`${invitado.confirmo}`"
+                                        false-value="NO"
+                                        true-value="SI"
+                                        hide-details
+                                    ></v-switch>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mb-4 mt-6" v-if="this.nuevo_registro == 1">
+                            <v-btn
+                                class="custom-button mr-2"
+                                color="#c4f45d"
+                                @click="guardarNuevoInvitado()"
+                                >
+                                Guardar
+                            </v-btn>
+                            <v-btn
+                                class="custom-button ml-2"
+                                color="#6a73a0"
+                                @click="cerrarEditarInvitado()"
+                                >
+                                Cancelar
+                            </v-btn>
+                        </div>
+                        <div class="text-center mb-4 mt-6" v-else>
+                            <v-btn
+                                class="custom-button mr-2"
+                                color="#c4f45d"
+                                @click="guardarCambiosEditarInvitado()"
+                                >
+                                Guardar
+                            </v-btn>
+                            <v-btn
+                                class="custom-button ml-2"
+                                color="#6a73a0"
+                                @click="cerrarEditarInvitado()"
+                                >
+                                Cancelar
+                            </v-btn>
+                        </div>
+                            </v-expansion-panel-text>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+            </v-container>
 
             <!--INICIO DE LA TABLA INVITADOS-->
             <div class="my-2 mb-12 py-6">
@@ -88,7 +240,7 @@
                                         <div class="text-center row justify-content-center">
                                             <div>
                                                 <v-icon
-                                                    @click="abrirModalEditarInvitado(invitado)"
+                                                    @click="abrirEditarInvitado(invitado)"
                                                     class="mr-1"
                                                     >
                                                     mdi-text-box-edit-outline
@@ -210,127 +362,6 @@
                     </div>
                 </div>
             </div>
-            <!-- INICIO MODAL PARA EDITAR DATOS DEL INVITADO -->
-            <v-dialog v-model="dialogEditarInvitado" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-2 custom-dialog-title">Editar invitado</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-center my-8 custom-border">
-                            <div class="custom-subtitle">
-                                <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.nombre.$model">
-                                    <p class="text-validation-red" v-if="v$.invitado.nombre.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellido_p">Apellido paterno:</label>
-                                    <input id="input_apellido_p" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_p.$model">
-                                    <p class="text-validation-red" v-if="v$.invitado.apellido_p.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellido_m">Apellido materno:</label>
-                                    <input id="input_apellido_m" type="text" class="form-control" autocomplete="off" v-model="v$.invitado.apellido_m.$model">
-                                    <p class="text-validation-red" v-if="v$.invitado.apellido_m.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-md-8 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_dependencia">Dependencia u Organismo:</label>
-                                    <input id="input_dependencia" type="text" class="form-control" autocomplete="off" v-model="invitado.dependencia">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_cargo">Cargo:</label>
-                                    <input id="input_cargo" type="text" class="form-control" autocomplete="off" v-model="invitado.cargo">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_area">Área:</label>
-                                    <input id="input_area" type="text" class="form-control" autocomplete="off" v-model="invitado.area">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_telefono">Teléfono de la dependencia:</label>
-                                    <input id="input_telefono" type="number" autocomplete="off" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" v-model="invitado.telefono">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_email">Correo:</label>
-                                    <input id="input_email" type="email" autocomplete="off" class="form-control" v-model="v$.invitado.email.$model">
-                                    <p class="text-validation-red" v-if="v$.invitado.email.$error">*Formato incorrecto</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_estado">Estado:</label>
-                                    <input id="input_estado" type="text" autocomplete="off" class="form-control" v-model="invitado.estado">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_municipio">Municipio:</label>
-                                    <input id="input_municipio" type="text" autocomplete="off" class="form-control" v-model="invitado.municipio">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="select_seccion">Seccion:</label>
-                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
-                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="select_seccion">Estacionamiento:</label>
-                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.estacionamiento">
-                                        <option  v-for="item in estacionamiento" :key="item.id" :value="item.id">{{item.nombre}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center mb-4 mt-6">
-                            <v-btn
-                                class="custom-button mr-2"
-                                color="#c4f45d"
-                                @click="guardarCambiosEditarInvitado()"
-                                >
-                                Guardar
-                            </v-btn>
-                            <v-btn
-                                class="custom-button ml-2"
-                                color="#6a73a0"
-                                @click="cerrarModalNuevoInvitado()"
-                                >
-                                Cancelar
-                            </v-btn>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
         </div>
     </div>
 </template>
@@ -344,10 +375,8 @@
     export default defineComponent({
         name: 'invitados',
         data () {
-            return { 
+            return {
                 showNav: false,
-                dialogNuevoInvitado: false,
-                dialogEditarInvitado: false,
                 invitado: {
                     id: null,
                     nombreC:'',
@@ -363,7 +392,8 @@
                     municipio:'',
                     seccion: '',
                     cargo:'',
-                    estacionamiento: null
+                    estacionamiento: null,
+                    confirmo:''
 
                 },       
                 loading: false,
@@ -391,7 +421,11 @@
                         nombre: 'No'
                         
                     }
-                ]
+                ],
+                panel_editar_invitado:[],
+                panel_editar_invitado: false,
+                nuevo_registro: 0
+            
             }
         },
         setup() {
@@ -445,7 +479,7 @@
                         || item.area.toLowerCase().includes(this.buscar.toLowerCase())
                         || item.confirmo.toLowerCase().includes(this.buscar.toLowerCase())
                         || item.zona.toLowerCase().includes(this.buscar.toLowerCase())
-                   
+                
                     })
                 } else {
                     this.getDataPagina(1)
@@ -517,13 +551,10 @@
             setCurrentPage(pagina) {
                 this.current = pagina
             },
-            abrirModalNuevoInvitado(){
-                this.dialogNuevoInvitado = true
-            },
-            cerrarModalNuevoInvitado(){
-                this.dialogNuevoInvitado = false
-                this.dialogEditarInvitado = false
-                this.invitado.id = ''
+            cerrarEditarInvitado(){
+                this.panel_editar_invitado = []
+                this.panel_editar_invitado = false
+                this.invitado.id = null
                 this.invitado.nombre = ''
                 this.invitado.apellido_p = ''
                 this.invitado.apellido_m = ''
@@ -535,9 +566,13 @@
                 this.invitado.seccion = ''
                 this.invitado.telefono = ''
                 this.invitado.email = ''
+                this.invitado.confirmo = ''
+                this.v$.$reset()
             },
-            abrirModalEditarInvitado(invitado){
-                this.dialogEditarInvitado = true 
+            abrirEditarInvitado(invitado){
+                this.panel_editar_invitado = true
+                this.panel_editar_invitado = [0]
+                this.nuevo_registro = 0
                 this.invitado.id = invitado.id
                 this.invitado.nombreC = invitado.nombreC
                 this.invitado.nombre = invitado.nombre
@@ -552,6 +587,71 @@
                 this.invitado.municipio = invitado.municipio
                 this.invitado.seccion = invitado.seccion
                 this.invitado.estacionamiento = invitado.parking
+                this.invitado.confirmo = invitado.confirmo
+            },
+            abrirNuevoInvitado(){
+                this.panel_editar_invitado = true
+                this.panel_editar_invitado= [0]
+                this.nuevo_registro = 1
+                this.v$.$reset()                
+                this.invitado.id = null
+                this.invitado.nombreC = ''
+                this.invitado.nombre = ''
+                this.invitado.apellido_p = '' 
+                this.invitado.apellido_m = ''
+                this.invitado.dependencia = ''
+                this.invitado.area = ''
+                this.invitado.cargo = ''
+                this.invitado.telefono = '' 
+                this.invitado.email = ''
+                this.invitado.estado = ''
+                this.invitado.municipio = '' 
+                this.invitado.seccion = ''
+                this.invitado.estacionamiento = ''
+                this.invitado.confirmo = ''
+            },
+            async guardarNuevoInvitado() {
+                const isFormCorrect = await this.v$.invitado.$validate()              
+                if (!isFormCorrect) return
+                Swal.fire({
+                    title: '¿Guardar nuevo Invitado?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085D6',
+                    cancelButtonColor: '#D33',
+                    confirmButtonText: 'Si, guardar',
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        try {
+                                this.loading2 = true
+                                let response = await axios.post('/api/invitados/crear-invitado', this.invitado)
+                                return response
+                            } catch (error) {
+                                errorSweetAlert('Ocurrió un error al guardar al invitado.')
+                            }
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            if (result.value.status === 200) {
+                                if (result.value.data.status === "ok") {
+                                    successSweetAlert(result.value.data.message)
+                                    this.$store.commit('setInvitados', result.value.data.invitados)
+                                    this.getDataPagina(1)
+                                    this.cerrarEditarInvitado()
+                                    this.BuscarInvitado()
+                                } else if(result.value.data.status==="exists"){
+                                    warningSweetAlert(result.value.data.message)
+                                    this.loading2 = false
+                                }else {
+                                    errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
+                                }
+                            } else {
+                                errorSweetAlert('Ocurrió un error al guardar al invitado.')
+                            }
+                        }
+                    })
             },
             async guardarCambiosEditarInvitado() {
                 const isFormCorrect = await this.v$.invitado.$validate()              
@@ -582,7 +682,7 @@
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setInvitados', result.value.data.invitados)
                                     this.getDataPagina(1)
-                                    this.cerrarModalNuevoInvitado()
+                                    this.cerrarEditarInvitado()
                                     this.BuscarInvitado()
                                 } else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
@@ -726,12 +826,7 @@
                 }
                 this.loading = false
             },
-
-            //checar mañana
-            async exportarExcel()
-            {
-                console.log(this.invitados)
-
+            async exportarExcel(){
                 this.export.evento_id = this.invitado.evento_id
                 // this.export.invitados = this.invitados
                 let response = await axios.post('/api/invitados/exportar-excel',this.export,{

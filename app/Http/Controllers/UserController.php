@@ -24,6 +24,8 @@ class UserController extends Controller
                 $objectUsuario->apellido_materno = $usuario->apellido_materno;
                 $objectUsuario->nombrecompleto = $usuario->nombre.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno;
                 $objectUsuario->password = $usuario->password;
+                $objectUsuario->tipo_usuario = $usuario->tipoUsuario->nombre;
+                $objectUsuario->tipo_usuario_id = $usuario->tipo_usuario_id;
                 
                 array_push($array_usuarios, $objectUsuario);
                 $cont++;
@@ -57,7 +59,7 @@ class UserController extends Controller
                 $usuario->apellido_materno = $request->apellido_materno;
                 $usuario->username = $request->username;
                 $usuario->password = $request->password;
-                $usuario->tipo_usuario_id = 2;
+                $usuario->tipo_usuario_id = $request->tipo_usuario;
                 $usuario->save();
 
                 $usuarios = User::where('status', 1)->where('tipo_usuario_id', '!=', 1)->get();            
@@ -74,7 +76,9 @@ class UserController extends Controller
                     $objectUsuario->apellido_materno = $usuario->apellido_materno;
                     $objectUsuario->nombrecompleto = $usuario->nombre.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno;
                     $objectUsuario->password = $usuario->password;
-                    
+                    $objectUsuario->tipo_usuario = $usuario->tipoUsuario->nombre;
+                    $objectUsuario->tipo_usuario_id = $usuario->tipo_usuario_id;
+
                     array_push($array_usuarios, $objectUsuario);
                     $cont++;
                 }
@@ -112,6 +116,7 @@ class UserController extends Controller
             $usuario->apellido_materno = $request->apellido_materno;
             $usuario->username = $request->username;
             $usuario->password = $request->password;            
+            $usuario->tipo_usuario_id = $request->tipo_usuario;
             $usuario->save();
             
             $usuarios = User::where('status', 1)->where('tipo_usuario_id', '!=', 1)->get();
@@ -128,6 +133,8 @@ class UserController extends Controller
                 $objectUsuario->apellido_materno = $usuario->apellido_materno;
                 $objectUsuario->nombrecompleto = $usuario->nombre.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno;
                 $objectUsuario->password = $usuario->password;
+                $objectUsuario->tipo_usuario = $usuario->tipoUsuario->nombre;
+                $objectUsuario->tipo_usuario_id = $usuario->tipo_usuario_id;
         
                 array_push($array_usuarios, $objectUsuario);
                 $cont++;
@@ -179,6 +186,8 @@ class UserController extends Controller
                 $objectUsuario->apellido_materno = $usuario->apellido_materno;
                 $objectUsuario->nombrecompleto = $usuario->nombre.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno;
                 $objectUsuario->password = $usuario->password;
+                $objectUsuario->tipo_usuario = $usuario->tipoUsuario->nombre;
+                $objectUsuario->tipo_usuario_id = $usuario->tipo_usuario_id;
             
                 array_push($array_usuarios, $objectUsuario);
                 $cont++;

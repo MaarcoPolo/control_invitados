@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Evento;
 use App\Models\Invitado;
+use App\Models\Zona;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,6 +73,33 @@ class EventoController extends Controller
             $evento->ubicacion = $request->ubicacion;
             $evento->user_id = $user->id;
             $evento->save();
+
+            if($request->file('logo')){
+                
+                $file = $request->file('logo');
+                $extension = $file[0]->getClientOriginalExtension();
+                $fileName = 'logo'.$evento->nombre.'.'.$extension;
+                $path = $request->file('logo')[0]->storeAs('logo',$fileName);
+                $evento->logo = $path;
+                $evento->save();
+                
+            }
+            if($request->file('fondo')){
+                
+                $file = $request->file('fondo');
+                $extension = $file[0]->getClientOriginalExtension();
+                $fileName = 'fondo'.$evento->nombre.'.'.$extension;
+                $path = $request->file('fondo')[0]->storeAs('fondo',$fileName);
+                $evento->fondo = $path;
+                $evento->save();
+                
+            }
+
+            $zona = new Zona;
+            $zona->nombre = 'PUBLICO EN GENERAL';
+            $zona->color = '#D6AAED';
+            $zona->evento_id = $evento->id;
+            $zona->save();
 
             $eventos = Evento::where('status',1)->where('user_id',$user->id)->get();
             $array_eventos = array();

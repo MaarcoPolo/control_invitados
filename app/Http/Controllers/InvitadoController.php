@@ -16,7 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\InvitadosExport;
-
+use Illuminate\Support\Facades\Storage;
 
 class InvitadoController extends Controller{
 
@@ -50,6 +50,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
                 $objectInvitado->parking = $invitado->con_parking;
+                $objectInvitado->confirmo = $invitado->confirmo == 1 ? "SI" : "NO";
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -93,6 +94,7 @@ class InvitadoController extends Controller{
                 $invitado->zona_id = $request->seccion;
                 $invitado->cargo = $request->cargo;
                 $invitado->con_parking = $request->estacionamiento;
+                $invitado->confirmo = $request->confirmo == 'SI' ? 1 : 0;
                 $invitado->save();
 
                 $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
@@ -117,6 +119,7 @@ class InvitadoController extends Controller{
                     $objectInvitado->zona = $invitado->zona->nombre;
                     $objectInvitado->cargo = $invitado->cargo;
                     $objectInvitado->parking = $invitado->con_parking;
+                    $objectInvitado->confirmo = $invitado->confirmo == 1 ? "SI" : "NO";
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -161,6 +164,7 @@ class InvitadoController extends Controller{
             $invitado->municipio = $request->municipio;
             $invitado->zona_id = $request->seccion;
             $invitado->con_parking = $request->estacionamiento;
+            $invitado->confirmo = $request->confirmo == 'SI' ? 1 : 0;
             $invitado->save();
             
             $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
@@ -185,6 +189,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
                 $objectInvitado->parking = $invitado->con_parking;
+                $objectInvitado->confirmo = $invitado->confirmo == 1 ? "SI" : "NO";
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -244,6 +249,7 @@ class InvitadoController extends Controller{
                 $objectInvitado->zona = $invitado->zona->nombre;
                 $objectInvitado->cargo = $invitado->cargo;
                 $objectInvitado->parking = $invitado->con_parking;
+                $objectInvitado->confirmo = $invitado->confirmo == 1 ? "SI" : "NO";
                 array_push($array_invitados, $objectInvitado);
                 $cont++;
             }
@@ -315,7 +321,9 @@ class InvitadoController extends Controller{
             // disable auto-page-break
             PDF::SetAutoPageBreak(false, 0);
             // set bacground image
-            $img_file = public_path() . '/img/fondo_invitacion.jpg';
+            // $img_file = Storage::url($evento->fondo); 
+            $img_file = public_path() . '/storage/'.$evento->fondo;
+            // dd($img_file);
             PDF::Image($img_file, 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
             // restore auto-page-break status
             PDF::SetAutoPageBreak($auto_page_break, $bMargin);
@@ -339,7 +347,6 @@ class InvitadoController extends Controller{
             $user = Auth::user();
             if($user->tipo_usuario_id == 3){
                 $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
-                // dd($request->folio);
                 if($invitado){
                     $hora = $current_day->toTimeString();
                     if($invitado->verificado == 0){
@@ -360,7 +367,6 @@ class InvitadoController extends Controller{
                     }
                     if($invitado->verificado == 1){
     
-                        // $nombre =$invitado->nombre;
                         return response()->json([
                             "status" => "usado",
                             "message" => "Folio ya usado",
@@ -373,15 +379,12 @@ class InvitadoController extends Controller{
                     return response()->json([
                         "status" => "no_existe_e",
                         "message" => "Folio no existe",
-                        // "cita" => $request->folio
                     ], 200);
                 } 
 
             }else{
                 $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
-                // dd($request->folio);
                 if($invitado){
-                    // $hora = $current_day->toTimeString();
                     if($invitado->con_parking == 1){
                         if($invitado->parking == 1){
                             return response()->json([
@@ -394,7 +397,6 @@ class InvitadoController extends Controller{
 
                         }else if($invitado->parking == 0){
                             DB::beginTransaction();
-                        // $invitado->hora_ingreso = $hora;
                             $invitado->parking = 1;
                             $invitado->save();
         
@@ -416,8 +418,6 @@ class InvitadoController extends Controller{
                         return response()->json([
                             "status" => "sin_estacionamiento",
                             "message" => "No tiene Aceso al estacionamiento",
-                            // "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
-                            // "hora" => $invitado->hora_ingreso
                         ], 200);
                     }
                 }
@@ -425,7 +425,6 @@ class InvitadoController extends Controller{
                     return response()->json([
                         "status" => "no_existe",
                         "message" => "Folio no existe",
-                        // "cita" => $request->folio
                     ], 200);
                 } 
 
@@ -473,6 +472,7 @@ class InvitadoController extends Controller{
                     $objectInvitado->municipio = $invitado->municipio;
                     $objectInvitado->seccion = $invitado->zona_id;
                     $objectInvitado->parking = $invitado->con_parking;
+                    $objectInvitado->confirmo = $invitado->confirmo == 1 ? "SI" : "NO";
                     array_push($array_invitados, $objectInvitado);
                     $cont++;
                 }
@@ -513,10 +513,10 @@ class InvitadoController extends Controller{
         $hora = $h.' '.$w;
 
          //header
-        PDF::setHeaderCallBack(function($pdf){
-            $logo = public_path() . '/img/logo_poder_j.png';
-            $pdf->Image($logo,26,0,160,45);
-        });
+        // PDF::setHeaderCallBack(function($pdf){
+        //     $logo = public_path() . '/img/logo_poder_j.png';
+        //     $pdf->Image($logo,26,0,160,45);
+        // });
 
         $style = array(
             'border' => 0,
@@ -549,7 +549,7 @@ class InvitadoController extends Controller{
         // disable auto-page-break
         PDF::SetAutoPageBreak(false, 0);
         // set bacground image
-        $img_file = public_path() . '/img/fondo_invitacion.jpg';
+        $img_file = public_path() . '/storage/'.$evento->fondo;
         PDF::Image($img_file, 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
         // restore auto-page-break status
         PDF::SetAutoPageBreak($auto_page_break, $bMargin);
@@ -679,7 +679,6 @@ class InvitadoController extends Controller{
                 break;
         }
 
-        // $fecha_formateada = $nombre_dia . ' ' . $day . ' de ' . $nombre_mes . ' de ' . $year;
         $fecha_formateada = $nombre_dia . '         ' . $day . '          ' . $nombre_mes;
         return $fecha_formateada;
     }
@@ -688,13 +687,10 @@ class InvitadoController extends Controller{
     {
         try {
             $total_invitados = Invitado::where('evento_id',$request->evento_id)->count();
-            // $path = $request->file('file')->getRealPath();
-            // Excel::import(new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id),$path); 
-            // $path = $request->file('file')->getRealPath();
+
             $ex = new InvitadosImport($request->evento_id,$total_invitados,$request->zona_id);
-           Excel::import($ex,$request->file('file')); 
-            // $total = $ex->cont;
-            // dd($ex->cont);
+            Excel::import($ex,$request->file('file')); 
+        
             return response()->json([
                 "status" => "ok",
                 "message" => "Importados ".$ex->cont. " de ".$ex->total,
@@ -714,15 +710,11 @@ class InvitadoController extends Controller{
     }
 
     public function confirmarAsistencia(Request $request) {
-        // $current_day = Carbon::now();
         try {
             $invitado = Invitado::where('folio',$request->folio)->where('status',1)->first();
-            // dd($request->folio);
             if($invitado){
-                // $hora = $current_day->toTimeString();
                 if($invitado->confirmo == 0){
                     DB::beginTransaction();
-                    // $invitado->hora_ingreso = $hora;
                     $invitado->confirmo = 1;
                     $invitado->save();
 
@@ -733,12 +725,10 @@ class InvitadoController extends Controller{
                         "nombre" => $invitado->nombre.' '.$invitado->apellido_p.' '.$invitado->apellido_m,
                         "cargo" => $invitado->cargo,
                         "zona" => $invitado->zona->nombre,
-                        // "cita" => $invitado->verificado,
                     ], 200);
                 }
                 if($invitado->confirmo == 1){
 
-                    // $nombre =$invitado->nombre;
                     return response()->json([
                         "status" => "usado",
                         "message" => "Folio ya está confirmado",
@@ -772,10 +762,8 @@ class InvitadoController extends Controller{
     {
         DB::beginTransaction();
         try{
-            // $invitado = Invitado::find($request->id);
             $evento = Evento::find($request->evento_id);
             $invitados = Invitado::where('evento_id',$evento->id)->where('status',1)->where('correo_enviado',0)->get();
-            // dd($invitados);
             $cont_correos = 0;
             foreach($invitados as $invitado)
             {
@@ -795,11 +783,11 @@ class InvitadoController extends Controller{
                 }
                 $hora = $h.' '.$w;
         
-                //header
-                PDF::setHeaderCallBack(function($pdf){
-                    $logo = public_path() . '/img/logo_poder_j.png';
-                    $pdf->Image($logo,26,0,160,45);
-                });
+                // //header
+                // PDF::setHeaderCallBack(function($pdf){
+                //     $logo = public_path() . '/img/logo_poder_j.png';
+                //     $pdf->Image($logo,26,0,160,45);
+                // });
         
                 $style = array(
                     'border' => 0,
@@ -832,7 +820,7 @@ class InvitadoController extends Controller{
                 // disable auto-page-break
                 PDF::SetAutoPageBreak(false, 0);
                 // set bacground image
-                $img_file = public_path() . '/img/fondo_invitacion.jpg';
+                $img_file = public_path() . '/storage/'.$evento->fondo;
                 PDF::Image($img_file, 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                 // restore auto-page-break status
                 PDF::SetAutoPageBreak($auto_page_break, $bMargin);
@@ -873,7 +861,6 @@ class InvitadoController extends Controller{
     public function ExportarExcel(Request $request)
     {
         $invitados = Invitado::where('evento_id',$request->evento_id)->get();
-        // dd($invitados);
         
         $array_invitados = [];
         foreach($invitados as $invitado)
@@ -896,8 +883,6 @@ class InvitadoController extends Controller{
             
             array_push($array_invitados, $objectInvitado);
         }
-
-        // dd($array_invitados);
         return (new InvitadosExport($array_invitados))->download('Invitados.xlsx');
     }
 

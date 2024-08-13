@@ -1,38 +1,38 @@
 <template>
     <div class="wrapper" v-if="user">
-        <div class="main-head">
+        <header class="main-head">
             <div class="custom-page-header">
                 <div class="separador">
                     <h1 class="title-head"><span>Control de eventos</span></h1>
                 </div>
-                <div class="logo">
+                <div class="custom-image-header">
                     <picture>
-                        <img class="custom-image-header" loading="lazy" src="../../../public/img/logo_poder_judicial_gris.svg" alt="Logo Poder Judicial del Estado de Puebla">
+                        <img loading="lazy" src="../../../public/img/logo_poder_judicial_gris.svg" alt="Logo Poder Judicial del Estado de Puebla">
                     </picture>
                 </div>
                 <div class="separador-mobile">
                     <h1 class="title-head"><span>Control de eventos</span></h1>
                 </div>
             </div>
-            <div class="custom-navbar">
-                <ul class="custom-ul-navbar m-0">
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irInicio()">Inicio</li>   
+            <nav class="custom-navbar">
+                <!-- Botón de menú hamburguesa -->
+                <button class="menu-toggle" @click="toggleMenu">
+                    <span class="hamburger-icon"></span>
+                </button>
+                <ul class="custom-ul-navbar" :class="{ 'active': menuOpen }">
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irInicio()">Inicio</li>
                     <li v-if="user.user.tipo_usuario_id == 1" @click="irEventos()">Eventos</li>
                     <li v-if="user.user.tipo_usuario_id == 1" @click="irInvitado()">Invitados</li>
                     <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irZonas()">Secciones</li>   
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irIngresados()">Ingresos</li>   
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irZonas()">Secciones</li>
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irIngresados()">Ingresos</li>
                     <li @click="logout()">Cerrar Sesión</li>
                 </ul>
-            </div>
-            <div class="col-md-4 col-12">
-                <div class="text-center py-1 mt-8">
-                </div>
-            </div>
-        </div>
-        <div class="content">
+            </nav>
+        </header>
+        <main class="content">
             <router-view></router-view>
-        </div>
+        </main>
         <footer class="footer">
             <div class="footer-first-line"></div>
             <div class="footer-content">
@@ -53,7 +53,7 @@
         name: 'app',
         data() {
             return {
-            
+                menuOpen: false
             }
         },
         created() {
@@ -102,6 +102,9 @@
             },
             irIngresados() {
                 this.$router.push('/ingresados')
+            },
+            toggleMenu() {
+                this.menuOpen = !this.menuOpen;
             },
         }
     })
