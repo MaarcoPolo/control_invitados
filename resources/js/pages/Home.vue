@@ -3,10 +3,10 @@
         <div class="pt-6">
             <div class="row justify-content-between">
                 <div class="col-md-6 col-12 botones-inicio">
-                    <img style="height: 40rem; width: 40rem;" src="../../../public/img/icono-eventos.png" @click="irEventos()">
+                    <img class="botones-img" src="../../../public/img/icono-eventos.png" @click="irEventos()" alt="Eventos">
                 </div>
                 <div class="col-md-6 col-12 botones-inicio">
-                    <img style="height: 40rem; width: 40rem;" src="../../../public/img/icono-invitados.png" @click="irInvitados()">
+                    <img class="botones-img" src="../../../public/img/icono-invitados.png" @click="irInvitados()" alt="Invitados">
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 
-.botones-inicio{
+.botones-inicio {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,4 +9,26 @@
 
     cursor: pointer;
     transition: .5s all ease-in-out;
+
+    @media (max-width: 768px) {
+      margin-top: 5rem; // Reduce el margen superior en pantallas más pequeñas
+    }
+}
+
+.botones-img {
+    max-width: 100%;
+    height: auto; // Mantiene la relación de aspecto
+    width: 40rem; // Ancho específico para pantallas grandes
+
+    @media (max-width: 1024px) {
+      width: 30rem; // Ancho específico para tabletas
+    }
+
+    @media (max-width: 768px) {
+      width: 20rem; // Ancho específico para móviles
+    }
+
+    @media (max-width: 576px) {
+      width: 15rem; // Ancho específico para móviles más pequeños
+    }
 }

@@ -21,15 +21,6 @@
                 </div>
             </div>
             <div class="row justify-content-flex-start mt-6">
-                <div class="col-md-4 col-12">
-                    <v-btn
-                        class="custom-button mr-2"
-                        color="#c4f45d"
-                        @click="SeccionesConteo()"
-                        >
-                        Actualizar ingresos
-                    </v-btn>
-                </div>
                 <div class="col-md-4 col-12"></div>
                 <div class="col-md-4 col-12">
                     <div class="principal-div-custom-select">
@@ -355,8 +346,9 @@
                 numShown2: 5,
                 current2: 1,
                 buscar2: '',
-
                 tiempo:null,
+                reloadTimer: null, // Variable para almacenar el intervalo
+
             }
         },
         created() {
@@ -364,7 +356,7 @@
             this.getEventos()
         },
         mounted(){
-            // this.recargar()       
+            this.startAutoReload(60000) // Recarga cada 30 segundos
         },
         computed: {
             user() {
@@ -427,6 +419,11 @@
                 this.SeccionesConteo()
                 this.BusquedaGeneral()
             },
+            '$router'(to, from) {
+                if (to.path !== from.path) {
+                    this.stopAutoReload() // Detenemos el intervalo si la ruta cambia
+                }
+            }
         },
         methods: {
         logout() {
@@ -638,17 +635,22 @@
                 }
                 this.loading2 = false
             },
+            startAutoReload(interval) {
+                this.reloadTimer = setInterval(() => {
+                    // window.location.reload();
+                    this.SeccionesConteo()
+                }, interval)
+            },
+            stopAutoReload() {
+                if (this.reloadTimer) {
+                    clearInterval(this.reloadTimer)
+                    this.reloadTimer = null // Limpiamos el intervalo
+                }
+            },    
             
-            // recargar(){
-            //     this.tiempo = setInterval(() => {
-
-            //             this.SeccionesConteo()
-
-            //     }, 1000);
-            // },
-            // detener(){
-            //         clearInterval(this.tiempo);
-            // }
-        },                
+        },       
+        beforeUnmount(){
+            this.stopAutoReload() // Detenemos el intervalo si el componente se desmonta
+        },    
     })
 </script>
