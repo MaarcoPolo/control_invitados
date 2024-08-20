@@ -2,7 +2,7 @@
 @use '../base/mixins' as m;
 
 .wrapper {
-    display: grid;
+    // display: grid;
     grid-template-areas: 
         "header"
         "content"
@@ -160,11 +160,14 @@
     border: none;
     display: none;
     cursor: pointer;
-    padding: 1rem;
-    margin-right: 1rem;
+    // padding: 1rem;
+    // margin-right: 2rem;
+    // margin-left: 36rem;
+    position: absolute; /* Asegura que el ícono permanezca en su lugar */
 
     @media (max-width: 767px) {
         display: block;
+
     }
 }
 
@@ -173,7 +176,10 @@
     width: 25px;
     height: 3px;
     background-color: v.$gris_g6;
-    position: relative;
+    position: relative; /* Asegura que el ícono no se mueva */
+    top: 50%; /* Centra verticalmente */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Ajusta la posición para centrar el ícono */
     transition: all 0.3s ease-in-out;
 
     &::before,
@@ -214,6 +220,7 @@
     display: flex;
     justify-content: flex-end;
 }
+// background-color: v.$verde_v2;
 
 .custom-ul-navbar {
     background-color: v.$verde_v2;
@@ -222,7 +229,7 @@
     justify-content: center;
     list-style: none;
     padding: 0;
-    margin: 0;
+    // margin: 0;
 
     @media (max-width: 767px) {
         display: none;
@@ -231,7 +238,13 @@
     }
 
     &.active {
-        display: flex;
+        background-color: v.$verde_v2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     }
 }
 
@@ -255,9 +268,9 @@
     }
 }
 
-.custom-ul-navbar li:first-child {
-    margin: 0 0 0 3rem;
-}
+// .custom-ul-navbar li:first-child {
+//     margin: 0 0 0 3rem;
+// }
 
 .custom-ul-navbar li:hover {
     background-color: #BFE273;
@@ -278,4 +291,25 @@
 
 .custom-dropdown:hover {
     background-color: #BFE273;
+}
+@media (max-width: 600px) {
+    .swal2-popup {
+        width: auto !important;
+        max-width: 90vw;
+    }
+    .swal2-title {
+        font-size: 18px !important;
+    }
+    .swal2-content {
+        font-size: 16px !important;
+    }
+    .swal2-actions {
+        flex-direction: column;
+    }
+    .swal2-styled {
+        width: 100%;
+    }
+}
+.swal2-container {
+    z-index: 1050 !important;
 }

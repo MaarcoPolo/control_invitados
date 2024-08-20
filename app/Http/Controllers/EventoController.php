@@ -73,6 +73,7 @@ class EventoController extends Controller
             $evento->ubicacion = $request->ubicacion;
             $evento->user_id = $user->id;
             $evento->save();
+            
 
             if($request->file('logo')){
                 

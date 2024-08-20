@@ -3,7 +3,7 @@
         <div class="row justify-content-center" v-if="user.user.tipo_usuario_id == 3"><h1>ACCESO</h1></div>
         <div class="row justify-content-center" v-if="user.user.tipo_usuario_id == 4"><h1>ESTACIONAMIENTO</h1></div>
         <div class="row justify-content-center">
-            <div class="card-titulo-page">
+            <div class="card-titulo-page mt-8">
                 <img class="icono-page" src="../../../public/icons/ventanilla.png" alt="">
                 <p>Ingresados</p>
             </div>
@@ -24,59 +24,61 @@
                 <div class="col-md-4 col-12"></div>
                 <div class="col-md-4 col-12">
                     <div class="principal-div-custom-select">
-                        <div class="second-div-custom-select">
+                        <!-- <div class="second-div-custom-select"> -->
                             <input id="buscar" v-model="buscar" placeholder="Buscar invitado general" type="search" autocomplete="off" class="form-control custom-input">
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
             <v-container>
                 <v-expansion-panels v-model="panel">
                     <v-expansion-panel>
-                        <v-expansion-panel-title><h3>Información del conteo de los invitados</h3></v-expansion-panel-title>
+                        <v-expansion-panel-title><p style="font-size: 2rem;">Conteo de invitados</p></v-expansion-panel-title>
                         <v-expansion-panel-text>
                             <!--INICIO DE LA TABLA INVITADOS-->
                             <div class="my-2 mb-12 py-6">
                                 <div class="">
                                     <div class="row justify-content-between">
-                                        <table class="table custom-border-table">
-                                            <thead class="headers-table">
-                                                <tr>
-                                                    <th class="custom-title-table">Sección</th>
-                                                    <th class="custom-title-table">Confirmados</th>
-                                                    <th class="custom-title-table">Ingresados</th>
-                                                    <th class="custom-title-table">Pendientes</th>
-                                                    <th class="custom-title-table">Total de sección</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-if="loading">
-                                                    <th colspan="7">
-                                                        <p class="text-center text-loading-data-table">Cargando datos...</p>
-                                                        <div class="linear-activity">
-                                                            <div class="indeterminate"></div>
-                                                        </div>
-                                                    </th>
-                                                </tr>
-                                                <tr v-else v-for="secciones in datosPaginados" :key="secciones.id">
-                                                    <td class="custom-data-table2" @click="BusquedaInvitados(secciones)">
-                                                        {{secciones.nombre}}
-                                                    </td>
-                                                    <td class="custom-data-table text-uppercase" @click="BusquedaInvitados(secciones)">
-                                                        {{secciones.confirmados}}
-                                                    </td>
-                                                    <td class="custom-data-table text-uppercase" @click="BusquedaInvitados(secciones)">
-                                                        {{secciones.ingresados}}
-                                                    </td>
-                                                    <td class="custom-data-table text-uppercase" @click="BusquedaInvitados(secciones)">
-                                                        {{secciones.pendientes}}
-                                                    </td>
-                                                    <td class="custom-data-table text-uppercase" @click="BusquedaInvitados(secciones)">
-                                                        {{secciones.total_seccion}}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table custom-border-table">
+                                                <thead class="headers-table">
+                                                    <tr>
+                                                        <th class="custom-title-table">Sección</th>
+                                                        <th class="custom-title-table">Confirmados</th>
+                                                        <th class="custom-title-table">Ingresados</th>
+                                                        <th class="custom-title-table">Pendientes</th>
+                                                        <th class="custom-title-table">Total de sección</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-if="loading">
+                                                        <th colspan="7">
+                                                            <p class="text-center text-loading-data-table">Cargando datos...</p>
+                                                            <div class="linear-activity">
+                                                                <div class="indeterminate"></div>
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                    <tr v-else v-for="secciones in datosPaginados" :key="secciones.id">
+                                                        <td class="custom-data-table2" @click="BusquedaInvitados(secciones)">
+                                                            {{secciones.nombre}}
+                                                        </td>
+                                                        <td class="custom-data-table text-uppercase" @click="BusquedaInvitados(secciones)">
+                                                            {{secciones.confirmados}}
+                                                        </td>
+                                                        <td class="custom-data-table text-uppercase" @click="BusquedaInvitados(secciones)">
+                                                            {{secciones.ingresados}}
+                                                        </td>
+                                                        <td class="custom-data-table text-uppercase" @click="BusquedaInvitados(secciones)">
+                                                            {{secciones.pendientes}}
+                                                        </td>
+                                                        <td class="custom-data-table text-uppercase" @click="BusquedaInvitados(secciones)">
+                                                            {{secciones.total_seccion}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div>
                                         <template v-if="secciones && secciones.length > 0">
@@ -145,96 +147,98 @@
             <v-container>
                 <v-expansion-panels v-if="panel2" v-model="panel2">
                     <v-expansion-panel>
-                        <v-expansion-panel-title><h3>Información de la busqueda de los invitados</h3></v-expansion-panel-title>
+                        <v-expansion-panel-title><p style="font-size: 2rem;">Busqueda de invitados</p></v-expansion-panel-title>
                         <v-expansion-panel-text>
                             <div class="row justify-content-flex-start mt-6">
                                 <div class="col-md-4 col-12"></div>
                                 <div class="col-md-4 col-12"></div>
                                 <div class="col-md-4 col-12">
                                     <div class="principal-div-custom-select">
-                                        <div class="second-div-custom-select">
+                                        <!-- <div class="second-div-custom-select"> -->
                                             <input id="buscar" v-model="buscar2" placeholder="Buscar invitado" type="search" autocomplete="off" class="form-control custom-input">
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="my-2 mb-12 py-6" id="busqueda">
                                 <div class="">
                                     <div class="row justify-content-between">
-                                        <table class="table custom-border-table">
-                                            <thead class="headers-table">
-                                                <tr>
-                                                    <th class="custom-title-table">Nombre</th>
-                                                    <th class="custom-title-table">Dependencia</th>
-                                                    <th class="custom-title-table">Area</th>
-                                                    <th class="custom-title-table">Cargo</th>
-                                                    <th class="custom-title-table">Zona</th>
-                                                    <th class="custom-title-table">Confirmo</th>
-                                                    <th class="custom-title-table">Ingreso</th>
-                                                    <th class="custom-title-table">Hora de ingreso</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-if="loading2">
-                                                    <th colspan="7">
-                                                        <p class="text-center text-loading-data-table">Cargando datos...</p>
-                                                        <div class="linear-activity">
-                                                            <div class="indeterminate"></div>
-                                                        </div>
-                                                    </th>
-                                                </tr>
-                                                <tr v-else v-for="invitados in datosPaginados2" :key="invitados.id">
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
-                                                        {{invitados.nombreC}}
-                                                    </td>
-                                                    <td v-else class="custom-data-table-color text-uppercase">
-                                                        {{invitados.nombreC}}
-                                                    </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
-                                                        {{invitados.dependencia}}
-                                                    </td>
-                                                    <td v-else class="custom-data-table-color text-uppercase">
-                                                        {{invitados.dependencia}}
-                                                    </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
-                                                        {{invitados.area}}
-                                                    </td>
-                                                    <td v-else class="custom-data-table-color text-uppercase">
-                                                        {{invitados.area}}
-                                                    </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
-                                                        {{invitados.cargo}}
-                                                    </td>
-                                                    <td v-else class="custom-data-table-color text-uppercase">
-                                                        {{invitados.cargo}}
-                                                    </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
-                                                        {{invitados.zona}}
-                                                    </td>
-                                                    <td v-else class="custom-data-table-color text-uppercase">
-                                                        {{invitados.zona}}
-                                                    </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
-                                                        {{invitados.confirmado}}
-                                                    </td>
-                                                    <td v-else class="custom-data-table-color text-uppercase">
-                                                        {{invitados.confirmado}}
-                                                    </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
-                                                        {{invitados.verificado}}
-                                                    </td>
-                                                    <td v-else class="custom-data-table-color text-uppercase">
-                                                        {{invitados.verificado}}
-                                                    </td>
-                                                    <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
-                                                        {{invitados.hora}}
-                                                    </td>
-                                                    <td v-else class="custom-data-table-color text-uppercase">
-                                                        {{invitados.hora}}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table custom-border-table">
+                                                <thead class="headers-table">
+                                                    <tr>
+                                                        <th class="custom-title-table">Nombre</th>
+                                                        <th class="custom-title-table">Dependencia</th>
+                                                        <th class="custom-title-table">Area</th>
+                                                        <th class="custom-title-table">Cargo</th>
+                                                        <th class="custom-title-table">Zona</th>
+                                                        <th class="custom-title-table">Confirmo</th>
+                                                        <th class="custom-title-table">Ingreso</th>
+                                                        <th class="custom-title-table">Hora de ingreso</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-if="loading2">
+                                                        <th colspan="7">
+                                                            <p class="text-center text-loading-data-table">Cargando datos...</p>
+                                                            <div class="linear-activity">
+                                                                <div class="indeterminate"></div>
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                    <tr v-else v-for="invitados in datosPaginados2" :key="invitados.id">
+                                                        <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
+                                                            {{invitados.nombreC}}
+                                                        </td>
+                                                        <td v-else class="custom-data-table-color text-uppercase">
+                                                            {{invitados.nombreC}}
+                                                        </td>
+                                                        <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
+                                                            {{invitados.dependencia}}
+                                                        </td>
+                                                        <td v-else class="custom-data-table-color text-uppercase">
+                                                            {{invitados.dependencia}}
+                                                        </td>
+                                                        <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
+                                                            {{invitados.area}}
+                                                        </td>
+                                                        <td v-else class="custom-data-table-color text-uppercase">
+                                                            {{invitados.area}}
+                                                        </td>
+                                                        <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
+                                                            {{invitados.cargo}}
+                                                        </td>
+                                                        <td v-else class="custom-data-table-color text-uppercase">
+                                                            {{invitados.cargo}}
+                                                        </td>
+                                                        <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
+                                                            {{invitados.zona}}
+                                                        </td>
+                                                        <td v-else class="custom-data-table-color text-uppercase">
+                                                            {{invitados.zona}}
+                                                        </td>
+                                                        <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
+                                                            {{invitados.confirmado}}
+                                                        </td>
+                                                        <td v-else class="custom-data-table-color text-uppercase">
+                                                            {{invitados.confirmado}}
+                                                        </td>
+                                                        <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
+                                                            {{invitados.verificado}}
+                                                        </td>
+                                                        <td v-else class="custom-data-table-color text-uppercase">
+                                                            {{invitados.verificado}}
+                                                        </td>
+                                                        <td v-if="invitados.verificado == 'si'" class="custom-data-table text-uppercase">
+                                                            {{invitados.hora}}
+                                                        </td>
+                                                        <td v-else class="custom-data-table-color text-uppercase">
+                                                            {{invitados.hora}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div>
                                         <template v-if="invitados && invitados.length > 0">

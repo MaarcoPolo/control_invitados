@@ -1,12 +1,11 @@
 <template>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="card-titulo-page mt-2">
+            <div class="card-titulo-page mt-8">
                 <img class="icono-page" src="../../../public/icons/ventanilla.png" alt="">
                 <p>Secciones</p>
             </div>
         </div>
-
         <div class="container mt-6">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-12">
@@ -29,12 +28,12 @@
                         Nueva Seccion
                     </v-btn>
                 </div>
-                    <div class="col-md-5 col-12"></div>
+                    <div class="col-md-5 col-12 mt-4"></div>
                     <div class="col-md-4 col-12">
                         <div class="principal-div-custom-select">
-                            <div class="second-div-custom-select">
+                            <!-- <div class="second-div-custom-select"> -->
                                 <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
             </div>
@@ -92,91 +91,93 @@
             <div class="my-2 mb-12 py-6">
                 <div class="">
                     <div class="row justify-content-between">
-                        <table class="table custom-border-table">
-                            <thead class="headers-table">
-                                <tr>
-                                    <th class="custom-title-table">#</th>
-                                    <th class="custom-title-table">Nombre</th>
-                                    <th class="custom-title-table">Color</th>
-                                    <th class="custom-title-table">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="loading">
-                                    <th colspan="7">
-                                        <p class="text-center text-loading-data-table">Cargando datos...</p>
-                                        <div class="linear-activity">
-                                            <div class="indeterminate"></div>
-                                        </div>
-                                    </th>
-                                </tr>
-                                <tr v-else v-for="seccion in datosPaginados" :key="seccion.id">
-                                    <td class="custom-data-table">
-                                        {{seccion.numero_registro}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{seccion.nombre}}
-                                    </td>
-                                    <!-- <td :class="seccion.color == '#D91729' ? 'color_zona_uno' : seccion.color == '#E6ED02' ? 'color_zona_dos' : seccion.color == '#5AD235' ? 'color_zona_tres' : seccion.color == '#87202D' ? 'color_zona_cuatro' : seccion.color == '#DFAD0C' ? 'color_zona_cinco' : 'color_zona_seis'"> -->
-                                    <td :bgcolor="seccion.color"></td>
-                                    <!-- </td> -->
-                                    <!-- <td :class="seccion.color">                                        
-                                    </td> -->
-                                    <!-- <td style="background-color: #E6ED02">
-                                        git 
-                                    </td> -->
-                                    <td>
-                                        <div class="text-center row justify-content-center">
-                                            <div>
-                                                <v-icon
-                                                    @click="abrirModalEditarSeccion(seccion)"
-                                                    class="mr-1"
-                                                    >
-                                                    mdi-text-box-edit-outline
-                                                </v-icon>
-
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Editar Seccion</span>
-                                                </v-tooltip>
+                        <div class="table-responsive">
+                            <table class="table custom-border-table">
+                                <thead class="headers-table">
+                                    <tr>
+                                        <th class="custom-title-table">#</th>
+                                        <th class="custom-title-table">Nombre</th>
+                                        <th class="custom-title-table">Color</th>
+                                        <th class="custom-title-table">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="loading">
+                                        <th colspan="7">
+                                            <p class="text-center text-loading-data-table">Cargando datos...</p>
+                                            <div class="linear-activity">
+                                                <div class="indeterminate"></div>
                                             </div>
-                                            <!-- <div>
-                                                <v-icon
-                                                    @click="abrirModalNuevoInvitado(evento)"
-                                                    class="ml-1"
-                                                    >
-                                                    mdi-account-plus
-                                                </v-icon>
+                                        </th>
+                                    </tr>
+                                    <tr v-else v-for="seccion in datosPaginados" :key="seccion.id">
+                                        <td class="custom-data-table">
+                                            {{seccion.numero_registro}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{seccion.nombre}}
+                                        </td>
+                                        <!-- <td :class="seccion.color == '#D91729' ? 'color_zona_uno' : seccion.color == '#E6ED02' ? 'color_zona_dos' : seccion.color == '#5AD235' ? 'color_zona_tres' : seccion.color == '#87202D' ? 'color_zona_cuatro' : seccion.color == '#DFAD0C' ? 'color_zona_cinco' : 'color_zona_seis'"> -->
+                                        <td :bgcolor="seccion.color"></td>
+                                        <!-- </td> -->
+                                        <!-- <td :class="seccion.color">                                        
+                                        </td> -->
+                                        <!-- <td style="background-color: #E6ED02">
+                                            git 
+                                        </td> -->
+                                        <td>
+                                            <div class="text-center row justify-content-center">
+                                                <div>
+                                                    <v-icon
+                                                        @click="abrirModalEditarSeccion(seccion)"
+                                                        class="mr-1"
+                                                        >
+                                                        mdi-text-box-edit-outline
+                                                    </v-icon>
 
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Agregar Invitado</span>
-                                                </v-tooltip>
-                                            </div> -->
-                                            <div>
-                                                <v-icon
-                                                    @click="eliminarSeccion(seccion)"
-                                                    class="ml-1"
-                                                    >
-                                                    mdi-trash-can
-                                                </v-icon>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Editar Seccion</span>
+                                                    </v-tooltip>
+                                                </div>
+                                                <!-- <div>
+                                                    <v-icon
+                                                        @click="abrirModalNuevoInvitado(evento)"
+                                                        class="ml-1"
+                                                        >
+                                                        mdi-account-plus
+                                                    </v-icon>
 
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Eliminar Seccion</span>
-                                                </v-tooltip>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Agregar Invitado</span>
+                                                    </v-tooltip>
+                                                </div> -->
+                                                <div>
+                                                    <v-icon
+                                                        @click="eliminarSeccion(seccion)"
+                                                        class="ml-1"
+                                                        >
+                                                        mdi-trash-can
+                                                    </v-icon>
+
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Eliminar Seccion</span>
+                                                    </v-tooltip>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div>
                         <template v-if="secciones && secciones.length > 0">

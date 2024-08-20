@@ -5,10 +5,32 @@
 .custom-button {
     padding: auto;
     margin: auto;
-    font-size: 1.5rem;
+    font-weight: 700;
     border-radius: 0;
     border-right: .5rem solid #8c92bc;
-    font-weight: 700;
+
+    // Tamaño de fuente para pantallas grandes
+    font-size: 1.5rem;
+
+    @media (max-width: 1200px) {
+        font-size: 1.4rem; // Ajuste para pantallas medianas
+    }
+
+    @media (max-width: 992px) {
+        font-size: 1.3rem; // Ajuste para pantallas medianas
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.2rem; // Ajuste para tablets
+    }
+
+    @media (max-width: 576px) {
+        font-size: 1.1rem; // Ajuste para pantallas pequeñas
+    }
+
+    @media (max-width: 400px) {
+        font-size: 1rem; // Ajuste para pantallas muy pequeñas
+    }
 }
 /** Fin Custom Button New */
 
@@ -50,12 +72,36 @@
 /** Inicio Custom Card Subtitle */
 .custom-subtitle p {
     background-color: v.$morado_m2;
-    width: 40rem;
+    width: 40rem; // Ancho predeterminado
     margin: auto;
     color: white;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 2rem; // Tamaño de fuente predeterminado
+
+    // Consulta para dispositivos de tamaño pequeño
+    @media (max-width: 1200px) {
+        width: 35rem;
+        font-size: 1.8rem;
+    }
+
+    // Consulta para dispositivos de tamaño mediano
+    @media (max-width: 992px) {
+        width: 30rem;
+        font-size: 1.6rem;
+    }
+
+    // Consulta para dispositivos de tamaño pequeño (tabletas en orientación vertical)
+    @media (max-width: 768px) {
+        width: 25rem;
+        font-size: 1.4rem;
+    }
+
+    // Consulta para dispositivos móviles
+    @media (max-width: 576px) {
+        width: 20rem;
+        font-size: 1.2rem;
+    }
 }
 
 .custom-border {

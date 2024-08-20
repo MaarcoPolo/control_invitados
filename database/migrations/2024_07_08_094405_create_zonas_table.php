@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('color');
+            $table->integer('evento_id')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

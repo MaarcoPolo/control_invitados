@@ -1,14 +1,14 @@
 <template>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="card-titulo-page mt-2">
+            <div class="card-titulo-page mt-8">
                 <img class="icono-page" src="../../../public/icons/ventanilla.png" alt="">
                 <p>Invitados</p>
             </div>
         </div>
-        <div class="container mt-16">
+        <div class="container mt-6">
             <!-- INICIO BOTON NUEVO Y BUSCADOR -->
-            <div class="row justify-content-center mt-6">
+            <div class="row justify-content-center">
                 <div class="col-md-8 col-12">
                     <div class="div-custom-input-form">
                         <label for="select_evento">Seleccione un evento:</label>
@@ -18,30 +18,32 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-flex-start mt-6">
-                <div class="col-md-3 col-12">
+            <div class="row justify-content-between mt-4">
+                <div class="col-md-3 col-12 mt-4">
                     <v-btn
-                        class="custom-button mr-2"
+                        class="custom-button"
+                        block
                         color="#c4f45d"
                         @click="abrirNuevoInvitado()"
                         >
                         Nuevo Invitado
                     </v-btn>
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-5 col-12 mt-4">
                     <v-btn
-                        class="custom-button mr-2"
+                        class="custom-button"
                         color="#c4f45d"
+                        block
                         @click="exportarExcel()"
                         >
                         Exportar Datos
                     </v-btn>
                 </div>
-                <div class="col-md-6 col-12">
+                <div class="col-md-4 col-12 mt-4">
                     <div class="principal-div-custom-select">
-                        <div class="second-div-custom-select">
+                        <!-- <div class="second-div-custom-select"> -->
                             <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -196,112 +198,114 @@
             <div class="my-2 mb-12 py-6">
                 <div class="">
                     <div class="row justify-content-between">
-                        <table class="table custom-border-table">
-                            <thead class="headers-table">
-                                <tr>
-                                    <th class="custom-title-table">Id</th>
-                                    <th class="custom-title-table">Nombre</th>
-                                    <th class="custom-title-table">Dependencia</th>
-                                    <th class="custom-title-table">Área</th>
-                                    <th class="custom-title-table">Confirmado</th>
-                                    <th class="custom-title-table">Sección</th>
-                                    <th class="custom-title-table">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="loading">
-                                    <th colspan="7">
-                                        <p class="text-center text-loading-data-table">Cargando datos...</p>
-                                        <div class="linear-activity">
-                                            <div class="indeterminate"></div>
-                                        </div>
-                                    </th>
-                                </tr>
-                                <tr v-else v-for="invitado in datosPaginados" :key="invitado.id">
-                                    <td class="custom-data-table">
-                                        {{invitado.numero_registro}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{invitado.nombreC}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{invitado.dependencia}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{invitado.area}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{invitado.confirmo}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{invitado.zona}}
-                                    </td>
-                                    <td>
-                                        <div class="text-center row justify-content-center">
-                                            <div>
-                                                <v-icon
-                                                    @click="abrirEditarInvitado(invitado)"
-                                                    class="mr-1"
-                                                    >
-                                                    mdi-text-box-edit-outline
-                                                </v-icon>
+                        <div class="table-responsive">
+                            <table class="table custom-border-table">
+                                <thead class="headers-table">
+                                    <tr>
+                                        <th class="custom-title-table">Id</th>
+                                        <th class="custom-title-table">Nombre</th>
+                                        <th class="custom-title-table">Dependencia</th>
+                                        <th class="custom-title-table">Área</th>
+                                        <th class="custom-title-table">Confirmado</th>
+                                        <th class="custom-title-table">Sección</th>
+                                        <th class="custom-title-table">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="loading">
+                                        <th colspan="7">
+                                            <p class="text-center text-loading-data-table">Cargando datos...</p>
+                                            <div class="linear-activity">
+                                                <div class="indeterminate"></div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr v-else v-for="invitado in datosPaginados" :key="invitado.id">
+                                        <td class="custom-data-table">
+                                            {{invitado.numero_registro}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{invitado.nombreC}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{invitado.dependencia}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{invitado.area}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{invitado.confirmo}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{invitado.zona}}
+                                        </td>
+                                        <td>
+                                            <div class="text-center row justify-content-center">
+                                                <div>
+                                                    <v-icon
+                                                        @click="abrirEditarInvitado(invitado)"
+                                                        class="mr-1"
+                                                        >
+                                                        mdi-text-box-edit-outline
+                                                    </v-icon>
 
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Editar Invitado</span>
-                                                </v-tooltip>
-                                            </div>
-                                            <div>
-                                                <v-icon
-                                                    @click="descargarCodigoInvitado(invitado)"
-                                                    class="ml-1 mr-1"
-                                                    >
-                                                    mdi-qrcode
-                                                </v-icon>
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Descargar Código</span>
-                                                </v-tooltip>
-                                            </div>
-                                            <div>
-                                                <v-icon
-                                                    @click="enviarCorreo(invitado)"
-                                                    class="ml-1 mr-1"
-                                                    >
-                                                    mdi-email-fast-outline
-                                                </v-icon>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Editar Invitado</span>
+                                                    </v-tooltip>
+                                                </div>
+                                                <div>
+                                                    <v-icon
+                                                        @click="descargarCodigoInvitado(invitado)"
+                                                        class="ml-1 mr-1"
+                                                        >
+                                                        mdi-qrcode
+                                                    </v-icon>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Descargar Código</span>
+                                                    </v-tooltip>
+                                                </div>
+                                                <div>
+                                                    <v-icon
+                                                        @click="enviarCorreo(invitado)"
+                                                        class="ml-1 mr-1"
+                                                        >
+                                                        mdi-email-fast-outline
+                                                    </v-icon>
 
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Enviar correo</span>
-                                                </v-tooltip>
-                                            </div>
-                                            <div>
-                                                <v-icon
-                                                    @click="eliminarInvitado(invitado)"
-                                                    class="ml-1"
-                                                    >
-                                                    mdi-trash-can
-                                                </v-icon>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Enviar correo</span>
+                                                    </v-tooltip>
+                                                </div>
+                                                <div>
+                                                    <v-icon
+                                                        @click="eliminarInvitado(invitado)"
+                                                        class="ml-1"
+                                                        >
+                                                        mdi-trash-can
+                                                    </v-icon>
 
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Eliminar Invitado</span>
-                                                </v-tooltip>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Eliminar Invitado</span>
+                                                    </v-tooltip>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div>
                         <template v-if="invitados && invitados.length > 0">

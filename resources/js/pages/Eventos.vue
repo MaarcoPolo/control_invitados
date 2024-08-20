@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="card-titulo-page mt-2">
+            <div class="card-titulo-page mt-8">
                 <img class="icono-page" src="../../../public/icons/ventanilla.png" alt="">
                 <p>Eventos</p>
             </div>
@@ -19,12 +19,12 @@
                         Nuevo Evento
                     </v-btn>
                 </div>
-                <div class="col-md-5 col-12"></div>
+                <div class="col-md-5 col-12 mt-6"></div>
                     <div class="col-md-4 col-12">
                         <div class="principal-div-custom-select">
-                            <div class="second-div-custom-select">
+                            <!-- <div class="second-div-custom-select"> -->
                                 <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
             </div>
@@ -94,7 +94,8 @@
                                     <div class="col-md-12 col-12">
                                         <div class="div-custom-input-form">
                                             <label for="input_ubi">Ubicación en Google Maps:</label>
-                                            <input id="input_ubi" type="text" class="form-control" v-model="evento.ubicacion">
+                                            <input id="input_ubi" type="url" class="form-control" v-model="v$.evento.ubicacion.$model">
+                                            <p class="text-validation-red" v-if="v$.evento.ubicacion.$error">*No es un URL valido</p>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +109,6 @@
                                                 accept="image/*"
                                                 variant="outlined">
                                             </v-file-input>
-                                            <!-- <input id="input_logo" accept="image/*" type="file" class="form-control" v-model="evento.logo"> -->
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
@@ -120,7 +120,6 @@
                                                 accept="image/*"
                                                 variant="outlined">
                                             </v-file-input>
-                                            <!-- <input id="input_fondo" accept="image/*" type="file" class="form-control" v-model="evento.fondo"> -->
                                         </div>
                                     </div>
                                 </div>
@@ -285,128 +284,130 @@
             <div class="my-2 mb-12 py-6">
                 <div class="">
                     <div class="row justify-content-between">
-                        <table class="table custom-border-table">
-                            <thead class="headers-table">
-                                <tr>
-                                    <th class="custom-title-table">#</th>
-                                    <th class="custom-title-table">Nombre</th>
-                                    <th class="custom-title-table">Organizador</th>
-                                    <th class="custom-title-table">Sede</th>
-                                    <th class="custom-title-table">Fecha inicial</th>
-                                    <th class="custom-title-table">Fecha final</th>
-                                    <th class="custom-title-table">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="loading">
-                                    <th colspan="7">
-                                        <p class="text-center text-loading-data-table">Cargando datos...</p>
-                                        <div class="linear-activity">
-                                            <div class="indeterminate"></div>
-                                        </div>
-                                    </th>
-                                </tr>
-                                <tr v-else v-for="evento in datosPaginados" :key="evento.id">
-                                    <td class="custom-data-table">
-                                        {{evento.numero_registro}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{evento.nombre}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{evento.organizador}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{evento.sede}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{evento.fecha_i}}
-                                    </td>
-                                    <td class="custom-data-table text-uppercase">
-                                        {{evento.fecha_f}}
-                                    </td>
-                                    <td>
-                                        <div class="text-center row justify-content-center">
-                                            <div>
-                                                <v-icon
-                                                    @click="abrirEditarEvento(evento)"
-                                                    class="mr-1"
-                                                    >
-                                                    mdi-text-box-edit-outline
-                                                </v-icon>
-
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Editar Evento</span>
-                                                </v-tooltip>
+                        <div class="table-responsive">
+                            <table class="table custom-border-table">
+                                <thead class="headers-table">
+                                    <tr>
+                                        <th class="custom-title-table">#</th>
+                                        <th class="custom-title-table">Nombre</th>
+                                        <th class="custom-title-table">Organizador</th>
+                                        <th class="custom-title-table">Sede</th>
+                                        <th class="custom-title-table">Fecha inicial</th>
+                                        <th class="custom-title-table">Fecha final</th>
+                                        <th class="custom-title-table">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="loading">
+                                        <th colspan="7">
+                                            <p class="text-center text-loading-data-table">Cargando datos...</p>
+                                            <div class="linear-activity">
+                                                <div class="indeterminate"></div>
                                             </div>
-                                            <div>
-                                                <v-icon
-                                                    @click="abrirNuevoInvitado(evento)"
-                                                    class="ml-1"
-                                                    >
-                                                    mdi-account-plus
-                                                </v-icon>
-
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Agregar Invitado</span>
-                                                </v-tooltip>
-                                            </div>
-                                            <div>
-                                                <v-icon
-                                                    @click="abrirModalExcel(evento)"
-                                                    class="ml-1"
-                                                    >
-                                                    mdi-account-arrow-down-outline                                          
+                                        </th>
+                                    </tr>
+                                    <tr v-else v-for="evento in datosPaginados" :key="evento.id">
+                                        <td class="custom-data-table">
+                                            {{evento.numero_registro}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{evento.nombre}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{evento.organizador}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{evento.sede}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{evento.fecha_i}}
+                                        </td>
+                                        <td class="custom-data-table text-uppercase">
+                                            {{evento.fecha_f}}
+                                        </td>
+                                        <td>
+                                            <div class="text-center row justify-content-center">
+                                                <div>
+                                                    <v-icon
+                                                        @click="abrirEditarEvento(evento)"
+                                                        class="mr-1"
+                                                        >
+                                                        mdi-text-box-edit-outline
                                                     </v-icon>
 
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">subir invitados</span>
-                                                </v-tooltip>
-                                            </div>
-                                            <div>
-                                                <v-icon
-                                                    @click="eliminarEvento(evento)"
-                                                    class="ml-1"
-                                                    >
-                                                    mdi-trash-can
-                                                </v-icon>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Editar Evento</span>
+                                                    </v-tooltip>
+                                                </div>
+                                                <div>
+                                                    <v-icon
+                                                        @click="abrirNuevoInvitado(evento)"
+                                                        class="ml-1"
+                                                        >
+                                                        mdi-account-plus
+                                                    </v-icon>
 
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Eliminar Evento</span>
-                                                </v-tooltip>
-                                            </div>
-                                            <div>
-                                                <v-icon
-                                                    @click="enviarCorreos(evento)"
-                                                    class="ml-1"
-                                                    >
-                                                    mdi-email-arrow-right
-                                                </v-icon>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Agregar Invitado</span>
+                                                    </v-tooltip>
+                                                </div>
+                                                <div>
+                                                    <v-icon
+                                                        @click="abrirModalExcel(evento)"
+                                                        class="ml-1"
+                                                        >
+                                                        mdi-account-arrow-down-outline                                          
+                                                        </v-icon>
 
-                                                <v-tooltip
-                                                    activator="parent"
-                                                    location="bottom"
-                                                    >
-                                                    <span style="font-size: 15px;">Enviar Invitaciones</span>
-                                                </v-tooltip>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">subir invitados</span>
+                                                    </v-tooltip>
+                                                </div>
+                                                <div>
+                                                    <v-icon
+                                                        @click="eliminarEvento(evento)"
+                                                        class="ml-1"
+                                                        >
+                                                        mdi-trash-can
+                                                    </v-icon>
+
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Eliminar Evento</span>
+                                                    </v-tooltip>
+                                                </div>
+                                                <div>
+                                                    <v-icon
+                                                        @click="enviarCorreos(evento)"
+                                                        class="ml-1"
+                                                        >
+                                                        mdi-email-arrow-right
+                                                    </v-icon>
+
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="bottom"
+                                                        >
+                                                        <span style="font-size: 15px;">Enviar Invitaciones</span>
+                                                    </v-tooltip>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div>
                         <template v-if="eventos && eventos.length > 0">
@@ -751,25 +752,25 @@
     import { defineComponent } from 'vue';
     import { errorSweetAlert, successSweetAlert } from "../helpers/sweetAlertGlobals"
     import useValidate from '@vuelidate/core'
-    import { required, email } from '@vuelidate/validators'
+    import { required, email, url } from '@vuelidate/validators'
 
     export default defineComponent({
         name: 'eventos',
         data () {
             return { 
                 archivo: {
-                    evento_id: '',
-                    zona_id: '',
+                    evento_id: null,
+                    zona_id: null,
                     archivo: ''
                 },
                 notificacion: {
-                    evento_id: '',
+                    evento_id: null,
                 },
                 nuevo: 0,
                 panel_evento: [],
                 showNav: false,
                 evento: {
-                    id: 0,
+                    id: null,
                     nombre: '',
                     organizador:'',
                     sede: '',
@@ -835,7 +836,10 @@
                 panel_invitado: [],
                 panel_invitado: false,
                 panel_evento: false,
-                secciones: ''
+                secciones: '',
+                peticion: {
+                    evento_id: null
+                }
             }
         },
         setup() {
@@ -854,7 +858,11 @@
                         },
                         sede: {
                             required
+                        },
+                        ubicacion:{
+                            url
                         }
+
                     },
                     invitado:{
                         nombre:{
@@ -1094,6 +1102,14 @@
                     confirmButtonText: 'Si, guardar',
                     cancelButtonText: 'Cancelar',
                     showLoaderOnConfirm: true,
+                    customClass: {
+                    container: 'swal2-container',
+                    popup: 'swal2-popup',
+                    title: 'swal2-title',
+                    content: 'swal2-content',
+                    actions: 'swal2-actions',
+                    confirmButton: 'swal2-styled'
+                },
                     preConfirm: async () => {
                         try {
                                 // this.loading = true
@@ -1147,7 +1163,11 @@
                         preConfirm: async () => {
                             try {
 
-                                let response = await axios.post('/api/eventos/actualizar-evento', this.evento)
+                                let response = await axios.post('/api/eventos/actualizar-evento', this.evento,{
+                                    headers: {
+                                        'Content-Type':'multipart/form-data'
+                                    }
+                                })
                                 return response
                             } catch (error) {
                                 errorSweetAlert('Ocurrió un error al actualizar los datos del evento.')
@@ -1218,12 +1238,12 @@
                 this.invitado.evento_id = evento.id
                 this.panel_evento = false
                 this.v$.$reset()
-                this.BuscarSecciones(this.invitado)
+                this.BuscarSecciones('invitado')
             },
             cerrarNuevoInvitado(){
                 this.panel_invitado = []
                 this.panel_invitado = false
-                this.invitado.id = ''
+                this.invitado.id = null
                 this.invitado.nombre =''
                 this.invitado.apellido_p =''
                 this.invitado.apellido_m =''
@@ -1239,6 +1259,23 @@
                 this.invitado.seccion = ''
                 this.v$.$reset()
 
+            },
+            limpiarPanelInvitado(){
+                this.invitado.id = nulL
+                this.invitado.nombre =''
+                this.invitado.apellido_p =''
+                this.invitado.apellido_m =''
+                this.invitado.dependencia =''
+                this.invitado.area =''
+                this.invitado.telefono = ''
+                this.invitado.email = ''
+                this.invitado.estado =''
+                this.invitado.municipio = ''
+                this.invitado.seccion = ''
+                this.invitado.estacionamiento = ''
+                this.invitado.cargo = ''
+                this.invitado.seccion = ''
+                this.v$.$reset()
             },
             async guardarNuevoInvitado() {
                 const isFormCorrect = await this.v$.invitado.$validate()              
@@ -1268,10 +1305,8 @@
                                 if (result.value.data.status === "ok") {
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setInvitados', result.value.data.invitados)
+                                    this.limpiarPanelInvitado()
                                     this.loading2 = false
-                                    this.getDataPagina2(1)
-                                    this.mostrar2 = true
-                                    this.cerrarNuevoInvitado()
                                 } else if(result.value.data.status==="exists"){
                                     warningSweetAlert(result.value.data.message)
                                     this.loading2 = false
@@ -1379,9 +1414,7 @@
                     }}).then((response) => {
                         if(response.status === 200){
                             if(response.data.status === "ok"){
-                                this.archivo.archivo = ''
-                                this.archivo.evento_id = ''
-                                this.archivo.zona_id = ''
+                                successSweetAlert('Se subio el archivo correctamente')
                                 this.cerrarDialogExcel()
                             }
                             else {
@@ -1391,7 +1424,6 @@
                         else {
                         errorSweetAlert('Ocurrió un error al obtener los invitados')
                         }
-                        successSweetAlert(response.data.message)
                 }).catch(function(){
                     errorSweetAlert('Ocurrió un error al agregar los invitados.')
                 });
@@ -1399,9 +1431,13 @@
             abrirModalExcel(evento){
                 this.archivo.evento_id = evento.id
                 this.dialogExcel = true
+                this.BuscarSecciones('archivo')
             },
             cerrarDialogExcel(){
                 this.dialogExcel = false
+                this.archivo.archivo = ''
+                this.archivo.evento_id = null
+                this.archivo.zona_id = ''
             },
 
             async enviarCorreos(evento) {  
@@ -1433,10 +1469,18 @@
                 }
                 this.loading = false
             },
-            async BuscarSecciones() {
+            async BuscarSecciones(ban){
+                console.log(ban)
+
+                if(ban == 'archivo'){
+                    this.peticion.evento_id = this.archivo.evento_id
+                
+                }else{
+                    this.peticion.evento_id = this.invitado.evento_id
+                }
                 this.loading = true
                 try {                   
-                    let response = await axios.post('/api/secciones/buscar-secciones', this.invitado)
+                    let response = await axios.post('/api/secciones/buscar-secciones', this.peticion)
                     if (response.status === 200) {
                         if (response.data.status === "ok") {
                             this.secciones = response.data.secciones

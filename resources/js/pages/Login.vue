@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-12 form-group mt-6 mb-12">
                     <button v-if="!loading" class="btn" type="submit" @click="login()">Entrar</button>
-                    <span v-else class="loader-ventanilla"></span>
+                    <span v-else class="loader-entrar"></span>
                 </div>
             </form>
         </div>

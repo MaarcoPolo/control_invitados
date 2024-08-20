@@ -12,23 +12,27 @@
                 </div>
                 <div class="separador-mobile">
                     <h1 class="title-head"><span>Control de eventos</span></h1>
+                    <div class="separador-mobile">
+                        <button class="menu-toggle" @click="toggleMenu">
+                            <span class="hamburger-icon"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <nav class="custom-navbar">
+            <div class="custom-navbar">
                 <!-- Botón de menú hamburguesa -->
-                <button class="menu-toggle" @click="toggleMenu">
-                    <span class="hamburger-icon"></span>
-                </button>
                 <ul class="custom-ul-navbar" :class="{ 'active': menuOpen }">
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irInicio()">Inicio</li>
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irEventos()">Eventos</li>
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irInvitado()">Invitados</li>
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios()">Usuarios</li>
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irZonas()">Secciones</li>
-                    <li v-if="user.user.tipo_usuario_id == 1" @click="irIngresados()">Ingresos</li>
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irInicio(); closeMenu()">Inicio</li>
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irEventos(); closeMenu()">Eventos</li>
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irInvitado(); closeMenu()">Invitados</li>
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irUsuarios(); closeMenu()">Usuarios</li>
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irZonas(); closeMenu()">Secciones</li>
+                    <li v-if="user.user.tipo_usuario_id == 1" @click="irIngresados(); closeMenu()">Ingresos</li>
                     <li @click="logout()">Cerrar Sesión</li>
                 </ul>
-            </nav>
+                
+                
+            </div>
         </header>
         <main class="content">
             <router-view></router-view>
@@ -47,7 +51,6 @@
 
 <script>
     import { defineComponent } from "vue";
-    import { errorSweetAlert, successSweetAlert } from "../helpers/sweetAlertGlobals"
 
     export default defineComponent({
         name: 'app',
@@ -106,6 +109,22 @@
             toggleMenu() {
                 this.menuOpen = !this.menuOpen;
             },
+            closeMenu() {
+                this.menuOpen = false;
+            },
+            handleClickOutside(event) {
+                const menuToggle = this.$el.querySelector('.menu-toggle');
+                const menu = this.$el.querySelector('.custom-ul-navbar');
+                if (this.menuOpen && !menuToggle.contains(event.target) && !menu.contains(event.target)) {
+                    this.closeMenu();
+                }
+            },
+            mounted() {
+                document.addEventListener('click', this.handleClickOutside);
+            },
+            beforeUnmount() {
+                document.removeEventListener('click', this.handleClickOutside);
+            }
         }
     })
 </script>

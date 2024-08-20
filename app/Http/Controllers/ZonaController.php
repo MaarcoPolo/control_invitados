@@ -307,8 +307,13 @@ class ZonaController extends Controller
     }
     public function BusquedaSeccion(Request $request){
         try{
-                
-            $zonas = Zona::where('status',1)->where('evento_id',$request->evento_id)->get();
+                if($request->evento_id){
+                    $zonas = Zona::where('status',1)->where('evento_id',$request->evento_id)->get();
+
+                }else{
+                    $zonas = Zona::where('status',1)->where('evento_id',$request->id)->get();
+
+                }
 
             $array_zonas = array();
             $cont = 1;

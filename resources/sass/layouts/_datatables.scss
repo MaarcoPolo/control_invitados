@@ -193,3 +193,18 @@
     width: 90%;
   }
 }
+/* Estilos para la tabla */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+      overflow-x: auto;
+  }
+  .table {
+      width: 100%;
+      min-width: 600px; /* Ajustar según la tabla */
+  }
+}

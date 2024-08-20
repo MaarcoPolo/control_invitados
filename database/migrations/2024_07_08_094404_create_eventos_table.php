@@ -21,8 +21,8 @@ return new class extends Migration
             $table->date('fecha_final');
             $table->time('horario');
             $table->text('ubicacion');
-            $table->string('logo');
-            $table->string('fondo');
+            $table->string('logo')->nullable();
+            $table->string('fondo')->nullable();
             $table->boolean('status')->default(1);
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
