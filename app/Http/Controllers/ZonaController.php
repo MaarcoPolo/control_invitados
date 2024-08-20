@@ -189,7 +189,7 @@ class ZonaController extends Controller
     public function SeccionesConteo(Request $request){
         try{
 
-            $zonas = Zona::where('status',1)->get();
+            $zonas = Zona::where('status',1)->where('evento_id',$request->evento_id)->get();
             
             $array_zonas = array();
             foreach($zonas as $zona){

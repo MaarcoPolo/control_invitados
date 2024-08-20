@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             TipoUsuarioSeeder::class,
-            UserSeeder::class,
-            ZonaSeeder::class
+            UserSeeder::class
+            // ZonaSeeder::class
         ]);
     }
 }
