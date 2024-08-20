@@ -83,52 +83,6 @@
                                     <div>
                                         <template v-if="secciones && secciones.length > 0">
                                             <div class="row justify-content-between container">
-                                                <!-- <div>
-                                                    <p class="custom-text-show-results mt-2">
-                                                        Mostrando
-                                                        <span>{{from}}</span>
-                                                        -
-                                                        <span>{{to}}</span>
-                                                        de
-                                                        <span>{{secciones.length}}</span>
-                                                        resultados
-                                                    </p>
-                                                </div> -->
-                                                <!-- <div>
-                                                    <nav aria-label="Page navigation example">
-                                                        <ul class="pagination pagination-lg justify-content-center">
-                                                            <li class="page-item cursor-paginator" @click="getFirstPage()">
-                                                                <a class="page-link" aria-label="Previous">
-                                                                    <span aria-hidden="true">&lt;&lt;</span>
-                                                                    <span class="sr-only">First</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="page-item cursor-paginator" @click="getPreviousPage()">
-                                                                <a class="page-link" aria-label="Previous">
-                                                                    <span aria-hidden="true">&lt;</span>
-                                                                    <span class="sr-only">Previous</span>
-                                                                </a>
-                                                            </li>
-                                                            <li v-for="pagina in pages" @click="getDataPagina(pagina), setCurrentPage(pagina)" :key="pagina" class="page-item cursor-paginator" :class="isActive(pagina)">
-                                                                <a class="page-link">
-                                                                    {{pagina}}
-                                                                </a>
-                                                            </li>
-                                                            <li class="page-item cursor-paginator" @click="getNextPage()">
-                                                                <a class="page-link" aria-label="Next">
-                                                                    <span aria-hidden="true">&gt;</span>
-                                                                    <span class="sr-only">Next</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="page-item cursor-paginator" @click="getLastPage()">
-                                                                <a class="page-link" aria-label="Next">
-                                                                    <span aria-hidden="true">&gt;&gt;</span>
-                                                                    <span class="sr-only">Last</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </nav>
-                                                </div> -->
                                             </div>
                                         </template>
                                         <template v-else-if="!loading">
@@ -309,9 +263,7 @@
 
 <script>
     import { defineComponent } from 'vue';
-    import { errorSweetAlert, successSweetAlert } from "../helpers/sweetAlertGlobals"
-    // import { onUnmounted } from "vue";
-
+    import { errorSweetAlert} from "../helpers/sweetAlertGlobals"
 
     export default defineComponent({
         name: 'ingresados',
@@ -641,7 +593,6 @@
             },
             startAutoReload(interval) {
                 this.reloadTimer = setInterval(() => {
-                    // window.location.reload();
                     this.SeccionesConteo()
                 }, interval)
             },

@@ -28,12 +28,10 @@
                         Nueva Seccion
                     </v-btn>
                 </div>
-                    <div class="col-md-5 col-12 mt-4"></div>
+                <div class="col-md-5 col-12 mt-4"></div>
                     <div class="col-md-4 col-12">
                         <div class="principal-div-custom-select">
-                            <!-- <div class="second-div-custom-select"> -->
-                                <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
-                            <!-- </div> -->
+                            <input v-model="buscar" placeholder="Buscar..." type="search" autocomplete="off" class="form-control custom-input">
                         </div>
                     </div>
             </div>
@@ -117,14 +115,7 @@
                                         <td class="custom-data-table text-uppercase">
                                             {{seccion.nombre}}
                                         </td>
-                                        <!-- <td :class="seccion.color == '#D91729' ? 'color_zona_uno' : seccion.color == '#E6ED02' ? 'color_zona_dos' : seccion.color == '#5AD235' ? 'color_zona_tres' : seccion.color == '#87202D' ? 'color_zona_cuatro' : seccion.color == '#DFAD0C' ? 'color_zona_cinco' : 'color_zona_seis'"> -->
                                         <td :bgcolor="seccion.color"></td>
-                                        <!-- </td> -->
-                                        <!-- <td :class="seccion.color">                                        
-                                        </td> -->
-                                        <!-- <td style="background-color: #E6ED02">
-                                            git 
-                                        </td> -->
                                         <td>
                                             <div class="text-center row justify-content-center">
                                                 <div>
@@ -142,21 +133,6 @@
                                                         <span style="font-size: 15px;">Editar Seccion</span>
                                                     </v-tooltip>
                                                 </div>
-                                                <!-- <div>
-                                                    <v-icon
-                                                        @click="abrirModalNuevoInvitado(evento)"
-                                                        class="ml-1"
-                                                        >
-                                                        mdi-account-plus
-                                                    </v-icon>
-
-                                                    <v-tooltip
-                                                        activator="parent"
-                                                        location="bottom"
-                                                        >
-                                                        <span style="font-size: 15px;">Agregar Invitado</span>
-                                                    </v-tooltip>
-                                                </div> -->
                                                 <div>
                                                     <v-icon
                                                         @click="eliminarSeccion(seccion)"
@@ -318,16 +294,6 @@ export default defineComponent({
         
     },
     watch:{
-        // 'seccion.color': function() {
-        //     console.log(this.seccion)
-        //         // this.input_background_color = this.$refs.color_seleccion.value
-        //         // this.areas.forEach(e => {
-        //         //     if (e.color == this.color) {
-        //         //         this.preregistro.area = e.id
-        //         //     }
-        //         //     document.getElementById('input_gafete').focus();
-        //         // })
-        //     },
             'panel': function() {
                 
                 if(!this.panel){
@@ -428,6 +394,14 @@ export default defineComponent({
                 this.seccion.nombre = seccion.nombre
                 this.seccion.color = seccion.color
             },
+            cerrarPanel(){
+                this.panel = []
+                this.seccion.nombre = ''
+                this.seccion.color = ''
+                this.seccion.id = null
+                this.v$.reset()
+
+            },
             async guardarNuevaSeccion() {
                 const isFormCorrect = await this.v$.seccion.$validate()              
                 if (!isFormCorrect) return
@@ -442,7 +416,6 @@ export default defineComponent({
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
                         try {
-                                // this.loading = true
                                 let response = await axios.post('/api/secciones/crear-seccion', this.seccion)
                                 return response
                             } catch (error) {
@@ -451,18 +424,13 @@ export default defineComponent({
                         },
                         allowOutsideClick: () => !Swal.isLoading()
                     }).then((result) => {
-                        // this.loading = true
                         if (result.isConfirmed) {
                             if (result.value.status === 200) {
                                 if (result.value.data.status === "ok") {
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setSecciones', result.value.data.secciones)
-                                    // this.loading = false
-                                    this.getDataPagina(1) 
-                                    this.panel = []
-                                    this.seccion.nombre =''
-                                    this.seccion.color =''
-                                    this.v$.reset()
+                                    this.BuscarSecciones()
+                                    this.cerrarPanel()
                                 }
                                 else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
@@ -472,7 +440,6 @@ export default defineComponent({
                             }
                         }
                     })
-                    // this.loading = false
                     this.v$.$reset()
             },
             async guardarCambiosSeccion() {
@@ -503,12 +470,8 @@ export default defineComponent({
                                 if (result.value.data.status === "ok") {
                                     successSweetAlert(result.value.data.message)
                                     this.$store.commit('setSecciones', result.value.data.secciones)
-                                    this.panel = []
-                                    this.seccion.nombre =''
-                                    this.seccion.color =''
-                                    this.getDataPagina(1)
-                                    this.v$.reset()
-                    
+                                    this.BuscarSecciones()
+                                    this.cerrarPanel()
                                 } else {
                                     errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                                 }
@@ -543,7 +506,7 @@ export default defineComponent({
                             if (result.value.data.status === "ok") {
                                 successSweetAlert(result.value.data.message)
                                 this.$store.commit('setSecciones', result.value.data.secciones)
-                                this.getDataPagina(1)
+                                this.BuscarSecciones()
                             } else {
                                 errorSweetAlert(`${result.value.data.message}<br>Error: ${result.value.data.error}<br>Location: ${result.value.data.location}<br>Line: ${result.value.data.line}`)
                             }

@@ -252,157 +252,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <v-dialog v-model="dialogNuevoUsuario" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-5 custom-dialog-title">Nuevo Usuario</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-center my-3 custom-border">
-                            <div class="custom-subtitle">
-                                <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.usuario.nombre.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.nombre.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoP">Apellido paterno:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="usuario.apellido_paterno">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoM">Apellido materno:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="usuario.apellido_materno">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_username">Nombre de usuario:</label>
-                                    <input id="input_username" type="text" autocomplete="off" class="form-control" v-model="v$.usuario.username.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.username.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_pass">Contraseña:</label>
-                                    <input id="input_pass" type="text" autocomplete="off" class="form-control" v-model="v$.usuario.password.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.password.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_tipoUsuario">Tipo de usuario:</label>
-                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="usuario.tipo_usuario">
-                                        <option  v-for="item in tipoUsuarios" :key="item.id" :value="item.id">{{item.nombre}}</option>
-                                    </select>                                   
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center mb-4 mt-6">
-                            <v-btn
-                                class="custom-button mr-2"
-                                color="#c4f45d"
-                                @click="guardarNuevoUsuario()"
-                                >
-                                Guardar
-                            </v-btn>
-                            <v-btn
-                                class="custom-button ml-2"
-                                color="#6a73a0"
-                                @click="cerrarModalNuevoUsuario()"
-                                >
-                                Cancelar
-                            </v-btn>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog> -->
-            <!-- INICIO MODAL PARA EDITAR DATOS DEL USUARIO -->
-            <!-- <v-dialog v-model="dialogEditarUsuario" max-width="100rem" persistent>
-                <v-card>
-                    <v-card-title class="text-center">
-                        <h3 class="mt-2 custom-dialog-title">Editar Usuario</h3>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-center my-8 custom-border">
-                            <div class="custom-subtitle">
-                                <p>Datos</p>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_nombre">Nombre:</label>
-                                    <input id="input_nombre" type="text" class="form-control" v-model="v$.usuario.nombre.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.nombre.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoP">Apellido paterno:</label>
-                                    <input id="input_apellidoP" type="text" class="form-control" v-model="usuario.apellido_paterno">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_apellidoM">Apellido materno:</label>
-                                    <input id="input_apellidoM" type="text" class="form-control" v-model="usuario.apellido_materno">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mt-4">
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_username">Nombre de usuario:</label>
-                                    <input id="input_username" type="text" class="form-control" v-model="v$.usuario.username.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.username.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_pass">Contraseña:</label>
-                                    <input id="input_pass" type="text" class="form-control" v-model="v$.usuario.password.$model">
-                                    <p class="text-validation-red" v-if="v$.usuario.password.$error">*Campo obligatorio</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="div-custom-input-form">
-                                    <label for="input_tipoUsuario">Tipo de usuario:</label>
-                                    <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="usuario.tipo_usuario">
-                                        <option  v-for="item in tipoUsuarios" :key="item.id" :value="item.id">{{item.nombre}}</option>
-                                    </select>                                   
-                                </div>
-                            </div>                        
-                        </div>
-                        <div class="text-center mb-4 mt-6">
-                            <v-btn
-                                class="custom-button mr-2"
-                                color="#c4f45d"
-                                @click="guardarCambiosEditarUsuario()"
-                                >
-                                Guardar
-                            </v-btn>
-                            <v-btn
-                                class="custom-button ml-2"
-                                color="#6a73a0"
-                                @click="cerrarModalNuevoUsuario()"
-                                >
-                                Cancelar
-                            </v-btn>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-dialog> -->
         </div>
     </div>
 </template>
@@ -411,15 +260,13 @@
     import { defineComponent } from 'vue';
     import { errorSweetAlert, successSweetAlert } from "../helpers/sweetAlertGlobals"
     import useValidate from '@vuelidate/core'
-    import { required, email, helpers } from '@vuelidate/validators'
+    import { required } from '@vuelidate/validators'
 
     export default defineComponent({
         name: 'usuarios',
         data () {
             return { 
                 showNav: false,
-                // dialogNuevoUsuario: false,
-                // dialogEditarUsuario: false,
                 usuario: {
                     id: null,
                     nombre: '',

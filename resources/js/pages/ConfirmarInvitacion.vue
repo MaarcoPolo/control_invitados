@@ -1,10 +1,6 @@
 <template>
     <div>
-        <!-- <template v-if="user"> -->
-            <!-- <div class="col-12">
-                <p class="boton-logout text-center mt-4" @click="logout()"><b>CERRAR SESIÓN</b></p>
-            </div> -->
-        <!-- </template> -->
+
     </div>
 </template>
 
@@ -18,33 +14,15 @@
                 buscar_folio:{
                     folio:''
                 },
-                // invitado:{
-                //     nombre:'',
-                //     dependencia:'',
-                //     area:'',
-                //     folio:'',
-                //     verificado:'',
-                //     evento_id:'',
-                //     archivo_oficio: [],   
-                // },
             }
         },
         
         created() {
             this.confirmacion()
-            // if(this.user){
-            //     this.buscarOficio()
-            // }
         },
         computed: {
-            // user() {
-            //     return this.$store.getters.user
-            // }
         },
         methods:{
-            // logout() {
-            //     this.$store.dispatch('logout')
-            // },
             async confirmacion() {
                 const queryString = window.location.search;
                 const urlParams = new URLSearchParams(queryString);

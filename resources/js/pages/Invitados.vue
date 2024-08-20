@@ -129,7 +129,7 @@
                                 <div class="div-custom-input-form">
                                     <label for="select_seccion">Seccion:</label>
                                     <select id="select_seccion" class="form-control minimal custom-select text-uppercase" v-model="invitado.seccion">
-                                        <option  v-for="item in secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
+                                        <option  v-for="item in this.secciones" :key="item.id" :value="item.id">{{item.nombre}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -428,7 +428,8 @@
                 ],
                 panel_editar_invitado:[],
                 panel_editar_invitado: false,
-                nuevo_registro: 0
+                nuevo_registro: 0,
+                secciones:''
             
             }
         },
@@ -457,7 +458,6 @@
         },
         created() {
             this.getEventos()
-            this.getSecciones()
         },
         computed: {
             pages() {
@@ -470,9 +470,6 @@
             eventos() {
                     return this.$store.getters.getEventos
             },
-            secciones() {
-                    return this.$store.getters.getSecciones
-            }
         },
         watch: {
             buscar: function () {
@@ -592,6 +589,8 @@
                 this.invitado.seccion = invitado.seccion
                 this.invitado.estacionamiento = invitado.parking
                 this.invitado.confirmo = invitado.confirmo
+                this.BuscarSecciones()
+
             },
             abrirNuevoInvitado(){
                 this.panel_editar_invitado = true
@@ -613,6 +612,7 @@
                 this.invitado.seccion = ''
                 this.invitado.estacionamiento = ''
                 this.invitado.confirmo = ''
+                this.BuscarSecciones()
             },
             async guardarNuevoInvitado() {
                 const isFormCorrect = await this.v$.invitado.$validate()              
@@ -810,26 +810,6 @@
                 }
                 this.loading = false
             },
-            async getSecciones() {
-                this.loading = true
-                try {                   
-                    let response = await axios.get('/api/secciones')
-                    if (response.status === 200) {
-                        if (response.data.status === "ok") {
-                            this.$store.commit('setSecciones', response.data.secciones)
-                            this.input_background_color = response.data.secciones.color
-                            this.mostrar = true
-                        } else {
-                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
-                        }
-                    } else {
-                        errorSweetAlert('Ocurrió un error al obtener las Secciones')
-                    }
-                } catch (error) {
-                    errorSweetAlert('Ocurrió un error al obtener las Secciones')
-                }
-                this.loading = false
-            },
             async exportarExcel(){
                 this.export.evento_id = this.invitado.evento_id
                 // this.export.invitados = this.invitados
@@ -845,6 +825,26 @@
                     link.click();
                 })
                 this.loading2 = false 
+            },
+            async BuscarSecciones(){
+                this.loading = true
+                try {                   
+                    let response = await axios.post('/api/secciones/buscar-secciones', this.invitado)
+                    if (response.status === 200) {
+                        if (response.data.status === "ok") {
+                            this.secciones = response.data.secciones
+                            this.getDataPagina(1)
+                            this.mostrar = true
+                        } else {
+                            errorSweetAlert(`${response.data.message}<br>Error: ${response.data.error}<br>Location: ${response.data.location}<br>Line: ${response.data.line}`)
+                        }
+                    } else {
+                        errorSweetAlert('Ocurrió un error al obtener las secciones')
+                    }
+                } catch (error) {
+                    errorSweetAlert('Ocurrió un error al obtener las secciones')
+                }
+                this.loading = false
             },
         }
     }) 

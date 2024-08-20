@@ -17,17 +17,21 @@ class EnviarCorreo extends Mailable
     public $invitado;
     public $evento;
     public $pdf;
+    public $hora;
+    public $f;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($invitado,$evento,$pdf)
+    public function __construct($invitado,$evento,$pdf,$hora,$f)
     {
         $this->invitado = $invitado;
         $this->evento = $evento;
         $this->pdf = $pdf;
+        $this->hora = $hora;
+        $this->f = $f;
     }
 
     /**
@@ -38,7 +42,7 @@ class EnviarCorreo extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Invitación a los Diálogos Nacionales sobre Tribunales de Justicia Local',
+            subject: $this->evento->nombre,
         );
     }
 

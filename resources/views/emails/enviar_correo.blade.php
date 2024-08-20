@@ -58,7 +58,7 @@
 
     Espero este mensaje le encuentre bien. <br><br>
 
-    Por medio del presente, tenemos el agrado de invitarle al evento <strong>"Diálogos Nacionales sobre Tribunales de Justicia Local"</strong>, organizado por la Cámara de Diputados, LXV Legislatura. El evento se llevará a cabo el próximo <strong> martes 23 de julio a las 10:30 AM en el Centro Expositor "Salón Fuerte de Loreto", ubicado en Av. Ejército de Oriente No. 100, Centro Cívico Cultural 5 de Mayo, Zona de los Fuertes, Puebla, México.</strong>
+    Por medio del presente, tenemos el agrado de invitarle al evento <strong>{{$evento->nombre}}</strong>, organizado por <strong>{{$evento->organizador}}.</strong> El evento se llevará a cabo el próximo <strong>{{$f}}</strong> a las <strong>{{$hora}}</strong> en el <strong>{{$evento->sede}}</strong>, ubicado en <strong>{{$evento->domicilio_sede}}.</strong> 
 
     <br><br>
     Adjunto encontrará la imagen con todos los detalles del evento.
@@ -71,7 +71,7 @@
     <br><br>
     Atentamente,
     <br><br>
-    Cámara de Diputados, LXV Legislatura
+    {{$evento->organizador}}
     <br><br><br>
     
     <a href="https://eventos.pjpuebla.gob.mx/confirmacion?folio={{$invitado->folio}}">CONFIRMA TU ASISTENCIA DANDO CLIC AQUÍ.</a></p>

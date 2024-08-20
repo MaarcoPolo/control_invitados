@@ -566,7 +566,7 @@ class InvitadoController extends Controller{
         $pdf = PDF::Output('Código.pdf','S');
 
 
-        Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
+        Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf,$hora,$f));
 
 
         $invitados = Invitado::where('evento_id', $request->evento_id)->where('status',1)->get();
@@ -835,7 +835,7 @@ class InvitadoController extends Controller{
                 $pdf = PDF::Output('Código.pdf','S');
             
                 if (filter_var($invitado->email, FILTER_VALIDATE_EMAIL)) {
-                    Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf));
+                    Mail::to($invitado->email)->send(new EnviarCorreo($invitado,$evento,$pdf,$hora,$f));
                 }
                 DB::commit();
                 $cont_correos++;

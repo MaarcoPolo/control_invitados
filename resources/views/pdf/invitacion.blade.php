@@ -69,7 +69,7 @@
     <br>
     <br>
     <br>
-    <p><span class="primera-linea">TRIBUNALES DE JUSTICIA LOCAL</span></p>
+    <p><span class="primera-linea">{{$evento->nombre}}</span></p>
     <p><span class="segunda-linea">EL  EVENTO  SE  LLEVARÁ  A  CABO  EL  PRÓXIMO</span></p>
     <p><span class="texto-fecha">{{$f}}</span></p>
     <p><span class="hora">{{$hora}}</span></p>
